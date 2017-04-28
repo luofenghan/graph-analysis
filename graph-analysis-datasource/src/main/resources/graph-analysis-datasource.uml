@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem</OriginalElement>
+  <nodes>
+    <node x="610.9638888888888" y="162.0">com.analysis.graph.datasource.DataSourceSystem.Cache</node>
+    <node x="278.0" y="243.0">com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem.JdbcDataAggregator</node>
+    <node x="483.25" y="81.0">com.analysis.graph.datasource.DataSourceType</node>
+    <node x="551.0319444444444" y="243.0">com.analysis.graph.datasource.DataSourceSystem</node>
+    <node x="291.5" y="162.0">com.analysis.graph.datasource.DataAggregator</node>
+    <node x="134.5" y="162.0">com.analysis.graph.datasource.DataProvider</node>
+    <node x="571.0319444444444" y="334.0">com.analysis.graph.datasource.saiku.SaikuDataSourceSystem</node>
+    <node x="121.0" y="243.0">com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem.JdbcDataProvider</node>
+    <node x="529.5111111111112" y="0.0">com.analysis.graph.datasource.DataSourceType.DB</node>
+    <node x="0.0" y="243.0">com.analysis.graph.datasource.DataSource</node>
+    <node x="185.875" y="334.0">com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem</node>
+    <node x="440.5" y="162.0">com.analysis.graph.datasource.DataSourceStatus</node>
+    <node x="632.25" y="81.0">com.analysis.graph.datasource.DataSourceSystem.Cache.Key</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.analysis.graph.datasource.DataSourceSystem" target="com.analysis.graph.datasource.DataSourceStatus">
+      <point x="-62.125" y="-15.5" />
+      <point x="559.9069444444444" y="223.0" />
+      <point x="474.5" y="223.0" />
+      <point x="-34.0" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem" target="com.analysis.graph.datasource.DataSourceSystem">
+      <point x="70.41666666666669" y="-15.5" />
+      <point x="340.7916666666667" y="314.0" />
+      <point x="586.5319444444444" y="314.0" />
+      <point x="-35.5" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem" target="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem.JdbcDataAggregator">
+      <point x="14.083333333333314" y="-15.5" />
+      <point x="284.4583333333333" y="294.0" />
+      <point x="317.0" y="294.0" />
+      <point x="-39.0" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.saiku.SaikuDataSourceSystem" target="com.analysis.graph.datasource.DataSourceSystem">
+      <point x="0.0" y="-15.5" />
+      <point x="35.5" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.DataSourceStatus" target="com.analysis.graph.datasource.DataSourceType">
+      <point x="0.0" y="-15.5" />
+      <point x="508.5" y="137.0" />
+      <point x="515.5" y="137.0" />
+      <point x="-32.25" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem.JdbcDataAggregator" target="com.analysis.graph.datasource.DataAggregator">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.DataSourceSystem" target="com.analysis.graph.datasource.DataSourceType">
+      <point x="-26.625" y="-15.5" />
+      <point x="595.4069444444444" y="223.0" />
+      <point x="587.0" y="223.0" />
+      <point x="587.0" y="137.0" />
+      <point x="580.0" y="137.0" />
+      <point x="32.25" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem.JdbcDataProvider" target="com.analysis.graph.datasource.DataProvider">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.DataSourceType.DB" target="com.analysis.graph.datasource.DataSourceType">
+      <point x="12.75" y="15.5" />
+      <point x="567.7611111111112" y="56.0" />
+      <point x="580.0" y="56.0" />
+      <point x="32.25" y="-15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem" target="com.analysis.graph.datasource.DataSource">
+      <point x="-70.41666666666669" y="-15.5" />
+      <point x="199.95833333333331" y="314.0" />
+      <point x="50.5" y="314.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem" target="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem.JdbcDataProvider">
+      <point x="-42.25" y="-15.5" />
+      <point x="228.125" y="304.0" />
+      <point x="155.25" y="304.0" />
+      <point x="-34.25" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem.JdbcDataProvider" target="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem">
+      <point x="34.25" y="15.5" />
+      <point x="223.75" y="294.0" />
+      <point x="256.29166666666663" y="294.0" />
+      <point x="-14.083333333333371" y="-15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.DataSourceSystem.Cache" target="com.analysis.graph.datasource.DataSourceSystem.Cache.Key">
+      <point x="-23.0" y="-15.5" />
+      <point x="622.4638888888888" y="137.0" />
+      <point x="639.125" y="137.0" />
+      <point x="-20.625" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.DataSourceSystem.Cache" target="com.analysis.graph.datasource.DataSourceSystem">
+      <point x="8.625" y="15.5" />
+      <point x="654.0888888888888" y="223.0" />
+      <point x="648.6569444444444" y="223.0" />
+      <point x="26.625" y="-15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.DataSourceSystem.Cache.Key" target="com.analysis.graph.datasource.DataSourceSystem.Cache">
+      <point x="6.875" y="15.5" />
+      <point x="666.625" y="137.0" />
+      <point x="668.4638888888888" y="137.0" />
+      <point x="23.0" y="-15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.DataSourceSystem" target="com.analysis.graph.datasource.DataSourceSystem.Cache">
+      <point x="-8.875" y="-15.5" />
+      <point x="613.1569444444444" y="223.0" />
+      <point x="619.5888888888888" y="223.0" />
+      <point x="-25.875" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.DataSourceType" target="com.analysis.graph.datasource.DataSourceType.DB">
+      <point x="-32.25" y="-15.5" />
+      <point x="515.5" y="56.0" />
+      <point x="542.2611111111112" y="56.0" />
+      <point x="-12.75" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.DataSourceSystem" target="com.analysis.graph.datasource.DataSourceSystem.Cache.Key">
+      <point x="62.125" y="-15.5" />
+      <point x="684.1569444444444" y="223.0" />
+      <point x="690.4638888888888" y="223.0" />
+      <point x="690.4638888888888" y="137.0" />
+      <point x="680.375" y="137.0" />
+      <point x="20.625" y="15.5" />
+    </edge>
+    <edge source="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem.JdbcDataAggregator" target="com.analysis.graph.datasource.jdbc.JdbcDataSourceSystem">
+      <point x="39.0" y="15.5" />
+      <point x="395.0" y="304.0" />
+      <point x="312.625" y="304.0" />
+      <point x="42.25" y="-15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="372.5" y="182.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

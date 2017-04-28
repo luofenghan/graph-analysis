@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en" data-ng-app="graphAnalysisApp">
+<head>
+    <title data-ng-bind="'DataGraph | ' + $state.current.page.title"></title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/assets/css/ionicons.min.css" rel="stylesheet">
+    <link href="/assets/css/morris.css" rel="stylesheet"/>
+    <link href="/assets/css/datepicker.css" rel="stylesheet"/>
+    <link href="/assets/css/animate.min.css" rel="stylesheet">
+    <link href="/assets/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/assets/css/owl.theme.default.min.css" rel="stylesheet">
+    <link href="/assets/css/simplify.min.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="favicon.ico" id="lazy-load-css-before-favicon"/>
+</head>
+<body class="overflow-hidden" ng-controller="AppController">
+<div class="wrapper preload">
+    <header class="top-nav" ng-controller="HeaderController"
+            ng-include="'scripts/component/header/header.html'"></header>
+    <section class="sidebar-right" ng-controller="RightSidebarController"
+             ng-include="'scripts/component/sidebar/right-sidebar.html'">
+    </section>
+    <aside class="sidebar-menu fixed" ng-controller="LeftSidebarController"
+           ng-include="'scripts/component/sidebar/left-sidebar.html'">
+    </aside>
+    <article ui-view class="main-container"></article>
+    <footer class="footer" ng-controller="FooterController"
+            ng-include="'scripts/component/footer/footer.html'"></footer>
+</div>
+
+<a href="#" class="scroll-to-top hidden-print"><i class="fa fa-chevron-up fa-lg"></i></a>
+
+
+<section class="custom-popup delete-widget-popup delete-confirmation-popup" id="deleteWidgetConfirm">
+    <div class="popup-header text-center">
+				<span class="fa-stack fa-4x">
+				  <i class="fa fa-circle fa-stack-2x"></i>
+				  <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+				</span>
+    </div>
+    <div class="popup-body text-center">
+        <h5>你确定删除该组件吗?</h5>
+        <strong class="block m-top-xs">
+            <i class="fa fa-exclamation-circle m-right-xs text-danger"></i>This action cannot be undone
+        </strong>
+        <div class="text-center m-top-lg">
+            <a class="btn btn-success m-right-sm remove-widget-btn">删除</a>
+            <a class="btn btn-default deleteWidgetConfirm_close">取消</a>
+        </div>
+    </div>
+</section>
+
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src='/bower_components/jquery-slimscroll/jquery.slimscroll.min.js'></script>
+<script src='/assets/js/jquery.flot.min.js'></script>
+<script src='/assets/js/rapheal.min.js'></script>
+<script src='/assets/js/morris.min.js'></script>
+<script src='/assets/js/uncompressed/datepicker.js'></script>
+<script src='/assets/js/sparkline.min.js'></script>
+<script src='/assets/js/uncompressed/skycons.js'></script>
+<script src='/assets/js/jquery.popupoverlay.min.js'></script>
+<script src='/assets/js/jquery.easypiechart.min.js'></script>
+<script src='/assets/js/uncompressed/jquery.sortable.js'></script>
+<script src='/assets/js/owl.carousel.min.js'></script>
+<script src='/assets/js/modernizr.min.js'></script>
+<script src="/assets/js/simplify/simplify.js"></script>
+<script src="/assets/js/simplify/simplify_dashboard.js"></script>
+
+
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="/bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+
+<!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+<script src="/scripts/main.js"></script>
+<script src="/scripts/component/sidebar/sidebar.controller.js"></script>
+<script src="/scripts/component/header/header.controller.js"></script>
+<script src="/scripts/component/footer/footer.controller.js"></script>
+<script src="/scripts/resource.factory.js" id="lazy-load-js-before-footer"></script>
+
+<!-- END APP LEVEL ANGULARJS SCRIPTS -->
+
+<script>
+    jQuery(function ($) {
+        $('.chart').easyPieChart({
+            easing: 'easeOutBounce',
+            size: '140',
+            lineWidth: '7',
+            barColor: '#7266ba',
+            onStep: function (from, to, percent) {
+                $(this.el).find('.percent').text(Math.round(percent));
+            }
+        });
+        $('.sortable-list').sortable();
+
+        $('.todo-checkbox').click(function () {
+            var _activeCheckbox = $(this).find('input[method="checkbox"]');
+            if (_activeCheckbox.is(':checked')) {
+                $(this).parent().addClass('selected');
+            } else {
+                $(this).parent().removeClass('selected');
+            }
+        });
+        //Delete Widget Confirmation
+        $('#deleteWidgetConfirm').popup({
+            vertical: 'top',
+            pagecontainer: '.container',
+            transition: 'all 0.3s'
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+debug: false
+
+graph:
+  analysis:
+    api:
+      blocked-api-patterns:
+
+spring:
+  cache:
+    method: redis
+    cache-names: graph-analysis-cache
+  redis:
+    database: 0
+    host: localhost
+    password: 123
+    port: 6579
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: 1
+    timeout: 0
+  thymeleaf:
+    cache: true
+
+server:
+  port: 80
+
+
+

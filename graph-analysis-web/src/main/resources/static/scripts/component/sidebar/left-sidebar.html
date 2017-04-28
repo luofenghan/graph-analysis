@@ -1,0 +1,91 @@
+<!--右边的菜单-->
+<div class="sidebar-inner scrollable-sidebar">
+    <div class="main-menu">
+        <ul class="accordion">
+            <li class="menu-header">
+                主菜单
+            </li>
+            <li class="bg-palette1 active">
+                <a href="#!/home">
+                    <span class="menu-content block">
+                        <span class="menu-icon"><i class="block fa fa-home fa-lg"></i></span>
+                        <span class="text m-left-sm">操作面板</span>
+                    </span>
+                    <span class="menu-content-hover block">首页</span>
+                </a>
+            </li>
+            <li class="bg-palette2">
+                <a href="#!/data-source">
+									<span class="menu-content block">
+										<span class="menu-icon"><i class="block fa fa-database fa-lg"></i></span>
+										<span class="text m-left-sm">数据源管理</span>
+										<small class="badge badge-warning badge-square bounceIn animation-delay6 m-left-xs pull-right">7</small>
+									</span>
+                    <span class="menu-content-hover block">
+										数据源
+									</span>
+                </a>
+            </li>
+            <li class="bg-palette3">
+                <a href="#!/data-set">
+									<span class="menu-content block">
+										<span class="menu-icon"><i class="block fa fa-table fa-lg"></i></span>
+										<span class="text m-left-sm">数据集管理</span>
+										<small class="badge badge-warning badge-square bounceIn animation-delay6 m-left-xs pull-right">7</small>
+									</span>
+                    <span class="menu-content-hover block">
+										数据集
+									</span>
+                </a>
+            </li>
+
+            <li class="openable bg-palette4">
+                <a href="#">
+									<span class="menu-content block">
+										<span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
+										<span class="text m-left-sm">系统管理</span>
+										<span class="submenu-icon"></span>
+									</span>
+                    <span class="menu-content-hover block">
+										系统
+									</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#/user-manage"><span class="submenu-label">用户管理</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!--左下角-->
+    <div class="sidebar-fix-bottom clearfix">
+        <div class="user-dropdown dropup pull-left">
+            <a href="#" class="dropdwon-toggle font-18" data-toggle="dropdown"><i class="fa fa-user"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="inbox.html">
+                        收藏夹
+                        <span class="badge badge-danger bounceIn animation-delay2 pull-right">1</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        通知
+                        <span class="badge badge-purple bounceIn animation-delay3 pull-right">2</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebarRight-toggle">
+                        消息
+                        <span class="badge badge-success bounceIn animation-delay4 pull-right">7</span>
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#">设置</a>
+                </li>
+            </ul>
+        </div>
+        <a href="/lock-screen" target="_self" class="pull-right font-18"><i class="fa fa-sign-out"></i></a>
+    </div>
+</div><!-- sidebar-inner -->

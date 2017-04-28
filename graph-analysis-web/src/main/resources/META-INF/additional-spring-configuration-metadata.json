@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "graph.analysis.api.blocked",
+      "type": "java.lang.String",
+      "description": "Description for graph.analysis.api.blocked."
+    },
+    {
+      "name": "spring.mail.sign.name",
+      "type": "java.lang.String",
+      "description": "Description for spring.mail.sign.name."
+    }
+  ]
+}

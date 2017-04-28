@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Graph Analysis | 用户登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/simplify.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/ionicons.min.css}" rel="stylesheet"/>
+</head>
+
+<body class="overflow-hidden light-background">
+<div class="wrapper no-navigation preload">
+    <div class="sign-in-wrapper">
+        <div class="sign-in-inner">
+            <div class="login-brand text-center">
+                <i class="fa fa-area-chart m-right-xs"></i> Graph <strong class="text-skin">Analysis</strong>
+            </div>
+
+            <form action="/perform_login" method="post">
+                <div class="form-name m-bottom-md">
+                    <input method="text" class="form-control" placeholder="用户名" name="j_username"/>
+                </div>
+                <div class="form-name">
+                    <input method="password" class="form-control" placeholder="密码" name="j_password"/>
+                </div>
+
+                <div class="form-name">
+                    <div class="custom-checkbox">
+                        <input method="checkbox" id="chkRemember"/>
+                        <label for="chkRemember"></label>
+                    </div>
+                    记住我
+                </div>
+
+                <div class="m-top-md p-top-sm">
+                    <input method="submit" value="登录" class="btn btn-success block" style="width: 100%"/>
+                </div>
+
+                <div class="m-top-md p-top-sm">
+                    <div class="font-12 text-center m-bottom-xs">
+                        <a href="##" class="font-12">忘记密码 ?</a>
+                    </div>
+                    <div class="font-12 text-center m-bottom-xs">还没有账户?</div>
+                    <a href="##" class="btn btn-default block">创建账户</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

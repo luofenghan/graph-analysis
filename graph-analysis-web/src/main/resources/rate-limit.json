@@ -1,0 +1,47 @@
+//rate limit config, put the specific config at front order, put the general config at the back order
+[
+  {
+    "name": "accountUpdateApi",
+    //rate limit name (placeholder, should be unique, not used now)
+    "path": [
+      "/api/reset-password.*",
+      "/api/account/password.*",
+      "/api/sms.*",
+      "/api/register.*",
+      "/api/contract.*"
+    ],
+    //API regex array (allow multiple definition if they share same config)
+    "userLimit": 60,
+    "ipLimit": 600,
+    "interval": 600
+    //expiration interval in seconds. (We support from 0 to 10 minutes at present)
+  },
+  {
+    "name": "orderApi",
+    "path": [
+      "/api/order.*"
+    ],
+    "userLimit": 100,
+    "ipLimit": 1000,
+    "interval": 600
+  },
+  {
+    "name": "accountApi",
+    "path": [
+      "/api/account.*"
+    ],
+    "userLimit": 300,
+    "ipLimit": 3000,
+    "interval": 600
+  },
+  {
+    //for all other Api requests
+    "name": "otherApi",
+    "path": [
+      "/api.*"
+    ],
+    "userLimit": 600,
+    "ipLimit": 6000,
+    "interval": 600
+  }
+]

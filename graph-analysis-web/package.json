@@ -1,0 +1,31 @@
+{
+  "name": "graph-analysis",
+  "version": "0.0.1",
+  "description": "",
+  "private": true,
+  "cacheDirectories": [
+    "node_modules",
+    "src/main/resources/static/bower_components"
+  ],
+  "dependencies": {
+    "bower": "^1.8.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-ng-constant": "^2.0.1",
+    "grunt-spritesmith": "^6.4.0"
+  },
+  "engines": {
+    "node": "^0.12 || ^4.2"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
+}

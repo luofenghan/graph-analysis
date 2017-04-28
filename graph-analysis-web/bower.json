@@ -1,0 +1,36 @@
+{
+  "name": "graph-analysis",
+  "description": {
+    "oclazyload": "官方文档：https://oclazyload.readme.io/docs/oclazyload-service"
+  },
+  "main": "",
+  "authors": [
+    "luofenghan <luofenghan_cwc@163.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/resources/static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.4.12",
+    "angular-i18n": "~1.4.8",
+    "angular-ui-router": "0.3.2",
+    "angular-resource": "1.4.8",
+    "angular-local-storage": "0.2.3",
+    "angular-bootstrap": "~0.14.3",
+    "ui-select": "angular-ui-select#~0.13.2",
+    "components-font-awesome": "~4.5.0",
+    "ng-file-upload": ">=12.0.x",
+    "bootstrap": "^3.3.7",
+    "jquery-slimscroll": "^1.3.8",
+    "oclazyload": "1.1.0",
+    "jquery": "3.2.1",
+    "font-awesome": "Font-Awesome#4.7.0"
+  }
+}

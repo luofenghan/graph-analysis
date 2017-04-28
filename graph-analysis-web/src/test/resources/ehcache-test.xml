@@ -1,0 +1,48 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd" updateCheck="true"
+         monitoring="autodetect" dynamicConfig="true">
+
+
+    <!-- By default, Ehcache stored the cached files in temp folder. -->
+    <!-- <diskStore path="java.io.tmpdir" /> -->
+
+    <!-- Ask Ehcache to store cache in this path -->
+    <diskStore path="java.io.tmpdir" />
+
+    <!-- Sample cache named cache1
+    This cache contains a maximum in memory of 10000 elements, and will expire
+    an element if it is idle for more than 5 minutes and lives for more than
+    10 minutes.
+
+    If there are more than 10000 elements it will overflow to the
+    disk cache, which in this configuration will go to wherever java.io.tmp is
+    defined on your system. On a standard Linux system this will be /tmp" -->
+
+    <!--timeToIdleSeconds: 10分钟, 可以记录10分钟内访问次数, 如果超过10分钟同一个API未被访问, 则该API计数(缓存)清零-->
+    <cache name="rateLimitCache"
+           maxElementsInMemory="20000"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="100000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="1200"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="webCache"
+           maxElementsInMemory="20000"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="100000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="1200"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+</ehcache>

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.analysis.graph.common.repository.mapper.DataSetMapper" >
+  <resultMap id="BaseResultMap" type="com.analysis.graph.common.domain.dbo.DataSet" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="client_id" property="clientId" jdbcType="INTEGER" />
+    <result column="data_source_id" property="dataSourceId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="data_set_name" property="dataSetName" jdbcType="VARCHAR" />
+    <result column="query" property="query" jdbcType="VARCHAR" />
+    <result column="filter_group" property="filterGroup" jdbcType="VARCHAR" />
+    <result column="expressions" property="expressions" jdbcType="VARCHAR" />
+    <result column="interval" property="interval" jdbcType="BIGINT" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, client_id, data_source_id, category_name, data_set_name, query, filter_group, 
+    expressions, interval, created_time, updated_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.analysis.graph.common.domain.dbo.DataSetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from data_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from data_set
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from data_set
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.analysis.graph.common.domain.dbo.DataSetExample" >
+    delete from data_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.analysis.graph.common.domain.dbo.DataSet" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into data_set (id, client_id, data_source_id, 
+      category_name, data_set_name, query, 
+      filter_group, expressions, interval, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{clientId,jdbcType=INTEGER}, #{dataSourceId,jdbcType=INTEGER}, 
+      #{categoryName,jdbcType=VARCHAR}, #{dataSetName,jdbcType=VARCHAR}, #{query,jdbcType=VARCHAR}, 
+      #{filterGroup,jdbcType=VARCHAR}, #{expressions,jdbcType=VARCHAR}, #{interval,jdbcType=BIGINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.analysis.graph.common.domain.dbo.DataSet" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into data_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      id,
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="dataSourceId != null" >
+        data_source_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="dataSetName != null" >
+        data_set_name,
+      </if>
+      <if test="query != null" >
+        query,
+      </if>
+      <if test="filterGroup != null" >
+        filter_group,
+      </if>
+      <if test="expressions != null" >
+        expressions,
+      </if>
+      <if test="interval != null" >
+        interval,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="updatedTime != null" >
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="clientId != null" >
+        #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="dataSourceId != null" >
+        #{dataSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSetName != null" >
+        #{dataSetName,jdbcType=VARCHAR},
+      </if>
+      <if test="query != null" >
+        #{query,jdbcType=VARCHAR},
+      </if>
+      <if test="filterGroup != null" >
+        #{filterGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="expressions != null" >
+        #{expressions,jdbcType=VARCHAR},
+      </if>
+      <if test="interval != null" >
+        #{interval,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null" >
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.analysis.graph.common.domain.dbo.DataSetExample" resultType="java.lang.Integer" >
+    select count(*) from data_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update data_set
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.clientId != null" >
+        client_id = #{record.clientId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dataSourceId != null" >
+        data_source_id = #{record.dataSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryName != null" >
+        category_name = #{record.categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataSetName != null" >
+        data_set_name = #{record.dataSetName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.query != null" >
+        query = #{record.query,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filterGroup != null" >
+        filter_group = #{record.filterGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressions != null" >
+        expressions = #{record.expressions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interval != null" >
+        interval = #{record.interval,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdTime != null" >
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedTime != null" >
+        updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update data_set
+    set id = #{record.id,jdbcType=BIGINT},
+      client_id = #{record.clientId,jdbcType=INTEGER},
+      data_source_id = #{record.dataSourceId,jdbcType=INTEGER},
+      category_name = #{record.categoryName,jdbcType=VARCHAR},
+      data_set_name = #{record.dataSetName,jdbcType=VARCHAR},
+      query = #{record.query,jdbcType=VARCHAR},
+      filter_group = #{record.filterGroup,jdbcType=VARCHAR},
+      expressions = #{record.expressions,jdbcType=VARCHAR},
+      interval = #{record.interval,jdbcType=BIGINT},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.analysis.graph.common.domain.dbo.DataSet" >
+    update data_set
+    <set >
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="dataSourceId != null" >
+        data_source_id = #{dataSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSetName != null" >
+        data_set_name = #{dataSetName,jdbcType=VARCHAR},
+      </if>
+      <if test="query != null" >
+        query = #{query,jdbcType=VARCHAR},
+      </if>
+      <if test="filterGroup != null" >
+        filter_group = #{filterGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="expressions != null" >
+        expressions = #{expressions,jdbcType=VARCHAR},
+      </if>
+      <if test="interval != null" >
+        interval = #{interval,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null" >
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.analysis.graph.common.domain.dbo.DataSet" >
+    update data_set
+    set client_id = #{clientId,jdbcType=INTEGER},
+      data_source_id = #{dataSourceId,jdbcType=INTEGER},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      data_set_name = #{dataSetName,jdbcType=VARCHAR},
+      query = #{query,jdbcType=VARCHAR},
+      filter_group = #{filterGroup,jdbcType=VARCHAR},
+      expressions = #{expressions,jdbcType=VARCHAR},
+      interval = #{interval,jdbcType=BIGINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.analysis.graph.common.domain.dbo.DataSetExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from data_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
