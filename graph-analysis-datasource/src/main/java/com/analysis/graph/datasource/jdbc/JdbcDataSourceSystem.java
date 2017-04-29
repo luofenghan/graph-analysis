@@ -2,7 +2,6 @@ package com.analysis.graph.datasource.jdbc;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.analysis.graph.common.util.IOUtils;
 import com.analysis.graph.datasource.*;
 import com.analysis.graph.datasource.aggregation.AggregationResult;
 import com.analysis.graph.datasource.aggregation.AggregationView;
@@ -78,7 +77,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
         }
     }
 
-    private class JdbcDataProvider implements DataProvider {
+    private class JdbcDataProvider extends AbstractDataProvider {
         private String sql;
         private Connection connection;
         private Statement stat;
@@ -147,11 +146,11 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
 
         @Override
         public void close() throws IOException {
-            IOUtils.cleanup(connection, stat, result);
+            batchClose(connection, stat, result);
         }
     }
 
-    private class JdbcDataAggregator implements DataAggregator {
+    private class JdbcDataAggregator extends AbstractDataAggregator {
 
         @Override
         public void aggregate(String columnName, AggregationView aggregationView) throws Exception {
