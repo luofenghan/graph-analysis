@@ -1,6 +1,6 @@
 package com.analysis.graph.web.library.repository;
 
-import com.analysis.graph.config.TestConfig;
+import com.analysis.graph.config.DataConfig;
 import com.analysis.graph.common.domain.dbo.DataSourceInfo;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by cwc on 2017/4/22 0022.
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {DataConfig.class})
 public class DataSourceRepositoryTest {
     @Autowired
     private DataSourceRepository dataSourceRepository;

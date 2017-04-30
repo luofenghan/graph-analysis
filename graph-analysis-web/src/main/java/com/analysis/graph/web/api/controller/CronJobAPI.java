@@ -35,7 +35,7 @@ public class CronJobAPI {
         return cronJobService.getSupportCronJobTypes();
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public CronJob createCronJob(CronJob cronJob) {
         Client client = sessionRepository.getCurrentOnlineClient();
         cronJob.setClientId(client.getId());
@@ -44,7 +44,7 @@ public class CronJobAPI {
         return cronJob;
     }
 
-    @RequestMapping(method = RequestMethod.PATCH)
+    @RequestMapping(method = RequestMethod.PUT)
     public CronJob modifyCronJob(CronJob cronJob) {
         cronJob = cronJobRepository.updateCronJob(cronJob);
         cronJobService.configScheduler();

@@ -7,11 +7,9 @@ public class DataSourceInfo {
 
     private Integer clientId;
 
-    private String type;
-
     private String name;
 
-    private String config;
+    private String uri;
 
     private Date createdTime;
 
@@ -33,14 +31,6 @@ public class DataSourceInfo {
         this.clientId = clientId;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
-    }
-
     public String getName() {
         return name;
     }
@@ -49,12 +39,12 @@ public class DataSourceInfo {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getConfig() {
-        return config;
+    public String getUri() {
+        return uri;
     }
 
-    public void setConfig(String config) {
-        this.config = config == null ? null : config.trim();
+    public void setUri(String uri) {
+        this.uri = uri == null ? null : uri.trim();
     }
 
     public Date getCreatedTime() {
@@ -81,9 +71,8 @@ public class DataSourceInfo {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", clientId=").append(clientId);
-        sb.append(", type=").append(type);
         sb.append(", name=").append(name);
-        sb.append(", config=").append(config);
+        sb.append(", uri=").append(uri);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", updatedTime=").append(updatedTime);
         sb.append("]");

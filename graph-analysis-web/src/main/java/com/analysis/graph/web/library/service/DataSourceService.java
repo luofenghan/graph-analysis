@@ -27,12 +27,12 @@ public class DataSourceService {
     }
 
     @Cacheable(value = "data-provider-cache", key = "#root.args.uri.toString() + #root.args.query")
-    public String[][] getCacheData(Integer id, URI uri, Map<String, String> query) {
+    public Object[][] getCacheData(Integer id, URI uri, Map<String, String> query) {
         return getFreshData(id, uri, query);
     }
 
-    public String[][] getFreshData(Integer id, URI uri, Map<String, String> query) {
-        DataSourceSystem dataSourceSystem = DataSourceSystem.get(uri, id);
+    public Object[][] getFreshData(Integer id, URI uri, Map<String, String> query) {
+        DataSourceSystem dataSourceSystem = DataSourceSystem.get(id, uri);
         try (DataProvider dataProvider = dataSourceSystem.getDataProvider(query)) {
             return dataProvider.readFully();
         } catch (Exception e) {

@@ -19,7 +19,7 @@ public class JdbcDataSourceSystemTest {
     @Test
     public void testDataProvider() {
         URI uri = URI.create("jdbc://root:123@127.0.0.1:3306/chinaregion?db=mysql&pooled=false&aggregatable=false");
-        DataSourceSystem dataSourceSystem = DataSourceSystem.get(uri, 1);
+        DataSourceSystem dataSourceSystem = DataSourceSystem.get(1,uri);
 
         Map<String, String> query = new HashMap<>();
         query.put("sql", "select * from city");

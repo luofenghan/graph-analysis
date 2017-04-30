@@ -5,14 +5,19 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.analysis.graph.datasource.*;
 import com.analysis.graph.datasource.aggregation.AggregationResult;
 import com.analysis.graph.datasource.aggregation.AggregationView;
+import com.analysis.graph.datasource.aggregation.AggregationView.DimensionView;
+import com.analysis.graph.datasource.aggregation.AggregationView.ValueView;
+import com.analysis.graph.datasource.aggregation.ColumnIndex;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 
 /**
  * Created by cwc on 2017/4/27 0027.
@@ -28,18 +33,14 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
 
     @Override
     public DataProvider getDataProvider(Map<String, String> query) throws SQLException {
-        return new JdbcDataProvider(getAsSubQuery(query.get("sql")));
+        return new JdbcDataProvider(query);
     }
 
     @Override
-    public DataAggregator getDataAggregator() {
-        return new JdbcDataAggregator();
+    public DataAggregator getDataAggregator(DataProvider dataProvider) {
+        return new JdbcDataAggregator(dataProvider);
     }
 
-    private String getAsSubQuery(String rawQueryText) {
-        String deletedBlankLine = rawQueryText.replaceAll("(?m)^[\\s\t]*\r?\n", "").trim();
-        return deletedBlankLine.endsWith(";") ? deletedBlankLine.substring(0, deletedBlankLine.length() - 1) : deletedBlankLine;
-    }
 
     private Connection getConnection() {
         try {
@@ -78,14 +79,35 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
     }
 
     private class JdbcDataProvider extends AbstractDataProvider {
-        private String sql;
         private Connection connection;
         private Statement stat;
         private ResultSet result;
+        private boolean lazyConnect = false;
 
-        public JdbcDataProvider(String sql) throws SQLException {
+        public JdbcDataProvider(Map<String, String> query) throws SQLException {
+            super(query);
+            connect();
+        }
+
+        public JdbcDataProvider(Map<String, String> query, boolean lazyConnect) throws SQLException {
+            super(query);
+            this.lazyConnect = lazyConnect;
+            if (!lazyConnect) {
+                connect();
+            }
+        }
+
+        private void connect() throws SQLException {
             this.connection = getConnection();
             this.stat = connection.createStatement();
+            this.result = stat.executeQuery(getQuery("sql"));
+        }
+
+        @Override
+        public void resetResultSet(String sql) throws SQLException {
+            if (result != null) {
+                batchClose(result);
+            }
             this.result = stat.executeQuery(sql);
         }
 
@@ -108,7 +130,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
         public String[] readColumnLabels() throws SQLException {
             try (Connection connection = getConnection();
                  Statement stat = connection.createStatement();
-                 ResultSet rs = stat.executeQuery(String.format("\nSELECT * FROM (\n%s\n) __view__ WHERE 1=0", sql))) {
+                 ResultSet rs = stat.executeQuery(String.format("\nSELECT * FROM (\n%s\n) __view__ WHERE 1=0", getQuery("sql")))) {
                 ResultSetMetaData metaData = rs.getMetaData();
                 String[] label = new String[metaData.getColumnCount()];
                 for (int i = 0, len = metaData.getColumnCount(); i < len; i++) {
@@ -123,7 +145,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
         public Map<String, Integer> readColumnLabelTypeMap() throws SQLException {
             try (Connection connection = getConnection();
                  Statement stat = connection.createStatement();
-                 ResultSet rs = stat.executeQuery(String.format("\nSELECT * FROM (\n%s\n) __view__ WHERE 1=0", sql))) {
+                 ResultSet rs = stat.executeQuery(String.format("\nSELECT * FROM (\n%s\n) __view__ WHERE 1=0", getQuery("sql")))) {
                 ResultSetMetaData metaData = rs.getMetaData();
                 Map<String, Integer> map = new HashMap<>(metaData.getColumnCount());
                 for (int i = 0, len = metaData.getColumnCount(); i < len; i++) {
@@ -150,22 +172,83 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
         }
     }
 
-    private class JdbcDataAggregator extends AbstractDataAggregator {
+    private static class JdbcDataAggregator extends AbstractDataAggregator {
+        private AggregationResult aggregationResult;
 
-        @Override
-        public void aggregate(String columnName, AggregationView aggregationView) throws Exception {
-
+        public JdbcDataAggregator(DataProvider dataProvider) {
+            super(dataProvider);
         }
 
         @Override
-        public void aggregate(AggregationView aggregationView) throws Exception {
+        public void aggregate(String columnName, AggregationView aggregationView) throws SQLException {
+        }
 
+        @Override
+        public void aggregate(AggregationView av) throws SQLException {
+            List<ColumnIndex> dimensionList = Stream.concat(av.columnStream(), av.rowStream())
+                    .map(ColumnIndex::fromDimensionConfig)
+                    .collect(Collectors.toList());
+            dimensionList.addAll(av.valueStream().map(ColumnIndex::fromValueConfig).collect(Collectors.toList()));
+            IntStream.range(0, dimensionList.size()).forEach(j -> dimensionList.get(j).setIndex(j));
+            String sql = getAggregationSql(av);
+            dataProvider.resetResultSet(sql);
+            aggregationResult = new AggregationResult(dimensionList, dataProvider.readFully());
         }
 
         @Override
         public AggregationResult getAggregateResult() {
-            return null;
+            return aggregationResult;
         }
+
+
+        public String getAggregationSql(AggregationView av) throws SQLException {
+            String columnNames = assembleDimensionColumns(Stream.concat(av.columnStream(), av.rowStream()));
+            String aggregationColumnNames = assembleAggregationColumns(av.valueStream());
+            String whereCondition = assembleWhereCondition(Stream.concat(Stream.concat(av.rowStream(), av.columnStream()), av.filterStream()));
+
+            String groupBy = "";
+            StringJoiner selectColsStr = new StringJoiner(",");
+            if (!StringUtils.isBlank(columnNames)) {
+                groupBy = "GROUP BY " + columnNames;
+                selectColsStr.add(columnNames);
+            }
+
+            if (!StringUtils.isBlank(aggregationColumnNames)) {
+                selectColsStr.add(aggregationColumnNames);
+            }
+            String subQuerySql = ((JdbcDataProvider) dataProvider).getQuery("sql");
+            String sqlTemplate = "\nSELECT %s \n FROM (\n%s\n) __view__ \n %s \n %s";
+            return String.format(sqlTemplate, selectColsStr.length() == 0 ? "*" : selectColsStr, subQuerySql, whereCondition, groupBy);
+
+        }
+
+        private String assembleWhereCondition(Stream<DimensionView> valueViewStream) {
+            StringJoiner where = new StringJoiner("\nAND ", "WHERE" + " ", "").setEmptyValue("");
+            valueViewStream.map(CONDITION_PARSER)
+                    .filter(Objects::nonNull)
+                    .forEach(where::add);
+            return where.toString();
+        }
+
+        private String assembleDimensionColumns(Stream<DimensionView> dimensionViewStream) {
+            StringJoiner columns = new StringJoiner(", ", "", " ").setEmptyValue("");
+            dimensionViewStream.map(DimensionView::getName)
+                    .distinct()
+                    .filter(Objects::nonNull)
+                    .forEach(columns::add);
+            return columns.toString();
+        }
+
+        private String assembleAggregationColumns(Stream<ValueView> valueViewStream) throws SQLException {
+            Map<String, Integer> labelTypeMap = dataProvider.readColumnLabelTypeMap();
+            StringJoiner columns = new StringJoiner(", ", "", " ").setEmptyValue("");
+            valueViewStream.map(m -> AGGREGATION_PARSER.apply(m, labelTypeMap))
+                    .filter(Objects::nonNull)
+                    .forEach(columns::add);
+            return columns.toString();
+        }
+
     }
+
 
 }

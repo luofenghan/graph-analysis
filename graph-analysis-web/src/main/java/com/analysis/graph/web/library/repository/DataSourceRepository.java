@@ -3,14 +3,13 @@ package com.analysis.graph.web.library.repository;
 import com.analysis.graph.common.domain.dbo.DataSourceInfo;
 import com.analysis.graph.common.domain.dbo.DataSourceInfoExample;
 import com.analysis.graph.common.repository.mapper.DataSourceInfoMapper;
+import com.google.common.base.Preconditions;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by cwc on 2017/4/22 0022.
@@ -20,8 +19,10 @@ public class DataSourceRepository {
     @Resource
     private DataSourceInfoMapper dataSourceInfoMapper;
 
-    public Optional<DataSourceInfo> queryDataSourceInfoById(Integer id) {
-        return Optional.ofNullable(dataSourceInfoMapper.selectByPrimaryKey(id));
+    public DataSourceInfo queryDataSourceInfoById(Integer id) {
+        DataSourceInfo dataSourceInfo = dataSourceInfoMapper.selectByPrimaryKey(id);
+        Preconditions.checkArgument(dataSourceInfo != null, "can not find dataSourceInfo by id: %d", id);
+        return dataSourceInfo;
     }
 
     public List<DataSourceInfo> queryDataSourceListByClientId(Integer id) {
@@ -35,25 +36,19 @@ public class DataSourceRepository {
         DateTime now = new DateTime();
         dataSourceInfo.setCreatedTime(now.toDate());
         dataSourceInfo.setUpdatedTime(now.toDate());
-        if (dataSourceInfoMapper.insert(dataSourceInfo) != 1) {
-            throw new IllegalArgumentException("insertDataSource failed");
-        }
+        dataSourceInfoMapper.insert(dataSourceInfo);
         return dataSourceInfo;
     }
 
     @Transactional
     public DataSourceInfo updateDataSource(DataSourceInfo dataSourceInfo) {
         dataSourceInfo.setUpdatedTime(new DateTime().toDate());
-        if (dataSourceInfoMapper.updateByPrimaryKeySelective(dataSourceInfo) != 1) {
-            throw new IllegalArgumentException("updateDataSource failed");
-        }
+        dataSourceInfoMapper.updateByPrimaryKeySelective(dataSourceInfo);
         return dataSourceInfo;
     }
 
     @Transactional
     public void deleteDataSource(Integer id) {
-        if (dataSourceInfoMapper.deleteByPrimaryKey(id) != 1) {
-            throw new IllegalArgumentException("deleteDataSource failed");
-        }
+        dataSourceInfoMapper.deleteByPrimaryKey(id);
     }
 }

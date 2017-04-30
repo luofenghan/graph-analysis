@@ -28,4 +28,6 @@ public interface DataProvider extends Closeable {
      */
     Object[][] readFully() throws SQLException;
 
+    void resetResultSet(String sql) throws SQLException;
+
 }

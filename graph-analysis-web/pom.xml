@@ -14,6 +14,7 @@
     <name>graph-analysis-web</name>
     <description>Demo project for Spring Boot</description>
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>

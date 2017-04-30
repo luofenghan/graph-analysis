@@ -18,6 +18,7 @@ import java.beans.PropertyVetoException;
  */
 @Configuration
 public class DataConfig {
+
     @Bean
     public DataSource defaultDataSource() throws PropertyVetoException {
         DruidDataSource dataSource = new DruidDataSource();
@@ -32,7 +33,7 @@ public class DataConfig {
         dataSource.setTimeBetweenEvictionRunsMillis(300000);
         dataSource.setMinEvictableIdleTimeMillis(300000);
         dataSource.setValidationQueryTimeout(300000);
-        dataSource.setValidationQuery("select sysdate from dual");
+        dataSource.setValidationQuery("select * from dual");
         dataSource.setTestWhileIdle(true);
         dataSource.setTestOnBorrow(false);
         dataSource.setTestOnReturn(false);

@@ -3,12 +3,10 @@ package com.analysis.graph.web.api.controller;
 import com.alibaba.fastjson.JSON;
 import com.analysis.graph.common.domain.dbo.Client;
 import com.analysis.graph.common.domain.dbo.DataSourceInfo;
-import com.analysis.graph.web.library.domain.dto.DataSourceInfoDTO;
 import com.analysis.graph.web.library.repository.DataSourceRepository;
 import com.analysis.graph.web.library.repository.SessionRepository;
 import com.analysis.graph.web.library.service.DataSourceService;
 import com.google.common.base.Functions;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,32 +35,14 @@ public class DataSourceAPI {
     @Resource
     private SessionRepository sessionRepository;
 
-    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DataSourceInfoDTO saveDataSource(DataSourceInfoDTO dataSourceInfoDTO) {
-        DataSourceInfo dataSourceInfo = new DataSourceInfo();
-        dataSourceInfo.setName(dataSourceInfoDTO.getName());
-        dataSourceInfo.setType(dataSourceInfoDTO.getType());
-        dataSourceInfo.setConfig(JSON.toJSONString(dataSourceInfoDTO.getConfig()));
-        dataSourceInfo.setClientId(dataSourceInfo.getClientId());
-
-        dataSourceInfo = dataSourceRepository.insertDataSource(dataSourceInfo);
-
-        return new DataSourceInfoDTO(dataSourceInfo);
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public DataSourceInfo saveDataSource(DataSourceInfo dataSourceInfo) {
+        return dataSourceRepository.insertDataSource(dataSourceInfo);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DataSourceInfoDTO updateDataSource(DataSourceInfoDTO dataSourceInfoDTO) {
-        DataSourceInfo dataSourceInfo = new DataSourceInfo();
-        dataSourceInfo.setId(dataSourceInfoDTO.getId());
-        dataSourceInfo.setName(dataSourceInfoDTO.getName());
-        dataSourceInfo.setType(dataSourceInfoDTO.getType());
-        dataSourceInfo.setConfig(JSON.toJSONString(dataSourceInfoDTO.getConfig()));
-        dataSourceInfo.setClientId(dataSourceInfo.getClientId());
-        dataSourceInfo.setCreatedTime(dataSourceInfoDTO.getCreatedTime());
-
-        dataSourceInfo = dataSourceRepository.updateDataSource(dataSourceInfo);
-
-        return new DataSourceInfoDTO(dataSourceInfo);
+    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public DataSourceInfo updateDataSource(DataSourceInfo dataSourceInfo) {
+        return dataSourceRepository.updateDataSource(dataSourceInfo);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
@@ -81,10 +61,9 @@ public class DataSourceAPI {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<DataSourceInfoDTO> dataSourceList() {
+    public List<DataSourceInfo> dataSourceList() {
         Client client = sessionRepository.getCurrentOnlineClient();
-        List<DataSourceInfo> dataSourceInfoList = dataSourceRepository.queryDataSourceListByClientId(client.getId());
-        return Lists.transform(dataSourceInfoList, DataSourceInfoDTO::new);
+        return dataSourceRepository.queryDataSourceListByClientId(client.getId());
     }
 
     @RequestMapping(value = "/type/list", method = RequestMethod.GET)

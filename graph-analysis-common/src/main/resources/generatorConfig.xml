@@ -35,18 +35,18 @@
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="client" domainObjectName="Client">
+<!--        <table tableName="client" domainObjectName="Client">
             <generatedKey column="id" sqlStatement="MySql"/>
-        </table>
+        </table>-->
         <table tableName="data_source_info" domainObjectName="DataSourceInfo">
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>
-        <table tableName="data_set" domainObjectName="DataSet">
+<!--        <table tableName="data_set" domainObjectName="DataSet">
             <generatedKey column="id" sqlStatement="MySql"/>
-        </table>
-        <table tableName="cron_job" domainObjectName="CronJob">
+        </table>-->
+<!--        <table tableName="cron_job" domainObjectName="CronJob">
             <generatedKey column="id" sqlStatement="MySql"/>
-        </table>
+        </table>-->
 
     </context>
 </generatorConfiguration>

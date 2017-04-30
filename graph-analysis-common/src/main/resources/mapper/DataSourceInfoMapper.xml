@@ -4,9 +4,8 @@
   <resultMap id="BaseResultMap" type="com.analysis.graph.common.domain.dbo.DataSourceInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="client_id" property="clientId" jdbcType="INTEGER" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="config" property="config" jdbcType="VARCHAR" />
+    <result column="uri" property="uri" jdbcType="VARCHAR" />
     <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
     <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -69,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, client_id, type, name, config, created_time, updated_time
+    id, client_id, name, uri, created_time, updated_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfoExample" >
     select
@@ -105,12 +104,12 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into data_source_info (id, client_id, type, 
-      name, config, created_time, 
-      updated_time)
-    values (#{id,jdbcType=INTEGER}, #{clientId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{config,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedTime,jdbcType=TIMESTAMP})
+    insert into data_source_info (id, client_id, name, 
+      uri, created_time, updated_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{clientId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{uri,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfo" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
@@ -122,14 +121,11 @@
       <if test="clientId != null" >
         client_id,
       </if>
-      <if test="type != null" >
-        type,
-      </if>
       <if test="name != null" >
         name,
       </if>
-      <if test="config != null" >
-        config,
+      <if test="uri != null" >
+        uri,
       </if>
       <if test="createdTime != null" >
         created_time,
@@ -143,14 +139,11 @@
       <if test="clientId != null" >
         #{clientId,jdbcType=INTEGER},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=VARCHAR},
-      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="config != null" >
-        #{config,jdbcType=VARCHAR},
+      <if test="uri != null" >
+        #{uri,jdbcType=VARCHAR},
       </if>
       <if test="createdTime != null" >
         #{createdTime,jdbcType=TIMESTAMP},
@@ -175,14 +168,11 @@
       <if test="record.clientId != null" >
         client_id = #{record.clientId,jdbcType=INTEGER},
       </if>
-      <if test="record.type != null" >
-        type = #{record.type,jdbcType=VARCHAR},
-      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.config != null" >
-        config = #{record.config,jdbcType=VARCHAR},
+      <if test="record.uri != null" >
+        uri = #{record.uri,jdbcType=VARCHAR},
       </if>
       <if test="record.createdTime != null" >
         created_time = #{record.createdTime,jdbcType=TIMESTAMP},
@@ -199,9 +189,8 @@
     update data_source_info
     set id = #{record.id,jdbcType=INTEGER},
       client_id = #{record.clientId,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
-      config = #{record.config,jdbcType=VARCHAR},
+      uri = #{record.uri,jdbcType=VARCHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -214,14 +203,11 @@
       <if test="clientId != null" >
         client_id = #{clientId,jdbcType=INTEGER},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=VARCHAR},
-      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="config != null" >
-        config = #{config,jdbcType=VARCHAR},
+      <if test="uri != null" >
+        uri = #{uri,jdbcType=VARCHAR},
       </if>
       <if test="createdTime != null" >
         created_time = #{createdTime,jdbcType=TIMESTAMP},
@@ -235,9 +221,8 @@
   <update id="updateByPrimaryKey" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfo" >
     update data_source_info
     set client_id = #{clientId,jdbcType=INTEGER},
-      type = #{type,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      config = #{config,jdbcType=VARCHAR},
+      uri = #{uri,jdbcType=VARCHAR},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

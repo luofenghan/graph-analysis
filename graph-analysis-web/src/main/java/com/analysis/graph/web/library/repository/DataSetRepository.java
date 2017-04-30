@@ -27,11 +27,7 @@ public class DataSetRepository {
     @Transactional
     public DataSet insertDataSet(DataSet dataSet) {
         if (StringUtils.isEmpty(dataSet.getDataSetName())) {
-            Optional<DataSourceInfo> dataSourceInfoOptional = dataSourceRepository.queryDataSourceInfoById(dataSet.getDataSourceId());
-            if (!dataSourceInfoOptional.isPresent()) {
-                throw new IllegalArgumentException("dataSource not existed by datasourceId " + dataSet.getDataSourceId());
-            }
-            DataSourceInfo dataSourceInfo = dataSourceInfoOptional.get();
+            DataSourceInfo dataSourceInfo = dataSourceRepository.queryDataSourceInfoById(dataSet.getDataSourceId());
             dataSet.setDataSetName(String.format("%s_%s", dataSourceInfo.getName(), dataSet.hashCode()));
         }
         if (StringUtils.isEmpty(dataSet.getCategoryName())) {
@@ -58,10 +54,18 @@ public class DataSetRepository {
         dataSetMapper.deleteByPrimaryKey(id);
     }
 
-    public List<DataSet> getDataSetsOfClient(Integer id) {
+    public List<DataSet> queryClientDataSet(Integer clientId) {
         DataSetExample example = new DataSetExample();
-        example.createCriteria().andClientIdEqualTo(id);
+        example.createCriteria().andClientIdEqualTo(clientId);
 
         return dataSetMapper.selectByExample(example);
+    }
+
+    public DataSet queryDataSet(Long dataSetId) {
+        DataSet dataSet = dataSetMapper.selectByPrimaryKey(dataSetId);
+        if (dataSet == null) {
+            throw new IllegalArgumentException("can not find client's dataset by datasetId：" + dataSetId);
+        }
+        return dataSet;
     }
 }

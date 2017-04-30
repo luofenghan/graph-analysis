@@ -3,6 +3,7 @@ package com.analysis.graph.datasource.aggregation;
 import com.analysis.graph.datasource.aggregation.AggregationFilter.Type;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by cwc on 2017/4/27 0027.
@@ -12,6 +13,23 @@ public class AggregationView {
     private List<DimensionView> columns;
     private List<DimensionView> filters;
     private List<ValueView> values;
+
+
+    public Stream<DimensionView> rowStream() {
+        return rows.stream();
+    }
+
+    public Stream<DimensionView> columnStream() {
+        return columns.stream();
+    }
+
+    public Stream<DimensionView> filterStream() {
+        return filters.stream();
+    }
+
+    public Stream<ValueView> valueStream() {
+        return values.stream();
+    }
 
     public List<DimensionView> getRows() {
         return rows;
@@ -66,6 +84,10 @@ public class AggregationView {
             this.filter = filter;
         }
 
+        public void setFilter(String filter) {
+            this.filter = Type.fromSymbol(filter);
+        }
+
         public List<String> getValues() {
             return values;
         }
@@ -73,6 +95,7 @@ public class AggregationView {
         public void setValues(List<String> values) {
             this.values = values;
         }
+
     }
 
     public static class ValueView {
@@ -91,8 +114,13 @@ public class AggregationView {
             return method;
         }
 
+
         public void setMethod(AggregationMethod method) {
             this.method = method;
+        }
+
+        public void setMethod(String method) {
+            this.method = AggregationMethod.valueOf(method.toUpperCase());
         }
     }
 }

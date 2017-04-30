@@ -26,7 +26,7 @@ public abstract class DataSourceSystem {
         }
     }
 
-    public static DataSourceSystem get(final URI uri, Integer clientId) {
+    public static DataSourceSystem get(Integer clientId, final URI uri) {
         return CACHE.get(uri, clientId);
     }
 
@@ -62,7 +62,7 @@ public abstract class DataSourceSystem {
 
     public abstract DataProvider getDataProvider(Map<String, String> query) throws Exception;
 
-    public abstract DataAggregator getDataAggregator();
+    public abstract DataAggregator getDataAggregator(DataProvider dataProvider);
 
     public URI getUri() {
         return uri;

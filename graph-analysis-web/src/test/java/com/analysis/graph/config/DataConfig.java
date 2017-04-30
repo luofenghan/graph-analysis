@@ -1,12 +1,15 @@
 package com.analysis.graph.config;
 
 import com.analysis.graph.common.constant.Encryption;
-import com.analysis.graph.web.config.app.GraphAnalysisAPIProperties;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -14,25 +17,45 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by cwc on 2017/4/22 0022.
  */
-@Profile("test")
+
+
 @Configuration
-@ComponentScan(
-        basePackages = {
-                "com.analysis.graph"
-        },
-        excludeFilters = {
-                @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Configuration.class)
-        })
+@ComponentScan({
+        "com.analysis.graph.common",
+        "com.analysis.graph.datasource",
+        "com.analysis.graph.web.api",
+        "com.analysis.graph.web.config.app",
+//        "com.analysis.graph.web.config.system",
+        "com.analysis.graph.web.library"
+})
 @PropertySource("classpath:application-test.properties")
-@Import({AuthenticationConfiguration.class, GraphAnalysisAPIProperties.class})
-public class TestConfig {
+@EnableCaching
+public class DataConfig {
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+        javaMailSender.setHost("stmp.qq.com");
+        javaMailSender.setPassword("stmp.qq.com");
+        javaMailSender.setUsername("stmp.qq.com");
+        return javaMailSender;
+    }
+
+    @Bean
+    public SchedulerFactoryBean schedulerFactoryBean() {
+        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+        return schedulerFactoryBean;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(Encryption.PASSWORD_ENCODER_STRENGTH);
@@ -58,6 +81,9 @@ public class TestConfig {
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:schema.sql")
                 .addScript("classpath:test-data.sql")
+                .addScript("classpath:test-data-city.sql")
+                .addScript("classpath:test-data-province.sql")
+                .addScript("classpath:test-data-county.sql")
                 .build();
     }
 

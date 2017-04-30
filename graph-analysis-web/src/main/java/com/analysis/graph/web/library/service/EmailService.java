@@ -5,12 +5,12 @@ import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import java.util.Map;
@@ -25,8 +25,7 @@ public class EmailService {
 
     private VelocityEngine velocityEngine;
 
-    @Resource
-    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
     private JavaMailSender javaMailSender;
 
     @PostConstruct

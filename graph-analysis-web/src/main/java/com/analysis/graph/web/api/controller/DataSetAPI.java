@@ -28,14 +28,14 @@ public class DataSetAPI {
     @Resource
     private SessionRepository sessionRepository;
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public DataSet createDataSet(DataSet dataSet) {
         Client client = sessionRepository.getCurrentOnlineClient();
         dataSet.setClientId(client.getId());
         return dataSetRepository.insertDataSet(dataSet);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH)
+    @RequestMapping(method = RequestMethod.PUT)
     public DataSet updateDataSet(DataSet dataSet) {
         return dataSetRepository.updateDataSet(dataSet);
     }
@@ -49,13 +49,13 @@ public class DataSetAPI {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<DataSet> getAllDataSets() {
         Client client = sessionRepository.getCurrentOnlineClient();
-        return dataSetRepository.getDataSetsOfClient(client.getId());
+        return dataSetRepository.queryClientDataSet(client.getId());
     }
 
     @RequestMapping(value = "/category/list", method = RequestMethod.GET)
     public List<String> getDataSetCategoryList() {
         Client client = sessionRepository.getCurrentOnlineClient();
-        return dataSetRepository.getDataSetsOfClient(client.getId())
+        return dataSetRepository.queryClientDataSet(client.getId())
                 .stream()
                 .map(DataSet::getCategoryName)
                 .collect(Collectors.toList());

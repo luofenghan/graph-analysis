@@ -22,9 +22,8 @@ IF EXISTS `graph-analysis-db`.`data_source_info`;
 CREATE TABLE `graph-analysis-db`.`data_source_info` (
   `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT '数据源的id',
   `client_id` INTEGER NOT NULL COMMENT '使用该数据源信息的用户ID',
-  `type` VARCHAR (20) NOT NULL COMMENT '数据源类型，现在支持的数据源有:jdbc',
   `name` VARCHAR (50) NOT NULL COMMENT '数据源名称',
-  `uri` VARCHAR (255) NOT NULL COMMENT ' 数据源的配置',
+  `uri` VARCHAR (255) NOT NULL COMMENT ' 数据源的uri，例如：jdbc://root:123@127.0.0.1:3306/chinaregion?db=mysql&pooled=true&aggregatable=true',
   `created_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
   `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
   PRIMARY KEY (`id`)

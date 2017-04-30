@@ -2,7 +2,7 @@ package com.analysis.graph.web.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.analysis.graph.common.domain.dbo.DataSourceInfo;
-import com.analysis.graph.config.TestConfig;
+import com.analysis.graph.config.DataConfig;
 import com.analysis.graph.web.library.repository.DataSourceRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
  */
 @RunWith(SpringRunner.class)
 @WebMvcTest(DataSourceAPI.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = DataConfig.class)
 public class DataSourceAPITest {
     @Autowired
     private MockMvc mockMvc;
@@ -60,8 +60,8 @@ public class DataSourceAPITest {
         DataSourceInfo savedDataSourceInfo = new DataSourceInfo();
         savedDataSourceInfo.setClientId(1);
         savedDataSourceInfo.setName("chinaregion");
-        savedDataSourceInfo.setType("jdbc");
-        savedDataSourceInfo.setConfig(config.toJSONString());
+//        savedDataSourceInfo.setType("jdbc");
+//        savedDataSourceInfo.setConfig(config.toJSONString());
         savedDataSourceInfo.setId(1);
         savedDataSourceInfo.setCreatedTime(new Date());
         savedDataSourceInfo.setUpdatedTime(new Date());
@@ -70,9 +70,9 @@ public class DataSourceAPITest {
 
         this.mockMvc.perform(put("/api/data-source")
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .param("type", savedDataSourceInfo.getType())
-                .param("name", savedDataSourceInfo.getName())
-                .param("config", savedDataSourceInfo.getConfig()))
+//                .param("type", savedDataSourceInfo.getType())
+//                .param("config", savedDataSourceInfo.getConfig())
+                .param("name", savedDataSourceInfo.getName()))
                 .andReturn();
 
         verify(dataSourceRepository, atLeastOnce()).insertDataSource(savedDataSourceInfo);

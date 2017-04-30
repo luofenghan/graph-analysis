@@ -9,19 +9,20 @@ import java.util.stream.Collectors;
  * Created by cwc on 2017/4/22 0022.
  */
 public enum AggregationMethod {
-    SUM,
-    AVG,
-    MAX,
-    MIN,
-    DISTINCT,
-    COUNT;
+    SUM("SUM(%s)"),
+    AVG("AVG(%s)"),
+    MAX("MAX(%s)"),
+    MIN("MIN(%s)"),
+    DISTINCT("COUNT(DISTINCT %s)"),
+    COUNT("COUNT(%s)");
+    private String format;
 
+    AggregationMethod(String format) {
+        this.format = format;
+    }
 
-    private static double toDouble(Object o) {
-        if (o instanceof Double) {
-            return (double) o;
-        }
-        return Double.parseDouble((String) o);
+    public String getExpression(String param) {
+        return String.format(format, param);
     }
 
     public <T> Collector getCollector(ToDoubleFunction<? super T> function) {

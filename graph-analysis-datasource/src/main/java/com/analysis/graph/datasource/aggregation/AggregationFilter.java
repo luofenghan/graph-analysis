@@ -25,7 +25,7 @@ public class AggregationFilter {
     }
 
     @SuppressWarnings("unchecked")
-    public boolean filter(String[] row) {
+    public boolean filter(final String[] row) {
         return ruleList.stream().allMatch(rule -> {
             if (CollectionUtils.isEmpty(rule.getValues())) {
                 return true;
@@ -84,32 +84,42 @@ public class AggregationFilter {
     }
 
     public enum Type {
-        EQUAL("="),
-        NOT_EQUAL("≠"),
-        GREATER_THAN(">"),
-        LESS_THAN("<"),
-        NOT_LESS_THAN("≥"),
-        NOT_MORE_THAN("≤"),
-        RANGE_A_B("(a,b)"),
-        RANGE_A_$B("(a,b]"),
-        RANGE_$A_B("[a,b)"),
-        RANGE_$A_$B("[a,b]");
-        private String operation;
+        EQUAL("=", "%s IN ( %s )"),
+        NOT_EQUAL("≠", "%s NOT IN ( '%s' )"),
+        GREATER_THAN(">", "%s > '%s'"),
+        LESS_THAN("<", "%s < '%s'"),
+        NOT_LESS_THAN("≥", "%s >= '%s'"),
+        NOT_MORE_THAN("≤", "%s <= '%s'"),
+        RANGE_A_B("(a,b)", "( %s > '%s' AND %s < '%s'"),
+        RANGE_A_$B("(a,b]", "( %s > '%s' AND %s <= '%s'"),
+        RANGE_$A_B("[a,b)", "( %s >= '%s' AND %s < '%s'"),
+        RANGE_$A_$B("[a,b]", "( %s >= '%s' AND %s <= '%s'");
+        private String symbol;
+        private String expressionFormat;
 
-        Type(String operation) {
-            this.operation = operation;
+        Type(String symbol, String expressionFormat) {
+            this.symbol = symbol;
+            this.expressionFormat = expressionFormat;
         }
 
-        private static final Map<String, Type> MAP = new HashMap<>();
+        private static final Map<String, Type> MAP = new HashMap<>(values().length);
 
         static {
             for (Type type : values()) {
-                MAP.put(type.operation, type);
+                MAP.put(type.symbol, type);
             }
         }
 
-        public static Type from(String type) {
+        public static Type fromSymbol(String type) {
             return MAP.get(type);
+        }
+
+        public String expression(String first, String second) {
+            return String.format(expressionFormat, first, second);
+        }
+
+        public String expression(String first, String second, String thirty, String fourth) {
+            return String.format(expressionFormat, first, second, thirty, fourth);
         }
     }
 

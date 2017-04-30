@@ -20,7 +20,9 @@ public class SaikuDataSourceSystem extends DataSourceSystem {
     }
 
     @Override
-    public DataAggregator getDataAggregator() {
+    public DataAggregator getDataAggregator(DataProvider dataProvider) {
         return null;
     }
+
+
 }

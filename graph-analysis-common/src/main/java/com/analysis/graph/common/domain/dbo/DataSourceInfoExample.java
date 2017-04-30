@@ -225,76 +225,6 @@ public class DataSourceInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andTypeIsNull() {
-            addCriterion("type is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNotNull() {
-            addCriterion("type is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeEqualTo(String value) {
-            addCriterion("type =", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotEqualTo(String value) {
-            addCriterion("type <>", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThan(String value) {
-            addCriterion("type >", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("type >=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThan(String value) {
-            addCriterion("type <", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThanOrEqualTo(String value) {
-            addCriterion("type <=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLike(String value) {
-            addCriterion("type like", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotLike(String value) {
-            addCriterion("type not like", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIn(List<String> values) {
-            addCriterion("type in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotIn(List<String> values) {
-            addCriterion("type not in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeBetween(String value1, String value2) {
-            addCriterion("type between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotBetween(String value1, String value2) {
-            addCriterion("type not between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;
@@ -365,73 +295,73 @@ public class DataSourceInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andConfigIsNull() {
-            addCriterion("config is null");
+        public Criteria andUriIsNull() {
+            addCriterion("uri is null");
             return (Criteria) this;
         }
 
-        public Criteria andConfigIsNotNull() {
-            addCriterion("config is not null");
+        public Criteria andUriIsNotNull() {
+            addCriterion("uri is not null");
             return (Criteria) this;
         }
 
-        public Criteria andConfigEqualTo(String value) {
-            addCriterion("config =", value, "config");
+        public Criteria andUriEqualTo(String value) {
+            addCriterion("uri =", value, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigNotEqualTo(String value) {
-            addCriterion("config <>", value, "config");
+        public Criteria andUriNotEqualTo(String value) {
+            addCriterion("uri <>", value, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigGreaterThan(String value) {
-            addCriterion("config >", value, "config");
+        public Criteria andUriGreaterThan(String value) {
+            addCriterion("uri >", value, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigGreaterThanOrEqualTo(String value) {
-            addCriterion("config >=", value, "config");
+        public Criteria andUriGreaterThanOrEqualTo(String value) {
+            addCriterion("uri >=", value, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigLessThan(String value) {
-            addCriterion("config <", value, "config");
+        public Criteria andUriLessThan(String value) {
+            addCriterion("uri <", value, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigLessThanOrEqualTo(String value) {
-            addCriterion("config <=", value, "config");
+        public Criteria andUriLessThanOrEqualTo(String value) {
+            addCriterion("uri <=", value, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigLike(String value) {
-            addCriterion("config like", value, "config");
+        public Criteria andUriLike(String value) {
+            addCriterion("uri like", value, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigNotLike(String value) {
-            addCriterion("config not like", value, "config");
+        public Criteria andUriNotLike(String value) {
+            addCriterion("uri not like", value, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigIn(List<String> values) {
-            addCriterion("config in", values, "config");
+        public Criteria andUriIn(List<String> values) {
+            addCriterion("uri in", values, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigNotIn(List<String> values) {
-            addCriterion("config not in", values, "config");
+        public Criteria andUriNotIn(List<String> values) {
+            addCriterion("uri not in", values, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigBetween(String value1, String value2) {
-            addCriterion("config between", value1, value2, "config");
+        public Criteria andUriBetween(String value1, String value2) {
+            addCriterion("uri between", value1, value2, "uri");
             return (Criteria) this;
         }
 
-        public Criteria andConfigNotBetween(String value1, String value2) {
-            addCriterion("config not between", value1, value2, "config");
+        public Criteria andUriNotBetween(String value1, String value2) {
+            addCriterion("uri not between", value1, value2, "uri");
             return (Criteria) this;
         }
 

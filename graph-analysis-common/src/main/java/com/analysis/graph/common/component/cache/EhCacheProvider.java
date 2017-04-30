@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * Created by cwc on 2017/4/19 0019.
  */
 @Component
-@Profile("dev")
+@Profile({"dev", "test"})
 public class EhCacheProvider implements CacheProvider {
     @Autowired
     private CacheManager cacheManager;
