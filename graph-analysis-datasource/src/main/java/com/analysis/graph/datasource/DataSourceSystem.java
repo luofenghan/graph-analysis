@@ -1,8 +1,8 @@
 package com.analysis.graph.datasource;
 
+import com.analysis.graph.common.util.ReflectUtils;
 import org.reflections.Reflections;
 
-import java.lang.reflect.Constructor;
 import java.net.URI;
 import java.util.*;
 
@@ -38,10 +38,7 @@ public abstract class DataSourceSystem {
 
     private static DataSourceSystem createDataSourceSystem(URI uri) throws Exception {
         DataSourceType type = DataSourceType.valueOf(uri.getScheme().toUpperCase());
-        Class<? extends DataSourceSystem> dataProviderClass = SOURCE_TYPE_SYSTEM_MAP.get(type);
-        Constructor<? extends DataSourceSystem> constructor = dataProviderClass.getDeclaredConstructor();
-        constructor.setAccessible(true);
-        DataSourceSystem provider = constructor.newInstance();
+        DataSourceSystem provider = ReflectUtils.on(SOURCE_TYPE_SYSTEM_MAP.get(type)).create().get();
         provider.initialize(uri);
         return provider;
     }
