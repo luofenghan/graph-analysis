@@ -7,7 +7,7 @@ graph:
 
 spring:
   cache:
-    method: redis
+    type: redis
     cache-names: graph-analysis-cache
   redis:
     database: 0
