@@ -3,11 +3,11 @@ package com.analysis.graph.datasource.jdbc;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.analysis.graph.datasource.*;
-import com.analysis.graph.datasource.aggregation.AggregationResult;
-import com.analysis.graph.datasource.aggregation.AggregationView;
+import com.analysis.graph.datasource.aggregation.*;
 import com.analysis.graph.datasource.aggregation.AggregationView.DimensionView;
 import com.analysis.graph.datasource.aggregation.AggregationView.ValueView;
-import com.analysis.graph.datasource.aggregation.ColumnIndex;
+import com.analysis.graph.datasource.AbstractDataProvider;
+import com.analysis.graph.datasource.DataProvider;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 
@@ -84,12 +84,11 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
         private ResultSet result;
         private boolean lazyConnect = false;
 
-        public JdbcDataProvider(Map<String, String> query) throws SQLException {
-            super(query);
-            connect();
+        JdbcDataProvider(Map<String, String> query) throws SQLException {
+            this(query, false);
         }
 
-        public JdbcDataProvider(Map<String, String> query, boolean lazyConnect) throws SQLException {
+        JdbcDataProvider(Map<String, String> query, boolean lazyConnect) throws SQLException {
             super(query);
             this.lazyConnect = lazyConnect;
             if (!lazyConnect) {
@@ -175,7 +174,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
     private static class JdbcDataAggregator extends AbstractDataAggregator {
         private AggregationResult aggregationResult;
 
-        public JdbcDataAggregator(DataProvider dataProvider) {
+        JdbcDataAggregator(DataProvider dataProvider) {
             super(dataProvider);
         }
 

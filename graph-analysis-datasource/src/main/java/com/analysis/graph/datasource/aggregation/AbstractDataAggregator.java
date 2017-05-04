@@ -1,7 +1,6 @@
-package com.analysis.graph.datasource;
+package com.analysis.graph.datasource.aggregation;
 
-import com.analysis.graph.datasource.aggregation.AggregationFilter;
-import com.analysis.graph.datasource.aggregation.AggregationView;
+import com.analysis.graph.datasource.DataProvider;
 import com.analysis.graph.datasource.aggregation.AggregationView.ValueView;
 import org.springframework.util.CollectionUtils;
 

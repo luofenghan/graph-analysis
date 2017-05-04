@@ -1,6 +1,7 @@
 package com.analysis.graph.datasource;
 
 import com.analysis.graph.common.util.ReflectUtils;
+import com.analysis.graph.datasource.aggregation.DataAggregator;
 import org.reflections.Reflections;
 
 import java.net.URI;

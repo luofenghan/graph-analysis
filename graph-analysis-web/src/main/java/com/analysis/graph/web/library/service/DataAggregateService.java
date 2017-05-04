@@ -1,7 +1,7 @@
 package com.analysis.graph.web.library.service;
 
 import com.analysis.graph.common.util.LoggerUtils;
-import com.analysis.graph.datasource.DataAggregator;
+import com.analysis.graph.datasource.aggregation.DataAggregator;
 import com.analysis.graph.datasource.DataProvider;
 import com.analysis.graph.datasource.DataSourceSystem;
 import com.analysis.graph.datasource.aggregation.AggregationResult;

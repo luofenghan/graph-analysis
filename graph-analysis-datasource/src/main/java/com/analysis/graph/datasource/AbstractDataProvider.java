@@ -31,14 +31,5 @@ public abstract class AbstractDataProvider implements DataProvider {
         return null;
     }
 
-    public static void batchClose(AutoCloseable... closeables) {
-        for (AutoCloseable c : closeables) {
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (Exception e) {
-                }
-            }
-        }
-    }
+
 }

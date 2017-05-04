@@ -30,4 +30,15 @@ public interface DataProvider extends Closeable {
 
     void resetResultSet(String sql) throws SQLException;
 
+    default void batchClose(AutoCloseable... closeables) {
+        for (AutoCloseable c : closeables) {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+
 }

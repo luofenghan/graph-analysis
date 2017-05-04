@@ -55,7 +55,7 @@ public class CronJobService {
         }
     }
 
-    public void configScheduler() {
+    public synchronized void configScheduler() {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         try {
             scheduler.clear();

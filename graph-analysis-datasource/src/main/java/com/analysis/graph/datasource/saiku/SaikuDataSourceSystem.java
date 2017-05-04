@@ -1,6 +1,8 @@
 package com.analysis.graph.datasource.saiku;
 
 import com.analysis.graph.datasource.*;
+import com.analysis.graph.datasource.aggregation.DataAggregator;
+import com.analysis.graph.datasource.DataProvider;
 
 import java.util.Map;
 

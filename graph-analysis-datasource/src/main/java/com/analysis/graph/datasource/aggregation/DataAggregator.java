@@ -1,7 +1,4 @@
-package com.analysis.graph.datasource;
-
-import com.analysis.graph.datasource.aggregation.AggregationResult;
-import com.analysis.graph.datasource.aggregation.AggregationView;
+package com.analysis.graph.datasource.aggregation;
 
 import java.sql.SQLException;
 
