@@ -199,7 +199,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
             return aggregationResult;
         }
 
-
+        @Override
         public String getAggregationSql(AggregationView av) throws SQLException {
             String columnNames = assembleDimensionColumns(Stream.concat(av.columnStream(), av.rowStream()));
             String aggregationColumnNames = assembleAggregationColumns(av.valueStream());
