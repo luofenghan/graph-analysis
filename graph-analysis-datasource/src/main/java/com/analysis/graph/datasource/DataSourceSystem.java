@@ -15,7 +15,6 @@ public abstract class DataSourceSystem {
     private DataSourceStatus dataSourceStatus;
     private static final Cache CACHE = new Cache();
     private Cache.Key key;
-    private URI uri;
 
     static {
         Reflections reflections = new Reflections("com.analysis.graph.datasource");
@@ -33,7 +32,6 @@ public abstract class DataSourceSystem {
 
 
     public void initialize(URI uri) {
-        this.uri = uri;
         this.dataSourceStatus = new DataSourceStatus(uri);
     }
 
@@ -62,9 +60,6 @@ public abstract class DataSourceSystem {
 
     public abstract DataAggregator getDataAggregator(DataProvider dataProvider);
 
-    public URI getUri() {
-        return uri;
-    }
 
     static class Cache {
         private final Map<Key, DataSourceSystem> map = new HashMap<>();
