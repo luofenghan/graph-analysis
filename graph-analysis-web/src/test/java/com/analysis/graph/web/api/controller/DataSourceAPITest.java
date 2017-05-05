@@ -1,9 +1,9 @@
 package com.analysis.graph.web.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.analysis.graph.common.domain.dbo.DataSourceInfo;
+import com.analysis.graph.common.domain.dbo.Datasource;
 import com.analysis.graph.config.DataConfig;
-import com.analysis.graph.web.library.repository.DataSourceRepository;
+import com.analysis.graph.web.library.repository.DatasourceRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,14 +27,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
  * Created by cwc on 2017/4/22 0022.
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(DataSourceAPI.class)
+@WebMvcTest(DatasourceAPI.class)
 @ContextConfiguration(classes = DataConfig.class)
 public class DataSourceAPITest {
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private DataSourceRepository dataSourceRepository;
+    private DatasourceRepository dataSourceRepository;
 
 
     @Before
@@ -57,25 +57,25 @@ public class DataSourceAPITest {
         config.put("username", "root");
         config.put("password", "123");
 
-        DataSourceInfo savedDataSourceInfo = new DataSourceInfo();
-        savedDataSourceInfo.setClientId(1);
-        savedDataSourceInfo.setName("chinaregion");
-//        savedDataSourceInfo.setType("jdbc");
-//        savedDataSourceInfo.setConfig(config.toJSONString());
-        savedDataSourceInfo.setId(1);
-        savedDataSourceInfo.setCreatedTime(new Date());
-        savedDataSourceInfo.setUpdatedTime(new Date());
+        Datasource savedDatasource = new Datasource();
+        savedDatasource.setClientId(1);
+        savedDatasource.setName("chinaregion");
+//        savedDatasource.setType("jdbc");
+//        savedDatasource.setConfig(config.toJSONString());
+        savedDatasource.setId(1);
+        savedDatasource.setCreatedTime(new Date());
+        savedDatasource.setUpdatedTime(new Date());
 
-        given(dataSourceRepository.insertDataSource(anyObject())).willReturn(savedDataSourceInfo);
+        given(dataSourceRepository.insertDataSource(anyObject())).willReturn(savedDatasource);
 
         this.mockMvc.perform(put("/api/data-source")
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-//                .param("type", savedDataSourceInfo.getType())
-//                .param("config", savedDataSourceInfo.getConfig())
-                .param("name", savedDataSourceInfo.getName()))
+//                .param("type", savedDatasource.getType())
+//                .param("config", savedDatasource.getConfig())
+                .param("name", savedDatasource.getName()))
                 .andReturn();
 
-        verify(dataSourceRepository, atLeastOnce()).insertDataSource(savedDataSourceInfo);
+        verify(dataSourceRepository, atLeastOnce()).insertDataSource(savedDatasource);
 
     }
 
@@ -85,7 +85,7 @@ public class DataSourceAPITest {
     }
 
     @Test
-    public void deleteDataSourceInfo() throws Exception {
+    public void deleteDatasource() throws Exception {
 
     }
 

@@ -4,10 +4,6 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.analysis.graph.datasource.*;
 import com.analysis.graph.datasource.aggregation.*;
-import com.analysis.graph.datasource.aggregation.AggregationView.DimensionView;
-import com.analysis.graph.datasource.aggregation.AggregationView.ValueView;
-import com.analysis.graph.datasource.AbstractDataProvider;
-import com.analysis.graph.datasource.DataProvider;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 
@@ -179,15 +175,15 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
         }
 
         @Override
-        public void aggregate(String columnName, AggregationView aggregationView) throws SQLException {
+        public void aggregate(String columnName, AggregationQuery aggregationView) throws SQLException {
         }
 
         @Override
-        public void aggregate(AggregationView av) throws SQLException {
+        public void aggregate(AggregationQuery av) throws SQLException {
             List<ColumnIndex> dimensionList = Stream.concat(av.columnStream(), av.rowStream())
                     .map(ColumnIndex::fromDimensionConfig)
                     .collect(Collectors.toList());
-            dimensionList.addAll(av.valueStream().map(ColumnIndex::fromValueConfig).collect(Collectors.toList()));
+            dimensionList.addAll(av.aggregationStream().map(ColumnIndex::fromValueConfig).collect(Collectors.toList()));
             IntStream.range(0, dimensionList.size()).forEach(j -> dimensionList.get(j).setIndex(j));
             String sql = getAggregationSql(av);
             dataProvider.resetResultSet(sql);
@@ -200,9 +196,9 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
         }
 
         @Override
-        public String getAggregationSql(AggregationView av) throws SQLException {
+        public String getAggregationSql(AggregationQuery av) throws SQLException {
             String columnNames = assembleDimensionColumns(Stream.concat(av.columnStream(), av.rowStream()));
-            String aggregationColumnNames = assembleAggregationColumns(av.valueStream());
+            String aggregationColumnNames = assembleAggregationColumns(av.aggregationStream());
             String whereCondition = assembleWhereCondition(Stream.concat(Stream.concat(av.rowStream(), av.columnStream()), av.filterStream()));
 
             String groupBy = "";
@@ -221,7 +217,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
 
         }
 
-        private String assembleWhereCondition(Stream<DimensionView> valueViewStream) {
+        private String assembleWhereCondition(Stream<Dimension> valueViewStream) {
             StringJoiner where = new StringJoiner("\nAND ", "WHERE" + " ", "").setEmptyValue("");
             valueViewStream.map(CONDITION_PARSER)
                     .filter(Objects::nonNull)
@@ -229,16 +225,16 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
             return where.toString();
         }
 
-        private String assembleDimensionColumns(Stream<DimensionView> dimensionViewStream) {
+        private String assembleDimensionColumns(Stream<Dimension> dimensionViewStream) {
             StringJoiner columns = new StringJoiner(", ", "", " ").setEmptyValue("");
-            dimensionViewStream.map(DimensionView::getName)
+            dimensionViewStream.map(Dimension::getName)
                     .distinct()
                     .filter(Objects::nonNull)
                     .forEach(columns::add);
             return columns.toString();
         }
 
-        private String assembleAggregationColumns(Stream<ValueView> valueViewStream) throws SQLException {
+        private String assembleAggregationColumns(Stream<Aggregation> valueViewStream) throws SQLException {
             Map<String, Integer> labelTypeMap = dataProvider.readColumnLabelTypeMap();
             StringJoiner columns = new StringJoiner(", ", "", " ").setEmptyValue("");
             valueViewStream.map(m -> AGGREGATION_PARSER.apply(m, labelTypeMap))

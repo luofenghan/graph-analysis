@@ -2,7 +2,7 @@ package com.analysis.graph.common.domain.dbo;
 
 import java.util.Date;
 
-public class DataSourceInfo {
+public class Datasource {
     private Integer id;
 
     private Integer clientId;

@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
  * Created by cwc on 2017/4/19 0019.
  */
 @Service
-public class DataSourceService {
-    private static final Logger logger = LoggerFactory.getLogger(DataSourceService.class);
+public class DatasourceService {
+    private static final Logger logger = LoggerFactory.getLogger(DatasourceService.class);
 
 
     public List<String> getDataSourceSupportList() {

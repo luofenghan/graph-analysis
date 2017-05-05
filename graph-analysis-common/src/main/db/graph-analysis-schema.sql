@@ -17,9 +17,9 @@ CREATE TABLE `graph-analysis-db`.`client` (
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
 DROP TABLE
-IF EXISTS `graph-analysis-db`.`data_source_info`;
+IF EXISTS `graph-analysis-db`.`datasource`;
 
-CREATE TABLE `graph-analysis-db`.`data_source_info` (
+CREATE TABLE `graph-analysis-db`.`datasource` (
   `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT '数据源的id',
   `client_id` INTEGER NOT NULL COMMENT '使用该数据源信息的用户ID',
   `name` VARCHAR (50) NOT NULL COMMENT '数据源名称',
@@ -30,14 +30,14 @@ CREATE TABLE `graph-analysis-db`.`data_source_info` (
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
 DROP TABLE
-IF EXISTS `graph-analysis-db`.`data_set`;
+IF EXISTS `graph-analysis-db`.`dataset`;
 
-CREATE TABLE `graph-analysis-db`.`data_set` (
+CREATE TABLE `graph-analysis-db`.`dataset` (
   `id` BIGINT (20) NOT NULL AUTO_INCREMENT COMMENT '数据集的id',
   `client_id` INTEGER NOT NULL COMMENT '创建该数据集的用户',
-  `data_source_id` INTEGER NOT NULL COMMENT '该数据集的数据源',
-  `category_name` VARCHAR (100) DEFAULT NULL COMMENT '数据集所属的分类',
-  `data_set_name` VARCHAR (100) DEFAULT NULL COMMENT '数据集的名称',
+  `datasource_id` INTEGER NOT NULL COMMENT '该数据集的数据源',
+  `category` VARCHAR (100) DEFAULT NULL COMMENT '数据集所属的分类',
+  `name` VARCHAR (100) DEFAULT NULL COMMENT '数据集的名称',
   `query` VARCHAR (255) DEFAULT NULL COMMENT '对数据源的查询，存储格式为Json,eg:[{"sql":"select * from dual"}]',
   `filter_group` VARCHAR (255) DEFAULT NULL COMMENT '过滤字段,eg: [{"filters":[{"col":"created_time","values":["{now(''W'',-1,''yyyy-MM-dd'')}"],"type":">"}],"group":"创建时间大于一周"},{"group":"province不为江苏","filters":[{"col":"province_id","type":"≠","values":["12000"]}]}]',
   `expressions` VARCHAR (255) DEFAULT NULL COMMENT '表达式存储格式为json 数组，eg:[{"alias":"CountCityOfProvince","type":"exp","exp":"count(city_name)"},{"type":"exp","exp":"max(min(city_id),max(province_id))","alias":"最大id"}]',
@@ -46,13 +46,13 @@ CREATE TABLE `graph-analysis-db`.`data_set` (
   `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
   PRIMARY KEY (`id`),
   KEY (`client_id`),
-  KEY (`data_source_id`)
+  KEY (`datasource_id`)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
 DROP TABLE
-IF EXISTS `graph-analysis-db`.`cron_job`;
+IF EXISTS `graph-analysis-db`.`cronjob`;
 
-CREATE TABLE `graph-analysis-db`.`cron_job` (
+CREATE TABLE `graph-analysis-db`.`cronjob` (
   `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '定时任务的id',
   `client_id` INTEGER NOT NULL COMMENT '创建定时任务的用户',
   `name` VARCHAR (50) NOT NULL COMMENT '定时任务名称',
@@ -60,11 +60,34 @@ CREATE TABLE `graph-analysis-db`.`cron_job` (
   `start_time` DATETIME NULL NOT NULL COMMENT '定时任务的开始日期',
   `last_exec_time` DATETIME NOT NULL COMMENT '上次定时任务的执行日期',
   `end_time` DATETIME NULL NOT NULL COMMENT '定时任务的终止日期',
-  `type` VARCHAR(10) NOT NULL COMMENT '定时任务类型，类型包括：email',
-  `config` VARCHAR(255) NOT NULL COMMENT '详细任务配置',
+  `type` VARCHAR (10) NOT NULL COMMENT '定时任务类型，类型包括：email',
+  `config` VARCHAR (255) NOT NULL COMMENT '详细任务配置',
   `exec_log` TEXT COMMENT '定时任务的运行日志',
   `created_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
   `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
   PRIMARY KEY (`id`),
   KEY (`client_id`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8;
+
+DROP TABLE
+IF EXISTS `graph-analysis-db`.`graph`;
+
+CREATE TABLE `graph-analysis-db`.`graph` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `client_id` INTEGER NOT NULL,
+  `category` VARCHAR (100) DEFAULT NULL,
+  `name` VARCHAR (100) DEFAULT NULL,
+  `datasource_id` INTEGER DEFAULT NULL COMMENT '图表的数据源，表示来自数据源，则必须提供查询的query',
+  `query` VARCHAR (500) DEFAULT NULL COMMENT '如果数据来源于数据源，那么保存数据源的sql查询语句，否则为空',
+  `dataset_id` BIGINT DEFAULT NULL COMMENT '图表的数据源，表示来自原数据集',
+  `graph_type` VARCHAR (15) NOT NULL DEFAULT 'table' COMMENT '图表类型',
+  `fill_field` VARCHAR (255) DEFAULT NULL COMMENT '表示可选择的字段，存储格式为: ["field1","field2","field3"]',
+  `row` VARCHAR (255) DEFAULT NULL COMMENT '行显示的字段配置',
+  `column` VARCHAR (255) DEFAULT NULL COMMENT '列显示的字段配置',
+  `filter` VARCHAR (255) DEFAULT NULL COMMENT '过滤',
+  `aggregation` VARCHAR (255) DEFAULT NULL COMMENT '聚合配置',
+  `created_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
+  `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
+  KEY (`client_id`),
+  PRIMARY KEY (`id`)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;

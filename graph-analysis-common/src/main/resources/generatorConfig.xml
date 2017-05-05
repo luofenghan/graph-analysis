@@ -38,15 +38,20 @@
 <!--        <table tableName="client" domainObjectName="Client">
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>-->
-        <table tableName="data_source_info" domainObjectName="DataSourceInfo">
+<!--        <table tableName="datasource" domainObjectName="Datasource">
+            <generatedKey column="id" sqlStatement="MySql"/>
+        </table>-->
+        <table tableName="dataset" domainObjectName="Dataset">
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>
-<!--        <table tableName="data_set" domainObjectName="DataSet">
+<!--
+        <table tableName="cronjob" domainObjectName="Cronjob">
             <generatedKey column="id" sqlStatement="MySql"/>
-        </table>-->
-<!--        <table tableName="cron_job" domainObjectName="CronJob">
+        </table>
+-->
+        <table tableName="graph" domainObjectName="Graph">
             <generatedKey column="id" sqlStatement="MySql"/>
-        </table>-->
+        </table>
 
     </context>
 </generatorConfiguration>

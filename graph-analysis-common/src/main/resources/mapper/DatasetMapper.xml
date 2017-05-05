@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.analysis.graph.common.repository.mapper.DataSourceInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.analysis.graph.common.domain.dbo.DataSourceInfo" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+<mapper namespace="com.analysis.graph.common.repository.mapper.DatasetMapper" >
+  <resultMap id="BaseResultMap" type="com.analysis.graph.common.domain.dbo.Dataset" >
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="client_id" property="clientId" jdbcType="INTEGER" />
+    <result column="datasource_id" property="datasourceId" jdbcType="INTEGER" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="uri" property="uri" jdbcType="VARCHAR" />
+    <result column="query" property="query" jdbcType="VARCHAR" />
+    <result column="filter_group" property="filterGroup" jdbcType="VARCHAR" />
+    <result column="expressions" property="expressions" jdbcType="VARCHAR" />
+    <result column="interval" property="interval" jdbcType="BIGINT" />
     <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
     <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -68,15 +73,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, client_id, name, uri, created_time, updated_time
+    id, client_id, datasource_id, category, name, query, filter_group, expressions, interval, 
+    created_time, updated_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.analysis.graph.common.domain.dbo.DatasetExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from data_source_info
+    from dataset
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,48 +90,65 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from data_source_info
-    where id = #{id,jdbcType=INTEGER}
+    from dataset
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from data_source_info
-    where id = #{id,jdbcType=INTEGER}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dataset
+    where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfoExample" >
-    delete from data_source_info
+  <delete id="deleteByExample" parameterType="com.analysis.graph.common.domain.dbo.DatasetExample" >
+    delete from dataset
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+  <insert id="insert" parameterType="com.analysis.graph.common.domain.dbo.Dataset" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into data_source_info (id, client_id, name, 
-      uri, created_time, updated_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{clientId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{uri,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
-      )
+    insert into dataset (id, client_id, datasource_id, 
+      category, name, query, 
+      filter_group, expressions, interval, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{clientId,jdbcType=INTEGER}, #{datasourceId,jdbcType=INTEGER}, 
+      #{category,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{query,jdbcType=VARCHAR}, 
+      #{filterGroup,jdbcType=VARCHAR}, #{expressions,jdbcType=VARCHAR}, #{interval,jdbcType=BIGINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+  <insert id="insertSelective" parameterType="com.analysis.graph.common.domain.dbo.Dataset" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into data_source_info
+    insert into dataset
     <trim prefix="(" suffix=")" suffixOverrides="," >
       id,
       <if test="clientId != null" >
         client_id,
       </if>
+      <if test="datasourceId != null" >
+        datasource_id,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
       <if test="name != null" >
         name,
       </if>
-      <if test="uri != null" >
-        uri,
+      <if test="query != null" >
+        query,
+      </if>
+      <if test="filterGroup != null" >
+        filter_group,
+      </if>
+      <if test="expressions != null" >
+        expressions,
+      </if>
+      <if test="interval != null" >
+        interval,
       </if>
       <if test="createdTime != null" >
         created_time,
@@ -135,15 +158,30 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{id,jdbcType=INTEGER},
+      #{id,jdbcType=BIGINT},
       <if test="clientId != null" >
         #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="datasourceId != null" >
+        #{datasourceId,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="uri != null" >
-        #{uri,jdbcType=VARCHAR},
+      <if test="query != null" >
+        #{query,jdbcType=VARCHAR},
+      </if>
+      <if test="filterGroup != null" >
+        #{filterGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="expressions != null" >
+        #{expressions,jdbcType=VARCHAR},
+      </if>
+      <if test="interval != null" >
+        #{interval,jdbcType=BIGINT},
       </if>
       <if test="createdTime != null" >
         #{createdTime,jdbcType=TIMESTAMP},
@@ -153,26 +191,41 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfoExample" resultType="java.lang.Integer" >
-    select count(*) from data_source_info
+  <select id="countByExample" parameterType="com.analysis.graph.common.domain.dbo.DatasetExample" resultType="java.lang.Integer" >
+    select count(*) from dataset
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update data_source_info
+    update dataset
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.clientId != null" >
         client_id = #{record.clientId,jdbcType=INTEGER},
       </if>
+      <if test="record.datasourceId != null" >
+        datasource_id = #{record.datasourceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.uri != null" >
-        uri = #{record.uri,jdbcType=VARCHAR},
+      <if test="record.query != null" >
+        query = #{record.query,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filterGroup != null" >
+        filter_group = #{record.filterGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressions != null" >
+        expressions = #{record.expressions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interval != null" >
+        interval = #{record.interval,jdbcType=BIGINT},
       </if>
       <if test="record.createdTime != null" >
         created_time = #{record.createdTime,jdbcType=TIMESTAMP},
@@ -186,28 +239,48 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update data_source_info
-    set id = #{record.id,jdbcType=INTEGER},
+    update dataset
+    set id = #{record.id,jdbcType=BIGINT},
       client_id = #{record.clientId,jdbcType=INTEGER},
+      datasource_id = #{record.datasourceId,jdbcType=INTEGER},
+      category = #{record.category,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
-      uri = #{record.uri,jdbcType=VARCHAR},
+      query = #{record.query,jdbcType=VARCHAR},
+      filter_group = #{record.filterGroup,jdbcType=VARCHAR},
+      expressions = #{record.expressions,jdbcType=VARCHAR},
+      interval = #{record.interval,jdbcType=BIGINT},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfo" >
-    update data_source_info
+  <update id="updateByPrimaryKeySelective" parameterType="com.analysis.graph.common.domain.dbo.Dataset" >
+    update dataset
     <set >
       <if test="clientId != null" >
         client_id = #{clientId,jdbcType=INTEGER},
       </if>
+      <if test="datasourceId != null" >
+        datasource_id = #{datasourceId,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="uri != null" >
-        uri = #{uri,jdbcType=VARCHAR},
+      <if test="query != null" >
+        query = #{query,jdbcType=VARCHAR},
+      </if>
+      <if test="filterGroup != null" >
+        filter_group = #{filterGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="expressions != null" >
+        expressions = #{expressions,jdbcType=VARCHAR},
+      </if>
+      <if test="interval != null" >
+        interval = #{interval,jdbcType=BIGINT},
       </if>
       <if test="createdTime != null" >
         created_time = #{createdTime,jdbcType=TIMESTAMP},
@@ -216,24 +289,29 @@
         updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfo" >
-    update data_source_info
+  <update id="updateByPrimaryKey" parameterType="com.analysis.graph.common.domain.dbo.Dataset" >
+    update dataset
     set client_id = #{clientId,jdbcType=INTEGER},
+      datasource_id = #{datasourceId,jdbcType=INTEGER},
+      category = #{category,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      uri = #{uri,jdbcType=VARCHAR},
+      query = #{query,jdbcType=VARCHAR},
+      filter_group = #{filterGroup,jdbcType=VARCHAR},
+      expressions = #{expressions,jdbcType=VARCHAR},
+      interval = #{interval,jdbcType=BIGINT},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <select resultMap="BaseResultMap" parameterType="com.analysis.graph.common.domain.dbo.DataSourceInfoExample" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.analysis.graph.common.domain.dbo.DatasetExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from data_source_info
+    from dataset
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

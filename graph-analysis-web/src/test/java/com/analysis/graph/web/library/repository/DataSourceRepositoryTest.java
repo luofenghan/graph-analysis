@@ -1,7 +1,7 @@
 package com.analysis.graph.web.library.repository;
 
+import com.analysis.graph.common.domain.dbo.Datasource;
 import com.analysis.graph.config.DataConfig;
-import com.analysis.graph.common.domain.dbo.DataSourceInfo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,11 +18,11 @@ import java.util.List;
 @ContextConfiguration(classes = {DataConfig.class})
 public class DataSourceRepositoryTest {
     @Autowired
-    private DataSourceRepository dataSourceRepository;
+    private DatasourceRepository dataSourceRepository;
 
     @Test
     public void queryDataSourceListByClientId() throws Exception {
-        List<DataSourceInfo> dataSourceInfos = dataSourceRepository.queryDataSourceListByClientId(1);
+        List<Datasource> dataSourceInfos = dataSourceRepository.queryDataSourceListByClientId(1);
         Assert.assertNotNull(dataSourceInfos);
     }
 

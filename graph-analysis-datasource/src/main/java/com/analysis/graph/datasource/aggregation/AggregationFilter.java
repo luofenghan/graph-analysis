@@ -11,10 +11,10 @@ import java.util.*;
  * Created by cwc on 2017/4/23 0023.
  */
 public class AggregationFilter {
-    private List<AggregationView.DimensionView> ruleList;
+    private List<Dimension> ruleList;
     private Map<String, Integer> columnIndex;
 
-    public AggregationFilter(AggregationView aggregateConfig, Map<String, Integer> columnIndex) {
+    public AggregationFilter(AggregationQuery aggregateConfig, Map<String, Integer> columnIndex) {
         ruleList = new ArrayList<>();
         if (aggregateConfig != null) {
             ruleList.addAll(aggregateConfig.getColumns());
@@ -80,46 +80,6 @@ public class AggregationFilter {
                     .toArray(Double[]::new);
         } else {
             return args;
-        }
-    }
-
-    public enum Type {
-        EQUAL("=", "%s IN ( %s )"),
-        NOT_EQUAL("≠", "%s NOT IN ( '%s' )"),
-        GREATER_THAN(">", "%s > '%s'"),
-        LESS_THAN("<", "%s < '%s'"),
-        NOT_LESS_THAN("≥", "%s >= '%s'"),
-        NOT_MORE_THAN("≤", "%s <= '%s'"),
-        RANGE_A_B("(a,b)", "( %s > '%s' AND %s < '%s'"),
-        RANGE_A_$B("(a,b]", "( %s > '%s' AND %s <= '%s'"),
-        RANGE_$A_B("[a,b)", "( %s >= '%s' AND %s < '%s'"),
-        RANGE_$A_$B("[a,b]", "( %s >= '%s' AND %s <= '%s'");
-        private String symbol;
-        private String expressionFormat;
-
-        Type(String symbol, String expressionFormat) {
-            this.symbol = symbol;
-            this.expressionFormat = expressionFormat;
-        }
-
-        private static final Map<String, Type> MAP = new HashMap<>(values().length);
-
-        static {
-            for (Type type : values()) {
-                MAP.put(type.symbol, type);
-            }
-        }
-
-        public static Type fromSymbol(String type) {
-            return MAP.get(type);
-        }
-
-        public String expression(String first, String second) {
-            return String.format(expressionFormat, first, second);
-        }
-
-        public String expression(String first, String second, String thirty, String fourth) {
-            return String.format(expressionFormat, first, second, thirty, fourth);
         }
     }
 

@@ -1,8 +1,8 @@
 package com.analysis.graph.web.library.repository;
 
-import com.analysis.graph.common.domain.dbo.DataSourceInfo;
-import com.analysis.graph.common.domain.dbo.DataSourceInfoExample;
-import com.analysis.graph.common.repository.mapper.DataSourceInfoMapper;
+import com.analysis.graph.common.domain.dbo.Datasource;
+import com.analysis.graph.common.domain.dbo.DatasourceExample;
+import com.analysis.graph.common.repository.mapper.DatasourceMapper;
 import com.google.common.base.Preconditions;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
@@ -15,40 +15,40 @@ import java.util.List;
  * Created by cwc on 2017/4/22 0022.
  */
 @Repository
-public class DataSourceRepository {
+public class DatasourceRepository {
     @Resource
-    private DataSourceInfoMapper dataSourceInfoMapper;
+    private DatasourceMapper datasourceMapper;
 
-    public DataSourceInfo queryDataSourceInfoById(Integer id) {
-        DataSourceInfo dataSourceInfo = dataSourceInfoMapper.selectByPrimaryKey(id);
+    public Datasource queryDatasourceById(Integer id) {
+        Datasource dataSourceInfo = datasourceMapper.selectByPrimaryKey(id);
         Preconditions.checkArgument(dataSourceInfo != null, "can not find dataSourceInfo by id: %d", id);
         return dataSourceInfo;
     }
 
-    public List<DataSourceInfo> queryDataSourceListByClientId(Integer id) {
-        DataSourceInfoExample example = new DataSourceInfoExample();
+    public List<Datasource> queryDataSourceListByClientId(Integer id) {
+        DatasourceExample example = new DatasourceExample();
         example.createCriteria().andClientIdEqualTo(id);
-        return dataSourceInfoMapper.selectByExample(example);
+        return datasourceMapper.selectByExample(example);
     }
 
     @Transactional
-    public DataSourceInfo insertDataSource(DataSourceInfo dataSourceInfo) {
+    public Datasource insertDataSource(Datasource dataSourceInfo) {
         DateTime now = new DateTime();
         dataSourceInfo.setCreatedTime(now.toDate());
         dataSourceInfo.setUpdatedTime(now.toDate());
-        dataSourceInfoMapper.insert(dataSourceInfo);
+        datasourceMapper.insert(dataSourceInfo);
         return dataSourceInfo;
     }
 
     @Transactional
-    public DataSourceInfo updateDataSource(DataSourceInfo dataSourceInfo) {
+    public Datasource updateDataSource(Datasource dataSourceInfo) {
         dataSourceInfo.setUpdatedTime(new DateTime().toDate());
-        dataSourceInfoMapper.updateByPrimaryKeySelective(dataSourceInfo);
+        datasourceMapper.updateByPrimaryKeySelective(dataSourceInfo);
         return dataSourceInfo;
     }
 
     @Transactional
     public void deleteDataSource(Integer id) {
-        dataSourceInfoMapper.deleteByPrimaryKey(id);
+        datasourceMapper.deleteByPrimaryKey(id);
     }
 }

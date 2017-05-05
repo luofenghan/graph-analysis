@@ -2,7 +2,7 @@ package com.analysis.graph.common.domain.dbo;
 
 import java.util.Date;
 
-public class CronJob {
+public class Cronjob {
     private Long id;
 
     private Integer clientId;

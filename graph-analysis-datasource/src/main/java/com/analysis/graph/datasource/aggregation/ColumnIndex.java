@@ -7,18 +7,18 @@ package com.analysis.graph.datasource.aggregation;
 public class ColumnIndex {
     private int index;
     private String name;
-    private AggregationMethod method;
+    private Aggregation.Function function;
 
-    public static ColumnIndex fromValueConfig(AggregationView.ValueView valueView) {
+    public static ColumnIndex fromValueConfig(Aggregation aggregation) {
         ColumnIndex columnIndex = new ColumnIndex();
-        columnIndex.setName(valueView.getColumn());
-        columnIndex.setMethod(valueView.getMethod());
+        columnIndex.setName(aggregation.getColumn());
+        columnIndex.setFunction(aggregation.getFunction());
         return columnIndex;
     }
 
-    public static ColumnIndex fromDimensionConfig(AggregationView.DimensionView dimensionView) {
+    public static ColumnIndex fromDimensionConfig(Dimension dimension) {
         ColumnIndex columnIndex = new ColumnIndex();
-        columnIndex.setName(dimensionView.getName());
+        columnIndex.setName(dimension.getName());
         return columnIndex;
     }
 
@@ -30,19 +30,19 @@ public class ColumnIndex {
         this.index = index;
     }
 
-    public AggregationMethod getMethod() {
-        return method;
-    }
-
-    public void setMethod(AggregationMethod method) {
-        this.method = method;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Aggregation.Function getFunction() {
+        return function;
+    }
+
+    public void setFunction(Aggregation.Function function) {
+        this.function = function;
     }
 }

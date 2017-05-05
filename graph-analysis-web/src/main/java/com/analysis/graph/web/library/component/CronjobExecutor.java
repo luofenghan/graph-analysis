@@ -8,7 +8,7 @@ import org.quartz.JobExecutionException;
 /**
  * Created by cwc on 2017/4/24 0024.
  */
-public interface CronJobExecutor {
+public interface CronjobExecutor {
     String CRON_JOB_CONFIG = "config";
     String CRON_JOB_TYPE = "type";
     String CRON_JOB_EXECUTOR = "executor";
@@ -20,7 +20,7 @@ public interface CronJobExecutor {
         @Override
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
             JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
-            CronJobExecutor executor = (CronJobExecutor) jobDataMap.get(CRON_JOB_EXECUTOR);
+            CronjobExecutor executor = (CronjobExecutor) jobDataMap.get(CRON_JOB_EXECUTOR);
 
             executor.execute(jobDataMap.getString(CRON_JOB_TYPE), jobDataMap.getString(CRON_JOB_CONFIG));
         }

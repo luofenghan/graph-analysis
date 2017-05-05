@@ -2,19 +2,16 @@ package com.analysis.graph.web.api.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.analysis.graph.common.domain.dbo.Client;
-import com.analysis.graph.common.domain.dbo.DataSourceInfo;
-import com.analysis.graph.web.library.repository.DataSourceRepository;
+import com.analysis.graph.common.domain.dbo.Datasource;
+import com.analysis.graph.web.library.repository.DatasourceRepository;
 import com.analysis.graph.web.library.repository.SessionRepository;
-import com.analysis.graph.web.library.service.DataSourceService;
+import com.analysis.graph.web.library.service.DatasourceService;
 import com.google.common.base.Functions;
 import com.google.common.collect.Maps;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.net.URI;
@@ -24,29 +21,29 @@ import java.util.List;
  * Created by cwc on 2017/4/19 0019.
  */
 @RestController
-@RequestMapping("/api/data-source")
-public class DataSourceAPI {
+@RequestMapping("/api/datasource")
+public class DatasourceAPI {
     @Resource
-    private DataSourceService dataSourceService;
+    private DatasourceService dataSourceService;
 
     @Resource
-    private DataSourceRepository dataSourceRepository;
+    private DatasourceRepository dataSourceRepository;
 
     @Resource
     private SessionRepository sessionRepository;
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DataSourceInfo saveDataSource(DataSourceInfo dataSourceInfo) {
+    public Datasource saveDataSource(Datasource dataSourceInfo) {
         return dataSourceRepository.insertDataSource(dataSourceInfo);
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DataSourceInfo updateDataSource(DataSourceInfo dataSourceInfo) {
+    public Datasource updateDataSource(Datasource dataSourceInfo) {
         return dataSourceRepository.updateDataSource(dataSourceInfo);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteDataSourceInfo(@RequestParam Integer id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteDatasource(@PathVariable Integer id) {
         dataSourceRepository.deleteDataSource(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -61,7 +58,7 @@ public class DataSourceAPI {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<DataSourceInfo> dataSourceList() {
+    public List<Datasource> dataSourceList() {
         Client client = sessionRepository.getCurrentOnlineClient();
         return dataSourceRepository.queryDataSourceListByClientId(client.getId());
     }

@@ -1,16 +1,13 @@
 package com.analysis.graph.web.api.controller;
 
 import com.analysis.graph.common.domain.dbo.Client;
-import com.analysis.graph.common.domain.dbo.CronJob;
-import com.analysis.graph.web.library.repository.CronJobRepository;
+import com.analysis.graph.common.domain.dbo.Cronjob;
+import com.analysis.graph.web.library.repository.CronjobRepository;
 import com.analysis.graph.web.library.repository.SessionRepository;
-import com.analysis.graph.web.library.service.CronJobService;
+import com.analysis.graph.web.library.service.CronjobService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,53 +16,53 @@ import java.util.List;
  * Created by cwc on 2017/4/24 0024.
  */
 @RestController
-@RequestMapping("/api/cron-job")
-public class CronJobAPI {
+@RequestMapping("/api/cronjob")
+public class CronjobAPI {
     @Resource
     private SessionRepository sessionRepository;
 
     @Resource
-    private CronJobRepository cronJobRepository;
+    private CronjobRepository cronJobRepository;
 
     @Resource
-    private CronJobService cronJobService;
+    private CronjobService cronJobService;
 
     @RequestMapping(value = "/type/list", method = RequestMethod.GET)
     public List<String> cronJobTypeSupportList() {
-        return cronJobService.getSupportCronJobTypes();
+        return cronJobService.getSupportCronjobTypes();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CronJob createCronJob(CronJob cronJob) {
+    public Cronjob createCronjob(Cronjob cronJob) {
         Client client = sessionRepository.getCurrentOnlineClient();
         cronJob.setClientId(client.getId());
-        cronJob = cronJobRepository.insertCronJob(cronJob);
+        cronJob = cronJobRepository.insertCronjob(cronJob);
         cronJobService.configScheduler();
         return cronJob;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public CronJob modifyCronJob(CronJob cronJob) {
-        cronJob = cronJobRepository.updateCronJob(cronJob);
+    public Cronjob modifyCronjob(Cronjob cronJob) {
+        cronJob = cronJobRepository.updateCronjob(cronJob);
         cronJobService.configScheduler();
         return cronJob;
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<CronJob> getCronJobList() {
+    public List<Cronjob> getCronjobList() {
         Client client = sessionRepository.getCurrentOnlineClient();
-        return cronJobRepository.queryCronJobList(client.getId());
+        return cronJobRepository.queryCronjobList(client.getId());
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteCronJob(@RequestParam Long id) {
-        cronJobRepository.deleteCronJob(id);
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteCronjob(@PathVariable Long id) {
+        cronJobRepository.deleteCronjob(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/execute", method = RequestMethod.GET)
-    public ResponseEntity<?> executeCronJob(@RequestParam Long id) {
-        cronJobService.executeCronJob(id);
+    public ResponseEntity<?> executeCronjob(@RequestParam Long id) {
+        cronJobService.executeCronjob(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

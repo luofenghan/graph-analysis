@@ -1,6 +1,6 @@
 package com.analysis.graph.web.library.constant;
 
-import com.analysis.graph.web.library.component.CronJobExecutor;
+import com.analysis.graph.web.library.component.CronjobExecutor;
 import org.quartz.Job;
 
 import java.util.HashMap;
@@ -9,18 +9,18 @@ import java.util.Map;
 /**
  * Created by cwc on 2017/4/24 0024.
  */
-public enum CronJobType {
-    EMAIL(CronJobExecutor.EmailJobExecutor.class);
+public enum CronjobType {
+    EMAIL(CronjobExecutor.EmailJobExecutor.class);
     private Class<? extends Job> jobExecutorClass;
-    private static final Map<String, CronJobType> LIBRARY = new HashMap<>();
+    private static final Map<String, CronjobType> LIBRARY = new HashMap<>();
 
     static {
-        for (CronJobType job : values()) {
+        for (CronjobType job : values()) {
             LIBRARY.put(job.name().toLowerCase(), job);
         }
     }
 
-    CronJobType(Class<? extends Job> jobTypeClass) {
+    CronjobType(Class<? extends Job> jobTypeClass) {
         this.jobExecutorClass = jobTypeClass;
     }
 
@@ -28,7 +28,7 @@ public enum CronJobType {
         return getJobType(jobType).jobExecutorClass;
     }
 
-    public static CronJobType getJobType(String jobType) {
+    public static CronjobType getJobType(String jobType) {
         return LIBRARY.get(jobType);
     }
 

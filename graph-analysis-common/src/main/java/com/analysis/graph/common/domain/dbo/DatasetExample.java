@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DataSetExample {
+public class DatasetExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public DataSetExample() {
+    public DatasetExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -225,203 +225,203 @@ public class DataSetExample {
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdIsNull() {
-            addCriterion("data_source_id is null");
+        public Criteria andDatasourceIdIsNull() {
+            addCriterion("datasource_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdIsNotNull() {
-            addCriterion("data_source_id is not null");
+        public Criteria andDatasourceIdIsNotNull() {
+            addCriterion("datasource_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdEqualTo(Integer value) {
-            addCriterion("data_source_id =", value, "dataSourceId");
+        public Criteria andDatasourceIdEqualTo(Integer value) {
+            addCriterion("datasource_id =", value, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdNotEqualTo(Integer value) {
-            addCriterion("data_source_id <>", value, "dataSourceId");
+        public Criteria andDatasourceIdNotEqualTo(Integer value) {
+            addCriterion("datasource_id <>", value, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdGreaterThan(Integer value) {
-            addCriterion("data_source_id >", value, "dataSourceId");
+        public Criteria andDatasourceIdGreaterThan(Integer value) {
+            addCriterion("datasource_id >", value, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("data_source_id >=", value, "dataSourceId");
+        public Criteria andDatasourceIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("datasource_id >=", value, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdLessThan(Integer value) {
-            addCriterion("data_source_id <", value, "dataSourceId");
+        public Criteria andDatasourceIdLessThan(Integer value) {
+            addCriterion("datasource_id <", value, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdLessThanOrEqualTo(Integer value) {
-            addCriterion("data_source_id <=", value, "dataSourceId");
+        public Criteria andDatasourceIdLessThanOrEqualTo(Integer value) {
+            addCriterion("datasource_id <=", value, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdIn(List<Integer> values) {
-            addCriterion("data_source_id in", values, "dataSourceId");
+        public Criteria andDatasourceIdIn(List<Integer> values) {
+            addCriterion("datasource_id in", values, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdNotIn(List<Integer> values) {
-            addCriterion("data_source_id not in", values, "dataSourceId");
+        public Criteria andDatasourceIdNotIn(List<Integer> values) {
+            addCriterion("datasource_id not in", values, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdBetween(Integer value1, Integer value2) {
-            addCriterion("data_source_id between", value1, value2, "dataSourceId");
+        public Criteria andDatasourceIdBetween(Integer value1, Integer value2) {
+            addCriterion("datasource_id between", value1, value2, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andDataSourceIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("data_source_id not between", value1, value2, "dataSourceId");
+        public Criteria andDatasourceIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("datasource_id not between", value1, value2, "datasourceId");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameIsNull() {
-            addCriterion("category_name is null");
+        public Criteria andCategoryIsNull() {
+            addCriterion("category is null");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameIsNotNull() {
-            addCriterion("category_name is not null");
+        public Criteria andCategoryIsNotNull() {
+            addCriterion("category is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameEqualTo(String value) {
-            addCriterion("category_name =", value, "categoryName");
+        public Criteria andCategoryEqualTo(String value) {
+            addCriterion("category =", value, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameNotEqualTo(String value) {
-            addCriterion("category_name <>", value, "categoryName");
+        public Criteria andCategoryNotEqualTo(String value) {
+            addCriterion("category <>", value, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameGreaterThan(String value) {
-            addCriterion("category_name >", value, "categoryName");
+        public Criteria andCategoryGreaterThan(String value) {
+            addCriterion("category >", value, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameGreaterThanOrEqualTo(String value) {
-            addCriterion("category_name >=", value, "categoryName");
+        public Criteria andCategoryGreaterThanOrEqualTo(String value) {
+            addCriterion("category >=", value, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameLessThan(String value) {
-            addCriterion("category_name <", value, "categoryName");
+        public Criteria andCategoryLessThan(String value) {
+            addCriterion("category <", value, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameLessThanOrEqualTo(String value) {
-            addCriterion("category_name <=", value, "categoryName");
+        public Criteria andCategoryLessThanOrEqualTo(String value) {
+            addCriterion("category <=", value, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameLike(String value) {
-            addCriterion("category_name like", value, "categoryName");
+        public Criteria andCategoryLike(String value) {
+            addCriterion("category like", value, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameNotLike(String value) {
-            addCriterion("category_name not like", value, "categoryName");
+        public Criteria andCategoryNotLike(String value) {
+            addCriterion("category not like", value, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameIn(List<String> values) {
-            addCriterion("category_name in", values, "categoryName");
+        public Criteria andCategoryIn(List<String> values) {
+            addCriterion("category in", values, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameNotIn(List<String> values) {
-            addCriterion("category_name not in", values, "categoryName");
+        public Criteria andCategoryNotIn(List<String> values) {
+            addCriterion("category not in", values, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameBetween(String value1, String value2) {
-            addCriterion("category_name between", value1, value2, "categoryName");
+        public Criteria andCategoryBetween(String value1, String value2) {
+            addCriterion("category between", value1, value2, "category");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNameNotBetween(String value1, String value2) {
-            addCriterion("category_name not between", value1, value2, "categoryName");
+        public Criteria andCategoryNotBetween(String value1, String value2) {
+            addCriterion("category not between", value1, value2, "category");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameIsNull() {
-            addCriterion("data_set_name is null");
+        public Criteria andNameIsNull() {
+            addCriterion("name is null");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameIsNotNull() {
-            addCriterion("data_set_name is not null");
+        public Criteria andNameIsNotNull() {
+            addCriterion("name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameEqualTo(String value) {
-            addCriterion("data_set_name =", value, "dataSetName");
+        public Criteria andNameEqualTo(String value) {
+            addCriterion("name =", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameNotEqualTo(String value) {
-            addCriterion("data_set_name <>", value, "dataSetName");
+        public Criteria andNameNotEqualTo(String value) {
+            addCriterion("name <>", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameGreaterThan(String value) {
-            addCriterion("data_set_name >", value, "dataSetName");
+        public Criteria andNameGreaterThan(String value) {
+            addCriterion("name >", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameGreaterThanOrEqualTo(String value) {
-            addCriterion("data_set_name >=", value, "dataSetName");
+        public Criteria andNameGreaterThanOrEqualTo(String value) {
+            addCriterion("name >=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameLessThan(String value) {
-            addCriterion("data_set_name <", value, "dataSetName");
+        public Criteria andNameLessThan(String value) {
+            addCriterion("name <", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameLessThanOrEqualTo(String value) {
-            addCriterion("data_set_name <=", value, "dataSetName");
+        public Criteria andNameLessThanOrEqualTo(String value) {
+            addCriterion("name <=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameLike(String value) {
-            addCriterion("data_set_name like", value, "dataSetName");
+        public Criteria andNameLike(String value) {
+            addCriterion("name like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameNotLike(String value) {
-            addCriterion("data_set_name not like", value, "dataSetName");
+        public Criteria andNameNotLike(String value) {
+            addCriterion("name not like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameIn(List<String> values) {
-            addCriterion("data_set_name in", values, "dataSetName");
+        public Criteria andNameIn(List<String> values) {
+            addCriterion("name in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameNotIn(List<String> values) {
-            addCriterion("data_set_name not in", values, "dataSetName");
+        public Criteria andNameNotIn(List<String> values) {
+            addCriterion("name not in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameBetween(String value1, String value2) {
-            addCriterion("data_set_name between", value1, value2, "dataSetName");
+        public Criteria andNameBetween(String value1, String value2) {
+            addCriterion("name between", value1, value2, "name");
             return (Criteria) this;
         }
 
-        public Criteria andDataSetNameNotBetween(String value1, String value2) {
-            addCriterion("data_set_name not between", value1, value2, "dataSetName");
+        public Criteria andNameNotBetween(String value1, String value2) {
+            addCriterion("name not between", value1, value2, "name");
             return (Criteria) this;
         }
 

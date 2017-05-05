@@ -1,9 +1,9 @@
 package com.analysis.graph.web.library.repository;
 
-import com.analysis.graph.common.domain.dbo.DataSet;
-import com.analysis.graph.common.domain.dbo.DataSetExample;
-import com.analysis.graph.common.domain.dbo.DataSourceInfo;
-import com.analysis.graph.common.repository.mapper.DataSetMapper;
+import com.analysis.graph.common.domain.dbo.Dataset;
+import com.analysis.graph.common.domain.dbo.DatasetExample;
+import com.analysis.graph.common.domain.dbo.Datasource;
+import com.analysis.graph.common.repository.mapper.DatasetMapper;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,27 +11,27 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by cwc on 2017/4/23 0023.
  */
 @Repository
-public class DataSetRepository {
+@SuppressWarnings("all")
+public class DatasetRepository {
     @Resource
-    private DataSetMapper dataSetMapper;
+    private DatasourceRepository dataSourceRepository;
 
     @Resource
-    private DataSourceRepository dataSourceRepository;
+    private DatasetMapper dataSetMapper;
 
     @Transactional
-    public DataSet insertDataSet(DataSet dataSet) {
-        if (StringUtils.isEmpty(dataSet.getDataSetName())) {
-            DataSourceInfo dataSourceInfo = dataSourceRepository.queryDataSourceInfoById(dataSet.getDataSourceId());
-            dataSet.setDataSetName(String.format("%s_%s", dataSourceInfo.getName(), dataSet.hashCode()));
+    public Dataset insertDataset(Dataset dataSet) {
+        if (StringUtils.isEmpty(dataSet.getName())) {
+            Datasource dataSourceInfo = dataSourceRepository.queryDatasourceById(dataSet.getDatasourceId());
+            dataSet.setName(String.format("%s_%s", dataSourceInfo.getName(), dataSet.hashCode()));
         }
-        if (StringUtils.isEmpty(dataSet.getCategoryName())) {
-            dataSet.setCategoryName("未分类");
+        if (StringUtils.isEmpty(dataSet.getCategory())) {
+            dataSet.setCategory("未分类");
         }
 
         DateTime now = new DateTime();
@@ -43,26 +43,26 @@ public class DataSetRepository {
     }
 
     @Transactional
-    public DataSet updateDataSet(DataSet dataSet) {
+    public Dataset updateDataset(Dataset dataSet) {
         dataSet.setUpdatedTime(new DateTime().toDate());
         dataSetMapper.updateByPrimaryKeySelective(dataSet);
         return dataSet;
     }
 
     @Transactional
-    public void deleteDataSet(Long id) {
+    public void deleteDataset(Long id) {
         dataSetMapper.deleteByPrimaryKey(id);
     }
 
-    public List<DataSet> queryClientDataSet(Integer clientId) {
-        DataSetExample example = new DataSetExample();
+    public List<Dataset> queryClientDataset(Integer clientId) {
+        DatasetExample example = new DatasetExample();
         example.createCriteria().andClientIdEqualTo(clientId);
 
         return dataSetMapper.selectByExample(example);
     }
 
-    public DataSet queryDataSet(Long dataSetId) {
-        DataSet dataSet = dataSetMapper.selectByPrimaryKey(dataSetId);
+    public Dataset queryDataset(Long dataSetId) {
+        Dataset dataSet = dataSetMapper.selectByPrimaryKey(dataSetId);
         if (dataSet == null) {
             throw new IllegalArgumentException("can not find client's dataset by datasetId：" + dataSetId);
         }

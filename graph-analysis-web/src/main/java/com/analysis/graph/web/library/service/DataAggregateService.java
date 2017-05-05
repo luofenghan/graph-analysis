@@ -5,7 +5,7 @@ import com.analysis.graph.datasource.aggregation.DataAggregator;
 import com.analysis.graph.datasource.DataProvider;
 import com.analysis.graph.datasource.DataSourceSystem;
 import com.analysis.graph.datasource.aggregation.AggregationResult;
-import com.analysis.graph.datasource.aggregation.AggregationView;
+import com.analysis.graph.datasource.aggregation.AggregationQuery;
 import com.mchange.lang.ThrowableUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class DataAggregateService {
     private static final Logger logger = LoggerFactory.getLogger(DataAggregateService.class);
 
-    public AggregationResult aggregate(Integer clientId, URI uri, Map<String, String> query, AggregationView aggregationView) {
+    public AggregationResult aggregate(Integer clientId, URI uri, Map<String, String> query, AggregationQuery aggregationView) {
         DataSourceSystem dataSourceSystem = DataSourceSystem.get(clientId, uri);
         try (DataProvider dataProvider = dataSourceSystem.getDataProvider(query)) {
             DataAggregator aggregator = dataSourceSystem.getDataAggregator(dataProvider);
@@ -37,7 +37,7 @@ public class DataAggregateService {
         }
     }
 
-    public String aggregationSQL(Integer clientId, URI uri, Map<String, String> query, AggregationView aggregationView) {
+    public String aggregationSQL(Integer clientId, URI uri, Map<String, String> query, AggregationQuery aggregationView) {
         DataSourceSystem dataSourceSystem = DataSourceSystem.get(clientId, uri);
         try (DataProvider dataProvider = dataSourceSystem.getDataProvider(query)) {
             DataAggregator aggregator = dataSourceSystem.getDataAggregator(dataProvider);

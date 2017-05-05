@@ -3,8 +3,10 @@ package com.analysis.graph.web.library.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.analysis.graph.config.DataConfig;
+import com.analysis.graph.datasource.aggregation.Aggregation;
+import com.analysis.graph.datasource.aggregation.AggregationQuery;
 import com.analysis.graph.datasource.aggregation.AggregationResult;
-import com.analysis.graph.datasource.aggregation.AggregationView;
+import com.analysis.graph.datasource.aggregation.Dimension;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,18 +44,18 @@ public class DataAggregateServiceTest {
                 "city c\n" +
                 "INNER JOIN province p ON c.province_id = p.province_id");
 
-        AggregationView view = new AggregationView();
-        AggregationView.DimensionView rows_city_id = new AggregationView.DimensionView();
+        AggregationQuery view = new AggregationQuery();
+        Dimension rows_city_id = new Dimension();
         rows_city_id.setName("city_id");
         rows_city_id.setFilter("=");
         rows_city_id.setValues(Arrays.asList("130600", "130400", "130500", "130700", "130800", "130900", "131000", "131100", "140100"));
 
-        AggregationView.DimensionView rows_city_name = new AggregationView.DimensionView();
+        Dimension rows_city_name = new Dimension();
         rows_city_name.setName("city_name");
         rows_city_name.setFilter("=");
         rows_city_name.setValues(Arrays.asList());
 
-        AggregationView.DimensionView rows_province_name = new AggregationView.DimensionView();
+        Dimension rows_province_name = new Dimension();
         rows_province_name.setName("province_name");
         rows_province_name.setFilter("=");
         rows_province_name.setValues(Arrays.asList());
@@ -62,16 +64,16 @@ public class DataAggregateServiceTest {
 
         view.setColumns(Collections.emptyList());
 
-        AggregationView.DimensionView filters = new AggregationView.DimensionView();
+        Dimension filters = new Dimension();
         rows_province_name.setName("province_name");
         rows_province_name.setFilter("≠");
         rows_province_name.setValues(Arrays.asList("北京市"));
         view.setFilters(Arrays.asList(filters));
 
-        AggregationView.ValueView values = new AggregationView.ValueView();
+        Aggregation values = new Aggregation();
         values.setColumn("city_name");
-        values.setMethod("count");
-        view.setValues(Arrays.asList(values));
+        values.setFunction("count");
+        view.setAggregates(Arrays.asList(values));
 
         System.out.println(JSON.toJSON(view));
 
@@ -95,7 +97,7 @@ public class DataAggregateServiceTest {
                 "INNER JOIN province p ON c.province_id = p.province_id");
 
         String aggregationViewExample = "{'columns':[],'values':[{'method':'COUNT','column':'city_name'}],'filters':[{}],'rows':[{'filter':'EQUAL','values':['130600','130400','130500','130700','130800','130900','131000','131100','140100'],'name':'city_id'},{'filter':'EQUAL','values':[],'name':'city_name'},{'filter':'NOT_EQUAL','values':['北京市'],'name':'province_name'}]}";
-        AggregationView view = JSON.toJavaObject(JSONObject.parseObject(aggregationViewExample), AggregationView.class);
+        AggregationQuery view = JSON.toJavaObject(JSONObject.parseObject(aggregationViewExample), AggregationQuery.class);
 
         String aggreagtionSql = dataAggregateService.aggregationSQL(clientId, uri, query, view);
         Assert.assertNotNull(aggreagtionSql);
@@ -116,7 +118,7 @@ public class DataAggregateServiceTest {
                 "INNER JOIN province p ON c.province_id = p.province_id");
 
         String aggregationViewExample = "{'columns':[],'values':[{'method':'COUNT','column':'city_name'}],'filters':[{}],'rows':[{'filter':'EQUAL','values':['130600','130400','130500','130700','130800','130900','131000','131100','140100'],'name':'city_id'},{'filter':'EQUAL','values':[],'name':'city_name'},{'filter':'NOT_EQUAL','values':['北京市'],'name':'province_name'}]}";
-        AggregationView view = JSON.toJavaObject(JSONObject.parseObject(aggregationViewExample), AggregationView.class);
+        AggregationQuery view = JSON.toJavaObject(JSONObject.parseObject(aggregationViewExample), AggregationQuery.class);
 
         AggregationResult result = dataAggregateService.aggregate(clientId, uri, query, view);
         Assert.assertNotNull(result);

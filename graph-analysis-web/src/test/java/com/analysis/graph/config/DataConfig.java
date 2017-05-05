@@ -52,8 +52,7 @@ public class DataConfig {
 
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean() {
-        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
-        return schedulerFactoryBean;
+        return new SchedulerFactoryBean();
     }
 
     @Bean

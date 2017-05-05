@@ -23,7 +23,7 @@ public class AggregationCollector<T> implements Collector<T[], Object[], Double[
     private AggregationCollector(List<ColumnIndex> valueList) {
         this.valueList = valueList;
         this.collectors = valueList.stream()
-                .map(value -> value.getMethod().getCollector(this::toDouble))
+                .map(value -> value.getFunction().getCollector(this::toDouble))
                 .collect(Collectors.toList());
     }
 

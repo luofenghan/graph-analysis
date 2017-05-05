@@ -7,12 +7,12 @@ import java.sql.SQLException;
  */
 public interface DataAggregator {
 
-    void aggregate(String columnName, AggregationView aggregationView) throws SQLException;
+    void aggregate(String columnName, AggregationQuery aggregationView) throws SQLException;
 
-    void aggregate(AggregationView aggregationView) throws SQLException;
+    void aggregate(AggregationQuery aggregationView) throws SQLException;
 
     AggregationResult getAggregateResult();
 
-    String getAggregationSql(AggregationView av) throws SQLException;
+    String getAggregationSql(AggregationQuery av) throws SQLException;
 
 }

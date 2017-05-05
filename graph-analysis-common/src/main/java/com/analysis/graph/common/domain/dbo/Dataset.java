@@ -2,16 +2,16 @@ package com.analysis.graph.common.domain.dbo;
 
 import java.util.Date;
 
-public class DataSet {
+public class Dataset {
     private Long id;
 
     private Integer clientId;
 
-    private Integer dataSourceId;
+    private Integer datasourceId;
 
-    private String categoryName;
+    private String category;
 
-    private String dataSetName;
+    private String name;
 
     private String query;
 
@@ -41,28 +41,28 @@ public class DataSet {
         this.clientId = clientId;
     }
 
-    public Integer getDataSourceId() {
-        return dataSourceId;
+    public Integer getDatasourceId() {
+        return datasourceId;
     }
 
-    public void setDataSourceId(Integer dataSourceId) {
-        this.dataSourceId = dataSourceId;
+    public void setDatasourceId(Integer datasourceId) {
+        this.datasourceId = datasourceId;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName == null ? null : categoryName.trim();
+    public void setCategory(String category) {
+        this.category = category == null ? null : category.trim();
     }
 
-    public String getDataSetName() {
-        return dataSetName;
+    public String getName() {
+        return name;
     }
 
-    public void setDataSetName(String dataSetName) {
-        this.dataSetName = dataSetName == null ? null : dataSetName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getQuery() {
@@ -121,9 +121,9 @@ public class DataSet {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", clientId=").append(clientId);
-        sb.append(", dataSourceId=").append(dataSourceId);
-        sb.append(", categoryName=").append(categoryName);
-        sb.append(", dataSetName=").append(dataSetName);
+        sb.append(", datasourceId=").append(datasourceId);
+        sb.append(", category=").append(category);
+        sb.append(", name=").append(name);
         sb.append(", query=").append(query);
         sb.append(", filterGroup=").append(filterGroup);
         sb.append(", expressions=").append(expressions);
