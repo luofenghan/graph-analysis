@@ -27,6 +27,22 @@ CREATE TABLE `datasource` (
   PRIMARY KEY (`id`)
 ) ;
 
+CREATE TABLE `dataset` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '数据集的id',
+	`client_id` INTEGER NOT NULL COMMENT '创建该数据集的用户',
+	`datasource_id` INTEGER NOT NULL COMMENT '该数据集的数据源',
+	`category` VARCHAR (50) DEFAULT NULL COMMENT '数据集所属的分类',
+	`name` VARCHAR (50) DEFAULT NULL COMMENT '数据集的名称',
+	`query` VARCHAR (255) DEFAULT NULL COMMENT '对数据源的查询，存储格式为Json,eg:[{"sql":"select * from dual"}]',
+	`filterType` VARCHAR (255) DEFAULT NULL COMMENT '数据集筛选器，用于添加到查询中,eg: [{"col":"created_time","values":["{now(''W'',-1,''yyyy-MM-dd'')}"],"type":">","alias":"创建时间不为1"},{"col":"created_time","type":">","values":["{now(''W'',-1,''yyyy-MM-dd'')}"],"alias":"创建时间不为1"}]',
+	`expression` VARCHAR (255) DEFAULT NULL COMMENT '表达式存储格式为json 数组，eg:[{"alias":"CountCityOfProvince","type":"exp","exp":"count(city_name)"},{"type":"exp","exp":"max(min(city_id),max(province_id))","alias":"最大id"}]',
+	`interval` BIGINT DEFAULT -1 COMMENT '表示数据集自动刷新间隔，-1表示不刷新',
+	`created_time` DATETIME DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
+	`updated_time` DATETIME DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
+	PRIMARY KEY (`id`),
+) ;
+
+
 CREATE TABLE `graph` (
 	`id` BIGINT AUTO_INCREMENT  NOT NULL ,
 	`client_id` INTEGER NOT NULL,
@@ -39,7 +55,7 @@ CREATE TABLE `graph` (
 	`fill_field` VARCHAR (255) DEFAULT NULL COMMENT '表示可选择的字段，存储格式为: ["field1","field2","field3"]',
 	`row` VARCHAR (255) DEFAULT NULL COMMENT '行显示的字段配置',
 	`column` VARCHAR (255) DEFAULT NULL COMMENT '列显示的字段配置',
-	`filter` VARCHAR (255) DEFAULT NULL COMMENT '过滤',
+	`filterType` VARCHAR (255) DEFAULT NULL COMMENT '过滤',
 	`aggregation` VARCHAR (255) DEFAULT NULL COMMENT '聚合配置',
 	`created_time` DATETIME DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
 	`updated_time` DATETIME DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
@@ -47,36 +63,5 @@ CREATE TABLE `graph` (
 );
 
 
-
-
--- 测试用数据库
-CREATE TABLE `city` (
-	`id` BIGINT  NOT NULL IDENTITY COMMENT 'id',
-	`city_id` VARCHAR (8) NOT NULL COMMENT '地级行政区ID',
-	`city_name` VARCHAR (16) NOT NULL COMMENT '地级行政区名称',
-	`province_id` VARCHAR (8) NOT NULL COMMENT '该行政区所在省级行政区ID',
-	`created_time` datetime DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
-	`updated_time` datetime DEFAULT CURRENT_TIMESTAMP (3)  COMMENT '更新日期',
-	PRIMARY KEY (`id`),
-) ;
-
-CREATE TABLE `county` (
-	`id` BIGINT  NOT NULL IDENTITY COMMENT 'id',
-	`county_id` VARCHAR (8) NOT NULL COMMENT '区县行政区ID',
-	`county_name` VARCHAR (16) NOT NULL COMMENT '区县行政区名称',
-	`city_id` VARCHAR (8) NOT NULL COMMENT '该行政区所在地级行政区ID',
-	`created_time` datetime DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
-	`updated_time` datetime DEFAULT CURRENT_TIMESTAMP (3)  COMMENT '更新日期',
-	PRIMARY KEY (`id`),
-);
-
-CREATE TABLE `province` (
-	`id` BIGINT NOT NULL IDENTITY COMMENT 'id',
-	`province_id` VARCHAR (8) NOT NULL COMMENT '省级行政区ID',
-	`province_name` VARCHAR (16) NOT NULL COMMENT '省级行政区名称',
-	`created_time` datetime DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
-	`updated_time` datetime DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
-	PRIMARY KEY (`id`)
-) ;
 
 

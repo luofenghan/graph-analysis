@@ -11,8 +11,8 @@ import java.util.Objects;
 public class Dimension {
     private String name;
     private List<String> values;
-    private Filter filter;
-    private Sort sort;
+    private FilterType filterType;
+    private SortType sortType;
 
     public String getName() {
         return name;
@@ -30,39 +30,39 @@ public class Dimension {
         this.values = values;
     }
 
-    public Filter getFilter() {
-        return filter;
+    public FilterType getFilterType() {
+        return filterType;
     }
 
-    public void setFilter(Filter filter) {
-        this.filter = filter;
+    public void setFilterType(FilterType filterType) {
+        this.filterType = filterType;
     }
 
-    public void setFilter(String filter) {
-        this.filter = Filter.parseFilter(filter);
+    public void setFilterType(String filter) {
+        this.filterType = FilterType.valueOfSymbol(filter);
     }
 
-    public Sort getSort() {
-        return sort;
+    public SortType getSortType() {
+        return sortType;
     }
 
-    public void setSort(Sort sort) {
-        this.sort = sort;
+    public void setSortType(SortType sortType) {
+        this.sortType = sortType;
     }
 
     public void setSort(String sort) {
         if (!Objects.isNull(sort)) {
-            this.sort = Sort.valueOf(sort.toUpperCase());
+            this.sortType = SortType.valueOf(sort.toUpperCase());
         } else {
-            this.sort = Sort.DEFAULT;
+            this.sortType = SortType.DEFAULT;
         }
     }
 
-    public enum Sort {
+    public enum SortType {
         DEFAULT, ASC, DESC;
     }
 
-    enum Filter {
+    public enum FilterType {
         EQUAL("=", "%s IN ( %s )"),
         NOT_EQUAL("≠", "%s NOT IN ( '%s' )"),
         GREATER_THAN(">", "%s > '%s'"),
@@ -76,21 +76,25 @@ public class Dimension {
         private String symbol;
         private String expFormat;
 
-        Filter(String symbol, String expFormat) {
+        FilterType(String symbol, String expFormat) {
             this.symbol = symbol;
             this.expFormat = expFormat;
         }
 
-        private static final Map<String, Filter> MAP = new HashMap<>(values().length);
+        private static final Map<String, FilterType> MAP = new HashMap<>(values().length);
 
         static {
-            for (Filter filter : values()) {
+            for (FilterType filter : values()) {
                 MAP.put(filter.symbol, filter);
             }
         }
 
-        public static Filter parseFilter(String type) {
-            return MAP.get(type);
+        public String getSymbol() {
+            return symbol;
+        }
+
+        public static FilterType valueOfSymbol(String type) {
+            return MAP.get(type.toLowerCase());
         }
 
         public String getFilterExp(String first, String second) {

@@ -15,9 +15,9 @@ public class Dataset {
 
     private String query;
 
-    private String filterGroup;
+    private String filter;
 
-    private String expressions;
+    private String expression;
 
     private Long interval;
 
@@ -73,20 +73,20 @@ public class Dataset {
         this.query = query == null ? null : query.trim();
     }
 
-    public String getFilterGroup() {
-        return filterGroup;
+    public String getFilter() {
+        return filter;
     }
 
-    public void setFilterGroup(String filterGroup) {
-        this.filterGroup = filterGroup == null ? null : filterGroup.trim();
+    public void setFilter(String filter) {
+        this.filter = filter == null ? null : filter.trim();
     }
 
-    public String getExpressions() {
-        return expressions;
+    public String getExpression() {
+        return expression;
     }
 
-    public void setExpressions(String expressions) {
-        this.expressions = expressions == null ? null : expressions.trim();
+    public void setExpression(String expression) {
+        this.expression = expression == null ? null : expression.trim();
     }
 
     public Long getInterval() {
@@ -125,8 +125,8 @@ public class Dataset {
         sb.append(", category=").append(category);
         sb.append(", name=").append(name);
         sb.append(", query=").append(query);
-        sb.append(", filterGroup=").append(filterGroup);
-        sb.append(", expressions=").append(expressions);
+        sb.append(", filter=").append(filter);
+        sb.append(", expression=").append(expression);
         sb.append(", interval=").append(interval);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", updatedTime=").append(updatedTime);

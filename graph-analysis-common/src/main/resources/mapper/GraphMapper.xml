@@ -13,7 +13,7 @@
     <result column="fill_field" property="fillField" jdbcType="VARCHAR" />
     <result column="row" property="row" jdbcType="VARCHAR" />
     <result column="column" property="column" jdbcType="VARCHAR" />
-    <result column="filter" property="filter" jdbcType="VARCHAR" />
+    <result column="filterType" property="filterType" jdbcType="VARCHAR" />
     <result column="aggregation" property="aggregation" jdbcType="VARCHAR" />
     <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
     <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
@@ -78,7 +78,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, client_id, category, name, datasource_id, query, dataset_id, graph_type, fill_field, 
-    row, column, filter, aggregation, created_time, updated_time
+    row, column, filterType, aggregation, created_time, updated_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.analysis.graph.common.domain.dbo.GraphExample" >
     select
@@ -117,13 +117,13 @@
     insert into graph (id, client_id, category, 
       name, datasource_id, query, 
       dataset_id, graph_type, fill_field, 
-      row, column, filter, 
+      row, column, filterType,
       aggregation, created_time, updated_time
       )
     values (#{id,jdbcType=BIGINT}, #{clientId,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{datasourceId,jdbcType=INTEGER}, #{query,jdbcType=VARCHAR}, 
       #{datasetId,jdbcType=BIGINT}, #{graphType,jdbcType=VARCHAR}, #{fillField,jdbcType=VARCHAR}, 
-      #{row,jdbcType=VARCHAR}, #{column,jdbcType=VARCHAR}, #{filter,jdbcType=VARCHAR}, 
+      #{row,jdbcType=VARCHAR}, #{column,jdbcType=VARCHAR}, #{filterType,jdbcType=VARCHAR},
       #{aggregation,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -164,8 +164,8 @@
       <if test="column != null" >
         column,
       </if>
-      <if test="filter != null" >
-        filter,
+      <if test="filterType != null" >
+        filterType,
       </if>
       <if test="aggregation != null" >
         aggregation,
@@ -209,8 +209,8 @@
       <if test="column != null" >
         #{column,jdbcType=VARCHAR},
       </if>
-      <if test="filter != null" >
-        #{filter,jdbcType=VARCHAR},
+      <if test="filterType != null" >
+        #{filterType,jdbcType=VARCHAR},
       </if>
       <if test="aggregation != null" >
         #{aggregation,jdbcType=VARCHAR},
@@ -265,8 +265,8 @@
       <if test="record.column != null" >
         column = #{record.column,jdbcType=VARCHAR},
       </if>
-      <if test="record.filter != null" >
-        filter = #{record.filter,jdbcType=VARCHAR},
+      <if test="record.filterType != null" >
+        filterType = #{record.filterType,jdbcType=VARCHAR},
       </if>
       <if test="record.aggregation != null" >
         aggregation = #{record.aggregation,jdbcType=VARCHAR},
@@ -295,7 +295,7 @@
       fill_field = #{record.fillField,jdbcType=VARCHAR},
       row = #{record.row,jdbcType=VARCHAR},
       column = #{record.column,jdbcType=VARCHAR},
-      filter = #{record.filter,jdbcType=VARCHAR},
+      filterType = #{record.filterType,jdbcType=VARCHAR},
       aggregation = #{record.aggregation,jdbcType=VARCHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
@@ -336,8 +336,8 @@
       <if test="column != null" >
         column = #{column,jdbcType=VARCHAR},
       </if>
-      <if test="filter != null" >
-        filter = #{filter,jdbcType=VARCHAR},
+      <if test="filterType != null" >
+        filterType = #{filterType,jdbcType=VARCHAR},
       </if>
       <if test="aggregation != null" >
         aggregation = #{aggregation,jdbcType=VARCHAR},
@@ -363,7 +363,7 @@
       fill_field = #{fillField,jdbcType=VARCHAR},
       row = #{row,jdbcType=VARCHAR},
       column = #{column,jdbcType=VARCHAR},
-      filter = #{filter,jdbcType=VARCHAR},
+      filterType = #{filterType,jdbcType=VARCHAR},
       aggregation = #{aggregation,jdbcType=VARCHAR},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}

@@ -3,7 +3,6 @@ package com.analysis.graph.datasource.aggregation;
 import com.analysis.graph.datasource.DataProvider;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -14,11 +13,11 @@ import java.util.stream.IntStream;
  */
 public abstract class AbstractDataAggregator implements DataAggregator {
     protected DataProvider dataProvider;
-    protected static final BiFunction<Aggregation, Map<String, Integer>, String> AGGREGATION_PARSER = (config, types) -> {
+    protected static final BiFunction<Measure, String[], String> AGGREGATION_PARSER = (config, types) -> {
         String aggExp;
         if (config.getColumn().contains(" ")) {
             aggExp = config.getColumn();
-            for (String column : types.keySet()) {
+            for (String column : types) {
                 aggExp = aggExp.replaceAll(" " + column + " ", " __view__." + column + " ");
             }
         } else {
@@ -31,7 +30,7 @@ public abstract class AbstractDataAggregator implements DataAggregator {
         if (CollectionUtils.isEmpty(config.getValues())) {
             return null;
         }
-        Dimension.Filter filter = config.getFilter();
+        Dimension.FilterType filter = config.getFilterType();
         switch (filter) {
             case EQUAL:
             case NOT_EQUAL:

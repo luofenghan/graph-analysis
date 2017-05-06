@@ -14,7 +14,7 @@ public class AggregationFilter {
     private List<Dimension> ruleList;
     private Map<String, Integer> columnIndex;
 
-    public AggregationFilter(AggregationQuery aggregateConfig, Map<String, Integer> columnIndex) {
+    public AggregationFilter(AggregationView aggregateConfig, Map<String, Integer> columnIndex) {
         ruleList = new ArrayList<>();
         if (aggregateConfig != null) {
             ruleList.addAll(aggregateConfig.getColumns());
@@ -38,7 +38,7 @@ public class AggregationFilter {
             String b = rule.getValues().size() >= 2 ? rule.getValues().get(1) : null;
 
             Comparator<String> stringComparator = Comparator.naturalOrder();
-            switch (rule.getFilter()) {
+            switch (rule.getFilterType()) {
                 case EQUAL:
                     return rule.getValues().stream().anyMatch(e -> e.equals(value));
                 case NOT_EQUAL:

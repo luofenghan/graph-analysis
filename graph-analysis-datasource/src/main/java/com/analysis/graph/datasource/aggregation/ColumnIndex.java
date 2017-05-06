@@ -7,16 +7,24 @@ package com.analysis.graph.datasource.aggregation;
 public class ColumnIndex {
     private int index;
     private String name;
-    private Aggregation.Function function;
+    private Measure.Function function;
 
-    public static ColumnIndex fromValueConfig(Aggregation aggregation) {
+    public ColumnIndex(int index, String name) {
+        this.index = index;
+        this.name = name;
+    }
+
+    public ColumnIndex() {
+    }
+
+    public static ColumnIndex fromMeasure(Measure aggregation) {
         ColumnIndex columnIndex = new ColumnIndex();
         columnIndex.setName(aggregation.getColumn());
         columnIndex.setFunction(aggregation.getFunction());
         return columnIndex;
     }
 
-    public static ColumnIndex fromDimensionConfig(Dimension dimension) {
+    public static ColumnIndex fromDimension(Dimension dimension) {
         ColumnIndex columnIndex = new ColumnIndex();
         columnIndex.setName(dimension.getName());
         return columnIndex;
@@ -38,11 +46,20 @@ public class ColumnIndex {
         this.name = name;
     }
 
-    public Aggregation.Function getFunction() {
+    public Measure.Function getFunction() {
         return function;
     }
 
-    public void setFunction(Aggregation.Function function) {
+    public void setFunction(Measure.Function function) {
         this.function = function;
+    }
+
+    @Override
+    public String toString() {
+        return "ColumnIndex{" +
+                "index=" + index +
+                ", name='" + name + '\'' +
+                ", function=" + function +
+                '}';
     }
 }

@@ -2,11 +2,16 @@ package com.analysis.graph.web.api.controller;
 
 import com.analysis.graph.common.domain.dbo.Client;
 import com.analysis.graph.common.domain.dbo.Dataset;
+import com.analysis.graph.datasource.aggregation.AggregationResult;
 import com.analysis.graph.web.library.repository.DatasetRepository;
 import com.analysis.graph.web.library.repository.SessionRepository;
+import com.analysis.graph.web.library.service.AggregationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -25,10 +30,12 @@ public class DatasetAPI {
     @Resource
     private SessionRepository sessionRepository;
 
+    @Resource
+    private AggregationService aggregationService;
+
     @RequestMapping(method = RequestMethod.POST)
     public Dataset createDataset(Dataset dataSet) {
-        Client client = sessionRepository.getCurrentOnlineClient();
-        dataSet.setClientId(client.getId());
+        dataSet.setClientId(sessionRepository.getUserId());
         return dataSetRepository.insertDataset(dataSet);
     }
 
@@ -37,26 +44,29 @@ public class DatasetAPI {
         return dataSetRepository.updateDataset(dataSet);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteDataset(@PathVariable Long id) {
         dataSetRepository.deleteDataset(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Dataset> getAllDatasets() {
+    public List<Dataset> getAllDatasetList() {
         Client client = sessionRepository.getCurrentOnlineClient();
         return dataSetRepository.queryClientDataset(client.getId());
     }
 
     @RequestMapping(value = "/category/list", method = RequestMethod.GET)
     public List<String> getDatasetCategoryList() {
-        Client client = sessionRepository.getCurrentOnlineClient();
-        return dataSetRepository.queryClientDataset(client.getId())
+        return dataSetRepository.queryClientDataset(sessionRepository.getUserId())
                 .stream()
                 .map(Dataset::getCategory)
                 .collect(Collectors.toList());
     }
 
+    @RequestMapping(value = "/load", method = RequestMethod.GET)
+    public AggregationResult loadDataByDataset(Dataset dataSet) {
+        return aggregationService.aggregate(sessionRepository.getUserId(), dataSet);
+    }
 
 }

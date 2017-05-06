@@ -26,6 +26,15 @@ public class DatasourceService {
         return Arrays.stream(DataSourceType.values()).map(type -> type.name().toLowerCase()).collect(Collectors.toList());
     }
 
+    public String[] getColumnLabels(Integer id, URI uri, Map<String, String> query) {
+        DataSourceSystem dataSourceSystem = DataSourceSystem.get(id, uri);
+        try (DataProvider dataProvider = dataSourceSystem.getDataProvider(query)) {
+            return dataProvider.readColumnLabels();
+        } catch (Exception e) {
+            throw new IllegalStateException();
+        }
+    }
+
     @Cacheable(value = "data-provider-cache", key = "#root.args.uri.toString() + #root.args.query")
     public Object[][] getCacheData(Integer id, URI uri, Map<String, String> query) {
         return getFreshData(id, uri, query);
@@ -36,7 +45,6 @@ public class DatasourceService {
         try (DataProvider dataProvider = dataSourceSystem.getDataProvider(query)) {
             return dataProvider.readFully();
         } catch (Exception e) {
-
             throw new IllegalStateException();
         }
     }

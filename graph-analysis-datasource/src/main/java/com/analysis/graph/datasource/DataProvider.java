@@ -28,7 +28,7 @@ public interface DataProvider extends Closeable {
      */
     Object[][] readFully() throws SQLException;
 
-    void resetResultSet(String sql) throws SQLException;
+    void resetResultIfExisted(String sql) throws SQLException;
 
     default void batchClose(AutoCloseable... closeables) {
         for (AutoCloseable c : closeables) {

@@ -22,6 +22,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Created by cwc on 2017/4/22 0022.
@@ -39,6 +40,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 })
 @PropertySource("classpath:application-test.properties")
 @EnableCaching
+@EnableTransactionManagement
 public class DataConfig {
 
     @Bean

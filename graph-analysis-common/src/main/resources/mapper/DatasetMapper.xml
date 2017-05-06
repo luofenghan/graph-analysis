@@ -8,8 +8,8 @@
     <result column="category" property="category" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="query" property="query" jdbcType="VARCHAR" />
-    <result column="filter_group" property="filterGroup" jdbcType="VARCHAR" />
-    <result column="expressions" property="expressions" jdbcType="VARCHAR" />
+    <result column="filterType" property="filterType" jdbcType="VARCHAR" />
+    <result column="expression" property="expression" jdbcType="VARCHAR" />
     <result column="interval" property="interval" jdbcType="BIGINT" />
     <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
     <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
@@ -73,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, client_id, datasource_id, category, name, query, filter_group, expressions, interval, 
+    id, client_id, datasource_id, category, name, query, filterType, expression, interval,
     created_time, updated_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.analysis.graph.common.domain.dbo.DatasetExample" >
@@ -112,11 +112,11 @@
     </selectKey>
     insert into dataset (id, client_id, datasource_id, 
       category, name, query, 
-      filter_group, expressions, interval, 
+      filterType, expression, interval,
       created_time, updated_time)
     values (#{id,jdbcType=BIGINT}, #{clientId,jdbcType=INTEGER}, #{datasourceId,jdbcType=INTEGER}, 
       #{category,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{query,jdbcType=VARCHAR}, 
-      #{filterGroup,jdbcType=VARCHAR}, #{expressions,jdbcType=VARCHAR}, #{interval,jdbcType=BIGINT}, 
+      #{filterType,jdbcType=VARCHAR}, #{expression,jdbcType=VARCHAR}, #{interval,jdbcType=BIGINT},
       #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.analysis.graph.common.domain.dbo.Dataset" >
@@ -141,11 +141,11 @@
       <if test="query != null" >
         query,
       </if>
-      <if test="filterGroup != null" >
-        filter_group,
+      <if test="filterType != null" >
+        filterType,
       </if>
-      <if test="expressions != null" >
-        expressions,
+      <if test="expression != null" >
+        expression,
       </if>
       <if test="interval != null" >
         interval,
@@ -174,11 +174,11 @@
       <if test="query != null" >
         #{query,jdbcType=VARCHAR},
       </if>
-      <if test="filterGroup != null" >
-        #{filterGroup,jdbcType=VARCHAR},
+      <if test="filterType != null" >
+        #{filterType,jdbcType=VARCHAR},
       </if>
-      <if test="expressions != null" >
-        #{expressions,jdbcType=VARCHAR},
+      <if test="expression != null" >
+        #{expression,jdbcType=VARCHAR},
       </if>
       <if test="interval != null" >
         #{interval,jdbcType=BIGINT},
@@ -218,11 +218,11 @@
       <if test="record.query != null" >
         query = #{record.query,jdbcType=VARCHAR},
       </if>
-      <if test="record.filterGroup != null" >
-        filter_group = #{record.filterGroup,jdbcType=VARCHAR},
+      <if test="record.filterType != null" >
+        filterType = #{record.filterType,jdbcType=VARCHAR},
       </if>
-      <if test="record.expressions != null" >
-        expressions = #{record.expressions,jdbcType=VARCHAR},
+      <if test="record.expression != null" >
+        expression = #{record.expression,jdbcType=VARCHAR},
       </if>
       <if test="record.interval != null" >
         interval = #{record.interval,jdbcType=BIGINT},
@@ -246,8 +246,8 @@
       category = #{record.category,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       query = #{record.query,jdbcType=VARCHAR},
-      filter_group = #{record.filterGroup,jdbcType=VARCHAR},
-      expressions = #{record.expressions,jdbcType=VARCHAR},
+      filterType = #{record.filterType,jdbcType=VARCHAR},
+      expression = #{record.expression,jdbcType=VARCHAR},
       interval = #{record.interval,jdbcType=BIGINT},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
@@ -273,11 +273,11 @@
       <if test="query != null" >
         query = #{query,jdbcType=VARCHAR},
       </if>
-      <if test="filterGroup != null" >
-        filter_group = #{filterGroup,jdbcType=VARCHAR},
+      <if test="filterType != null" >
+        filterType = #{filterType,jdbcType=VARCHAR},
       </if>
-      <if test="expressions != null" >
-        expressions = #{expressions,jdbcType=VARCHAR},
+      <if test="expression != null" >
+        expression = #{expression,jdbcType=VARCHAR},
       </if>
       <if test="interval != null" >
         interval = #{interval,jdbcType=BIGINT},
@@ -298,8 +298,8 @@
       category = #{category,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       query = #{query,jdbcType=VARCHAR},
-      filter_group = #{filterGroup,jdbcType=VARCHAR},
-      expressions = #{expressions,jdbcType=VARCHAR},
+      filterType = #{filterType,jdbcType=VARCHAR},
+      expression = #{expression,jdbcType=VARCHAR},
       interval = #{interval,jdbcType=BIGINT},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}

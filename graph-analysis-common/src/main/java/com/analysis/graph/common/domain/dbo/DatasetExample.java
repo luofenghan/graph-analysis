@@ -495,143 +495,143 @@ public class DatasetExample {
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupIsNull() {
-            addCriterion("filter_group is null");
+        public Criteria andFilterIsNull() {
+            addCriterion("filter is null");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupIsNotNull() {
-            addCriterion("filter_group is not null");
+        public Criteria andFilterIsNotNull() {
+            addCriterion("filter is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupEqualTo(String value) {
-            addCriterion("filter_group =", value, "filterGroup");
+        public Criteria andFilterEqualTo(String value) {
+            addCriterion("filter =", value, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupNotEqualTo(String value) {
-            addCriterion("filter_group <>", value, "filterGroup");
+        public Criteria andFilterNotEqualTo(String value) {
+            addCriterion("filter <>", value, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupGreaterThan(String value) {
-            addCriterion("filter_group >", value, "filterGroup");
+        public Criteria andFilterGreaterThan(String value) {
+            addCriterion("filter >", value, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupGreaterThanOrEqualTo(String value) {
-            addCriterion("filter_group >=", value, "filterGroup");
+        public Criteria andFilterGreaterThanOrEqualTo(String value) {
+            addCriterion("filter >=", value, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupLessThan(String value) {
-            addCriterion("filter_group <", value, "filterGroup");
+        public Criteria andFilterLessThan(String value) {
+            addCriterion("filter <", value, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupLessThanOrEqualTo(String value) {
-            addCriterion("filter_group <=", value, "filterGroup");
+        public Criteria andFilterLessThanOrEqualTo(String value) {
+            addCriterion("filter <=", value, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupLike(String value) {
-            addCriterion("filter_group like", value, "filterGroup");
+        public Criteria andFilterLike(String value) {
+            addCriterion("filter like", value, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupNotLike(String value) {
-            addCriterion("filter_group not like", value, "filterGroup");
+        public Criteria andFilterNotLike(String value) {
+            addCriterion("filter not like", value, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupIn(List<String> values) {
-            addCriterion("filter_group in", values, "filterGroup");
+        public Criteria andFilterIn(List<String> values) {
+            addCriterion("filter in", values, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupNotIn(List<String> values) {
-            addCriterion("filter_group not in", values, "filterGroup");
+        public Criteria andFilterNotIn(List<String> values) {
+            addCriterion("filter not in", values, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupBetween(String value1, String value2) {
-            addCriterion("filter_group between", value1, value2, "filterGroup");
+        public Criteria andFilterBetween(String value1, String value2) {
+            addCriterion("filter between", value1, value2, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andFilterGroupNotBetween(String value1, String value2) {
-            addCriterion("filter_group not between", value1, value2, "filterGroup");
+        public Criteria andFilterNotBetween(String value1, String value2) {
+            addCriterion("filter not between", value1, value2, "filter");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsIsNull() {
-            addCriterion("expressions is null");
+        public Criteria andExpressionIsNull() {
+            addCriterion("expression is null");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsIsNotNull() {
-            addCriterion("expressions is not null");
+        public Criteria andExpressionIsNotNull() {
+            addCriterion("expression is not null");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsEqualTo(String value) {
-            addCriterion("expressions =", value, "expressions");
+        public Criteria andExpressionEqualTo(String value) {
+            addCriterion("expression =", value, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsNotEqualTo(String value) {
-            addCriterion("expressions <>", value, "expressions");
+        public Criteria andExpressionNotEqualTo(String value) {
+            addCriterion("expression <>", value, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsGreaterThan(String value) {
-            addCriterion("expressions >", value, "expressions");
+        public Criteria andExpressionGreaterThan(String value) {
+            addCriterion("expression >", value, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsGreaterThanOrEqualTo(String value) {
-            addCriterion("expressions >=", value, "expressions");
+        public Criteria andExpressionGreaterThanOrEqualTo(String value) {
+            addCriterion("expression >=", value, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsLessThan(String value) {
-            addCriterion("expressions <", value, "expressions");
+        public Criteria andExpressionLessThan(String value) {
+            addCriterion("expression <", value, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsLessThanOrEqualTo(String value) {
-            addCriterion("expressions <=", value, "expressions");
+        public Criteria andExpressionLessThanOrEqualTo(String value) {
+            addCriterion("expression <=", value, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsLike(String value) {
-            addCriterion("expressions like", value, "expressions");
+        public Criteria andExpressionLike(String value) {
+            addCriterion("expression like", value, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsNotLike(String value) {
-            addCriterion("expressions not like", value, "expressions");
+        public Criteria andExpressionNotLike(String value) {
+            addCriterion("expression not like", value, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsIn(List<String> values) {
-            addCriterion("expressions in", values, "expressions");
+        public Criteria andExpressionIn(List<String> values) {
+            addCriterion("expression in", values, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsNotIn(List<String> values) {
-            addCriterion("expressions not in", values, "expressions");
+        public Criteria andExpressionNotIn(List<String> values) {
+            addCriterion("expression not in", values, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsBetween(String value1, String value2) {
-            addCriterion("expressions between", value1, value2, "expressions");
+        public Criteria andExpressionBetween(String value1, String value2) {
+            addCriterion("expression between", value1, value2, "expression");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionsNotBetween(String value1, String value2) {
-            addCriterion("expressions not between", value1, value2, "expressions");
+        public Criteria andExpressionNotBetween(String value1, String value2) {
+            addCriterion("expression not between", value1, value2, "expression");
             return (Criteria) this;
         }
 

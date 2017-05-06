@@ -49,9 +49,9 @@
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>
 -->
-        <table tableName="graph" domainObjectName="Graph">
+<!--        <table tableName="graph" domainObjectName="Graph">
             <generatedKey column="id" sqlStatement="MySql"/>
-        </table>
+        </table>-->
 
     </context>
 </generatorConfiguration>
