@@ -11,8 +11,8 @@ import java.util.Objects;
 public class Dimension {
     private String name;
     private List<String> values;
-    private FilterType filterType;
-    private SortType sortType;
+    private Filter filter;
+    private Sort sort;
 
     public String getName() {
         return name;
@@ -30,39 +30,39 @@ public class Dimension {
         this.values = values;
     }
 
-    public FilterType getFilterType() {
-        return filterType;
+    public Filter getFilter() {
+        return filter;
     }
 
-    public void setFilterType(FilterType filterType) {
-        this.filterType = filterType;
+    public void setFilter(Filter filter) {
+        this.filter = filter;
     }
 
-    public void setFilterType(String filter) {
-        this.filterType = FilterType.valueOfSymbol(filter);
+    public void setFilter(String filter) {
+        this.filter = Filter.valueOfSymbol(filter);
     }
 
-    public SortType getSortType() {
-        return sortType;
+    public Sort getSort() {
+        return sort;
     }
 
-    public void setSortType(SortType sortType) {
-        this.sortType = sortType;
+    public void setSort(Sort sort) {
+        this.sort = sort;
     }
 
     public void setSort(String sort) {
         if (!Objects.isNull(sort)) {
-            this.sortType = SortType.valueOf(sort.toUpperCase());
+            this.sort = Sort.valueOf(sort.toUpperCase());
         } else {
-            this.sortType = SortType.DEFAULT;
+            this.sort = Sort.DEFAULT;
         }
     }
 
-    public enum SortType {
+    public enum Sort {
         DEFAULT, ASC, DESC;
     }
 
-    public enum FilterType {
+    public enum Filter {
         EQUAL("=", "%s IN ( %s )"),
         NOT_EQUAL("≠", "%s NOT IN ( '%s' )"),
         GREATER_THAN(">", "%s > '%s'"),
@@ -76,15 +76,15 @@ public class Dimension {
         private String symbol;
         private String expFormat;
 
-        FilterType(String symbol, String expFormat) {
+        Filter(String symbol, String expFormat) {
             this.symbol = symbol;
             this.expFormat = expFormat;
         }
 
-        private static final Map<String, FilterType> MAP = new HashMap<>(values().length);
+        private static final Map<String, Filter> MAP = new HashMap<>(values().length);
 
         static {
-            for (FilterType filter : values()) {
+            for (Filter filter : values()) {
                 MAP.put(filter.symbol, filter);
             }
         }
@@ -93,7 +93,7 @@ public class Dimension {
             return symbol;
         }
 
-        public static FilterType valueOfSymbol(String type) {
+        public static Filter valueOfSymbol(String type) {
             return MAP.get(type.toLowerCase());
         }
 
@@ -103,6 +103,11 @@ public class Dimension {
 
         public String getFilterExp(String first, String second, String thirty, String fourth) {
             return String.format(expFormat, first, second, thirty, fourth);
+        }
+
+        @Override
+        public String toString() {
+            return symbol;
         }
     }
 }

@@ -1,5 +1,7 @@
-package com.analysis.graph.datasource.aggregation;
+package com.analysis.graph.datasource.aggregation.filter;
 
+import com.analysis.graph.datasource.aggregation.AggregationView;
+import com.analysis.graph.datasource.aggregation.Dimension;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -14,12 +16,12 @@ public class AggregationFilter {
     private List<Dimension> ruleList;
     private Map<String, Integer> columnIndex;
 
-    public AggregationFilter(AggregationView aggregateConfig, Map<String, Integer> columnIndex) {
+    public AggregationFilter(AggregationView aggregationView, Map<String, Integer> columnIndex) {
         ruleList = new ArrayList<>();
-        if (aggregateConfig != null) {
-            ruleList.addAll(aggregateConfig.getColumns());
-            ruleList.addAll(aggregateConfig.getRows());
-            ruleList.addAll(aggregateConfig.getFilters());
+        if (aggregationView != null) {
+            ruleList.addAll(aggregationView.getColumns());
+            ruleList.addAll(aggregationView.getRows());
+            ruleList.addAll(aggregationView.getFilters());
         }
         this.columnIndex = columnIndex;
     }
@@ -38,7 +40,7 @@ public class AggregationFilter {
             String b = rule.getValues().size() >= 2 ? rule.getValues().get(1) : null;
 
             Comparator<String> stringComparator = Comparator.naturalOrder();
-            switch (rule.getFilterType()) {
+            switch (rule.getFilter()) {
                 case EQUAL:
                     return rule.getValues().stream().anyMatch(e -> e.equals(value));
                 case NOT_EQUAL:

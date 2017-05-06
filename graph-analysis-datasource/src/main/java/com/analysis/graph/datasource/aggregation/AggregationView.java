@@ -11,13 +11,13 @@ public class AggregationView {
     private List<Dimension> rows;
     private List<Dimension> columns;
     private List<Dimension> filters;
-    private List<Measure> measures;
+    private List<Metric> metrics;
 
     public AggregationView() {
         this.rows = Collections.emptyList();
         this.columns = Collections.emptyList();
         this.filters = Collections.emptyList();
-        this.measures = Collections.emptyList();
+        this.metrics = Collections.emptyList();
     }
 
     public Stream<Dimension> rowStream() {
@@ -32,8 +32,8 @@ public class AggregationView {
         return filters.stream();
     }
 
-    public Stream<Measure> getMeasureStream() {
-        return measures.stream();
+    public Stream<Metric> metricStream() {
+        return metrics.stream();
     }
 
 
@@ -61,11 +61,11 @@ public class AggregationView {
         this.filters = filters;
     }
 
-    public List<Measure> getMeasures() {
-        return measures;
+    public List<Metric> getMetrics() {
+        return metrics;
     }
 
-    public void setMeasures(List<Measure> measures) {
-        this.measures = measures;
+    public void setMetrics(List<Metric> metrics) {
+        this.metrics = metrics;
     }
 }

@@ -1,7 +1,7 @@
 package com.analysis.graph.datasource;
 
 import com.analysis.graph.common.util.ReflectUtils;
-import com.analysis.graph.datasource.aggregation.DataAggregator;
+import com.analysis.graph.datasource.aggregation.Aggregator;
 import org.reflections.Reflections;
 
 import java.net.URI;
@@ -11,8 +11,8 @@ import java.util.*;
  * Created by cwc on 2017/4/27 0027.
  */
 public abstract class DataSourceSystem {
-    private static final Map<DataSourceType, Class<? extends DataSourceSystem>> SOURCE_TYPE_SYSTEM_MAP = new HashMap<>();
-    private DataSourceStatus dataSourceStatus;
+    private static final Map<DsType, Class<? extends DataSourceSystem>> SOURCE_TYPE_SYSTEM_MAP = new HashMap<>();
+    private DsStatus dsStatus;
     private static final Cache CACHE = new Cache();
     private Cache.Key key;
 
@@ -32,11 +32,11 @@ public abstract class DataSourceSystem {
 
 
     public void initialize(URI uri) {
-        this.dataSourceStatus = new DataSourceStatus(uri);
+        this.dsStatus = new DsStatus(uri);
     }
 
     private static DataSourceSystem createDataSourceSystem(URI uri) throws Exception {
-        DataSourceType type = DataSourceType.valueOf(uri.getScheme().toUpperCase());
+        DsType type = DsType.valueOf(uri.getScheme().toUpperCase());
         DataSourceSystem provider = ReflectUtils.on(SOURCE_TYPE_SYSTEM_MAP.get(type)).create().get();
         provider.initialize(uri);
         return provider;
@@ -46,8 +46,8 @@ public abstract class DataSourceSystem {
         CACHE.remove(this.key, this);
     }
 
-    public DataSourceStatus getDataSourceStatus() {
-        return dataSourceStatus;
+    public DsStatus getDsStatus() {
+        return dsStatus;
     }
 
     public String getKey() {
@@ -58,7 +58,7 @@ public abstract class DataSourceSystem {
 
     public abstract DataProvider getDataProvider(Map<String, String> query) throws Exception;
 
-    public abstract DataAggregator getDataAggregator(DataProvider dataProvider);
+    public abstract Aggregator getDataAggregator(DataProvider dataProvider);
 
 
     static class Cache {

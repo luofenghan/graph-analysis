@@ -82,9 +82,6 @@ public class DataConfig {
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:schema.sql")
                 .addScript("classpath:test-data.sql")
-                .addScript("classpath:test-data-city.sql")
-                .addScript("classpath:test-data-province.sql")
-                .addScript("classpath:test-data-county.sql")
                 .build();
     }
 

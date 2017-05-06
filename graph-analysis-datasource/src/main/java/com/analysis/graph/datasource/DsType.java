@@ -3,18 +3,18 @@ package com.analysis.graph.datasource;
 /**
  * Created by cwc on 2017/4/27 0027.
  */
-public enum DataSourceType {
+public enum DsType {
     JDBC(DB.MYSQL, DB.ORACLE),
     SAIKU;
     private DB[] dbs;
 
-    DataSourceType(DB... dbs) {
+    DsType(DB... dbs) {
         this.dbs = dbs;
     }
 
 
-    public static DataSourceType.DB verifyDB(String type, String db) {
-        for (DataSourceType.DB supportedDB : fromType(type).dbs) {
+    public static DsType.DB verifyDB(String type, String db) {
+        for (DsType.DB supportedDB : getDsType(type).dbs) {
             if (supportedDB.name().equalsIgnoreCase(db)) {
                 return supportedDB;
             }
@@ -22,7 +22,7 @@ public enum DataSourceType {
         throw new IllegalArgumentException(String.format("%s doesn't support %s", type, db));
     }
 
-    public static DataSourceType fromType(String type) {
+    public static DsType getDsType(String type) {
         return valueOf(type.toUpperCase());
     }
 

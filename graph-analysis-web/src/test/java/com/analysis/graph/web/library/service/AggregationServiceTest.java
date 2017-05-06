@@ -7,8 +7,8 @@ import com.analysis.graph.config.DataConfig;
 import com.analysis.graph.datasource.aggregation.AggregationResult;
 import com.analysis.graph.datasource.aggregation.ColumnIndex;
 import com.analysis.graph.datasource.aggregation.Dimension;
-import com.analysis.graph.datasource.aggregation.Measure;
 import com.analysis.graph.web.library.repository.DatasourceRepository;
+import com.analysis.graph.web.library.util.JsonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -36,33 +36,26 @@ public class AggregationServiceTest {
         Datasource datasource = new Datasource();
         datasource.setClientId(1);
         datasource.setName("数据源名称");
-        datasource.setUri("jdbc://root:123@localhost:3306/chinaregion?db=mysql&aggregatable=true&pooled=true");
+        datasource.setUri("jdbc://root:123@localhost:3306/global-superstore?db=mysql&aggregatable=true&pooled=true");
         datasource.setId(null);
         datasource = datasourceRepository.insertDataSource(datasource);
 
         /*初始化数据集*/
         Dataset dataset = new Dataset();
-        dataset.setQuery("{\"sql\":\"SELECT * FROM city \"}");
+        dataset.setQuery("{\"sql\":\"SELECT o.* FROM `order` o INNER JOIN `returns` r ON o.order_id = r.order_id LIMIT 1,5000\"}");
         dataset.setName("name");
         dataset.setCategory("分类");
         dataset.setClientId(1);
         dataset.setDatasourceId(datasource.getId());
 
         Dimension dimension = new Dimension();
-        dimension.setFilterType(Dimension.FilterType.EQUAL.getSymbol());
-        dimension.setName("city_id");
-        dimension.setValues(Arrays.asList("130600", "130400", "130500", "130700", "130800", "130900", "131000"));
+        dimension.setFilter(Dimension.Filter.LESS_THAN);
+        dimension.setName("sales");
+        dimension.setValues(Arrays.asList("64.8"));
         JSONArray filters = new JSONArray();
         filters.add(dimension);
-        dataset.setFilter(filters.toJSONString().replace("EQUAL", "="));
+        dataset.setFilter(JsonUtils.toJsonString(filters));
 
-        Measure measure = new Measure();
-        measure.setColumn("city_name");
-        measure.setFunction(Measure.Function.COUNT);
-        JSONArray measures = new JSONArray();
-        measures.add(measure);
-       // dataset.setExpression(measures.toJSONString().replace("COUNT", "count"));
-        dataset.setExpression(null);
         AggregationResult aggregationResult = aggregationService.aggregate(1, dataset);
 
         for (ColumnIndex index : aggregationResult.getColumns()) {

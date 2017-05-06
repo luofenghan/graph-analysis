@@ -1,4 +1,6 @@
-package com.analysis.graph.datasource.aggregation;
+package com.analysis.graph.datasource.aggregation.collector;
+
+import com.analysis.graph.datasource.aggregation.ColumnIndex;
 
 import java.util.*;
 import java.util.function.BiConsumer;

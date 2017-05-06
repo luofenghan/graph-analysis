@@ -42,14 +42,9 @@ public class AggregationService {
         AggregationView aggregationQuery = new AggregationView();
         if (dataset.getFilter() != null) {
             JSONArray.parseArray(dataset.getFilter());
-            List<Dimension> filters = JsonUtils.jsonToJavaObject(dataset.getFilter(), new TypeReference<List<Dimension>>() {
+            List<Dimension> filters = JsonUtils.toJavaObject(dataset.getFilter(), new TypeReference<List<Dimension>>() {
             });
             aggregationQuery.setFilters(filters);
-        }
-        if (dataset.getExpression() != null) {
-            List<Measure> measures = JsonUtils.jsonToJavaObject(dataset.getExpression(), new TypeReference<List<Measure>>() {
-            });
-            aggregationQuery.setMeasures(measures);
         }
         Datasource dataSourceInfo = dataSourceRepository.queryDatasourceById(dataset.getDatasourceId());
         return aggregate(clientId, dataSourceInfo.getUri(), dataset.getQuery(), aggregationQuery);
@@ -62,16 +57,15 @@ public class AggregationService {
     }
 
     public AggregationResult aggregate(Integer clientId, String uri, String queryStr, AggregationView aggregationView) {
-        Map<String, String> queryParam = Maps.transformValues(JSON.parseObject(queryStr), Functions.toStringFunction());
+        Map<String, String> queryParam = Maps.transformValues(JsonUtils.toJsonObject(queryStr), Functions.toStringFunction());
         return aggregate(clientId, URI.create(uri), queryParam, aggregationView);
     }
 
     private AggregationResult aggregate(Integer clientId, URI uri, Map<String, String> query, AggregationView aggregationView) {
         DataSourceSystem dataSourceSystem = DataSourceSystem.get(clientId, uri);
         try (DataProvider dataProvider = dataSourceSystem.getDataProvider(query)) {
-            DataAggregator aggregator = dataSourceSystem.getDataAggregator(dataProvider);
-            aggregator.aggregate(aggregationView);
-            return aggregator.getAggregateResult();
+            Aggregator aggregator = dataSourceSystem.getDataAggregator(dataProvider);
+            return aggregator.doAggregation(aggregationView);
         } catch (Exception e) {
             LoggerUtils.builder(logger)
                     .format("aggregate data failed, due to {}")
@@ -86,7 +80,7 @@ public class AggregationService {
         Map<String, String> queryParam = Maps.transformValues(JSON.parseObject(queryStr), Functions.toStringFunction());
         DataSourceSystem dataSourceSystem = DataSourceSystem.get(clientId, uri);
         try (DataProvider dataProvider = dataSourceSystem.getDataProvider(queryParam)) {
-            DataAggregator aggregator = dataSourceSystem.getDataAggregator(dataProvider);
+            Aggregator aggregator = dataSourceSystem.getDataAggregator(dataProvider);
             return aggregator.getAggregationSql(aggregationView);
         } catch (Exception e) {
             LoggerUtils.builder(logger)

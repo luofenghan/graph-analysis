@@ -17,7 +17,7 @@ public class Dataset {
 
     private String filter;
 
-    private String expression;
+    private String metric;
 
     private Long interval;
 
@@ -81,12 +81,12 @@ public class Dataset {
         this.filter = filter == null ? null : filter.trim();
     }
 
-    public String getExpression() {
-        return expression;
+    public String getMetric() {
+        return metric;
     }
 
-    public void setExpression(String expression) {
-        this.expression = expression == null ? null : expression.trim();
+    public void setMetric(String metric) {
+        this.metric = metric == null ? null : metric.trim();
     }
 
     public Long getInterval() {
@@ -126,7 +126,7 @@ public class Dataset {
         sb.append(", name=").append(name);
         sb.append(", query=").append(query);
         sb.append(", filter=").append(filter);
-        sb.append(", expression=").append(expression);
+        sb.append(", metric=").append(metric);
         sb.append(", interval=").append(interval);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", updatedTime=").append(updatedTime);

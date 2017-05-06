@@ -8,23 +8,23 @@ import java.util.Map;
 /**
  * Created by cwc on 2017/4/27 0027.
  */
-public class DataSourceStatus {
+public class DsStatus {
 
     //private URI uri; // 例如："jdbc://root:123@127.0.0.1:3306/chinaregion?db=mysql&pooled=true&aggregatable=false"
     private Configuration conf;
     private boolean aggregatable;
-    private DataSourceType type;
+    private DsType dsType;
     private String owner;
     private String group;
     private long createTime;
     private long accessTime;
 
-    public DataSourceStatus(URI uri) {
+    public DsStatus(URI uri) {
         this(uri, null, null);
     }
 
-    public DataSourceStatus(URI uri, String owner, String group) {
-        this.type = DataSourceType.fromType(uri.getScheme());
+    public DsStatus(URI uri, String owner, String group) {
+        this.dsType = DsType.getDsType(uri.getScheme());
         this.conf = new Configuration();
         initParams(uri);
         this.aggregatable = conf.getBoolean("data.aggregate.enable", false);
@@ -42,12 +42,12 @@ public class DataSourceStatus {
         // 初始化jdbc类型数据库的信息
         if ("jdbc".equals(uri.getScheme())) {
             if (!params.containsKey("db")) {
-                throw new IllegalArgumentException("type of jdbc uri must contains db");
+                throw new IllegalArgumentException("dsType of jdbc uri must contains db");
             }
             this.conf.put("jdbc.pooled.enable", params.remove("pooled"));
             this.conf.put("data.aggregate.enable", params.remove("aggregatable"));
 
-            DataSourceType.DB db = DataSourceType.verifyDB(uri.getScheme(), params.remove("db"));
+            DsType.DB db = DsType.verifyDB(uri.getScheme(), params.remove("db"));
             this.conf.put("jdbc.driver", "com." + db.name().toLowerCase() + ".jdbc.Driver");
             switch (db) {
                 case MYSQL:
@@ -79,8 +79,8 @@ public class DataSourceStatus {
         return aggregatable;
     }
 
-    public DataSourceType getType() {
-        return type;
+    public DsType getDsType() {
+        return dsType;
     }
 
     public long getAccessTime() {
@@ -119,13 +119,13 @@ public class DataSourceStatus {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DataSourceStatus that = (DataSourceStatus) o;
+        DsStatus that = (DsStatus) o;
 
         if (aggregatable != that.aggregatable) return false;
         if (createTime != that.createTime) return false;
         if (accessTime != that.accessTime) return false;
         if (conf != null ? !conf.equals(that.conf) : that.conf != null) return false;
-        if (type != that.type) return false;
+        if (dsType != that.dsType) return false;
         if (owner != null ? !owner.equals(that.owner) : that.owner != null) return false;
         return group != null ? group.equals(that.group) : that.group == null;
     }
@@ -134,7 +134,7 @@ public class DataSourceStatus {
     public int hashCode() {
         int result = conf != null ? conf.hashCode() : 0;
         result = 31 * result + (aggregatable ? 1 : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (dsType != null ? dsType.hashCode() : 0);
         result = 31 * result + (owner != null ? owner.hashCode() : 0);
         result = 31 * result + (group != null ? group.hashCode() : 0);
         result = 31 * result + (int) (createTime ^ (createTime >>> 32));

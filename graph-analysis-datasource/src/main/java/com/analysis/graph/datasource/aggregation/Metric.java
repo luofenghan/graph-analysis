@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Created by cwc on 2017/5/4 0004.
  */
-public class Measure {
+public class Metric {
     private String column;
     private Function function;
 
@@ -45,7 +45,7 @@ public class Measure {
             this.format = format;
         }
 
-        public String getAggregateFunc(String param) {
+        public String getMetricFunc(String param) {
             return String.format(format, param);
         }
 

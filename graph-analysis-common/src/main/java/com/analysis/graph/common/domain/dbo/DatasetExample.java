@@ -565,73 +565,73 @@ public class DatasetExample {
             return (Criteria) this;
         }
 
-        public Criteria andExpressionIsNull() {
-            addCriterion("expression is null");
+        public Criteria andMetricIsNull() {
+            addCriterion("metric is null");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionIsNotNull() {
-            addCriterion("expression is not null");
+        public Criteria andMetricIsNotNull() {
+            addCriterion("metric is not null");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionEqualTo(String value) {
-            addCriterion("expression =", value, "expression");
+        public Criteria andMetricEqualTo(String value) {
+            addCriterion("metric =", value, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionNotEqualTo(String value) {
-            addCriterion("expression <>", value, "expression");
+        public Criteria andMetricNotEqualTo(String value) {
+            addCriterion("metric <>", value, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionGreaterThan(String value) {
-            addCriterion("expression >", value, "expression");
+        public Criteria andMetricGreaterThan(String value) {
+            addCriterion("metric >", value, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionGreaterThanOrEqualTo(String value) {
-            addCriterion("expression >=", value, "expression");
+        public Criteria andMetricGreaterThanOrEqualTo(String value) {
+            addCriterion("metric >=", value, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionLessThan(String value) {
-            addCriterion("expression <", value, "expression");
+        public Criteria andMetricLessThan(String value) {
+            addCriterion("metric <", value, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionLessThanOrEqualTo(String value) {
-            addCriterion("expression <=", value, "expression");
+        public Criteria andMetricLessThanOrEqualTo(String value) {
+            addCriterion("metric <=", value, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionLike(String value) {
-            addCriterion("expression like", value, "expression");
+        public Criteria andMetricLike(String value) {
+            addCriterion("metric like", value, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionNotLike(String value) {
-            addCriterion("expression not like", value, "expression");
+        public Criteria andMetricNotLike(String value) {
+            addCriterion("metric not like", value, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionIn(List<String> values) {
-            addCriterion("expression in", values, "expression");
+        public Criteria andMetricIn(List<String> values) {
+            addCriterion("metric in", values, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionNotIn(List<String> values) {
-            addCriterion("expression not in", values, "expression");
+        public Criteria andMetricNotIn(List<String> values) {
+            addCriterion("metric not in", values, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionBetween(String value1, String value2) {
-            addCriterion("expression between", value1, value2, "expression");
+        public Criteria andMetricBetween(String value1, String value2) {
+            addCriterion("metric between", value1, value2, "metric");
             return (Criteria) this;
         }
 
-        public Criteria andExpressionNotBetween(String value1, String value2) {
-            addCriterion("expression not between", value1, value2, "expression");
+        public Criteria andMetricNotBetween(String value1, String value2) {
+            addCriterion("metric not between", value1, value2, "metric");
             return (Criteria) this;
         }
 

@@ -11,9 +11,9 @@ import java.util.stream.IntStream;
 /**
  * Created by cwc on 2017/4/28 0028.
  */
-public abstract class AbstractDataAggregator implements DataAggregator {
+public abstract class AbstractAggregator implements Aggregator {
     protected DataProvider dataProvider;
-    protected static final BiFunction<Measure, String[], String> AGGREGATION_PARSER = (config, types) -> {
+    protected static final BiFunction<Metric, String[], String> METRIC_PARSER = (config, types) -> {
         String aggExp;
         if (config.getColumn().contains(" ")) {
             aggExp = config.getColumn();
@@ -23,14 +23,14 @@ public abstract class AbstractDataAggregator implements DataAggregator {
         } else {
             aggExp = "__view__." + config.getColumn();
         }
-        return config.getFunction().getAggregateFunc(aggExp);
+        return config.getFunction().getMetricFunc(aggExp);
     };
 
-    protected static final Function<Dimension, String> CONDITION_PARSER = (config) -> {
+    protected static final Function<Dimension, String> FILTER_PARSER = (config) -> {
         if (CollectionUtils.isEmpty(config.getValues())) {
             return null;
         }
-        Dimension.FilterType filter = config.getFilterType();
+        Dimension.Filter filter = config.getFilter();
         switch (filter) {
             case EQUAL:
             case NOT_EQUAL:
@@ -54,7 +54,7 @@ public abstract class AbstractDataAggregator implements DataAggregator {
         }
     };
 
-    public AbstractDataAggregator(DataProvider dataProvider) {
+    public AbstractAggregator(DataProvider dataProvider) {
         this.dataProvider = dataProvider;
     }
 

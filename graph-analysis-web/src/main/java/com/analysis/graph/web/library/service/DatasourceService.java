@@ -2,7 +2,7 @@ package com.analysis.graph.web.library.service;
 
 import com.analysis.graph.datasource.DataProvider;
 import com.analysis.graph.datasource.DataSourceSystem;
-import com.analysis.graph.datasource.DataSourceType;
+import com.analysis.graph.datasource.DsType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,13 +23,13 @@ public class DatasourceService {
 
 
     public List<String> getDataSourceSupportList() {
-        return Arrays.stream(DataSourceType.values()).map(type -> type.name().toLowerCase()).collect(Collectors.toList());
+        return Arrays.stream(DsType.values()).map(type -> type.name().toLowerCase()).collect(Collectors.toList());
     }
 
     public String[] getColumnLabels(Integer id, URI uri, Map<String, String> query) {
         DataSourceSystem dataSourceSystem = DataSourceSystem.get(id, uri);
         try (DataProvider dataProvider = dataSourceSystem.getDataProvider(query)) {
-            return dataProvider.readColumnLabels();
+            return dataProvider.getColumnLabels();
         } catch (Exception e) {
             throw new IllegalStateException();
         }

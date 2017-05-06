@@ -7,7 +7,7 @@ package com.analysis.graph.datasource.aggregation;
 public class ColumnIndex {
     private int index;
     private String name;
-    private Measure.Function function;
+    private Metric.Function function;
 
     public ColumnIndex(int index, String name) {
         this.index = index;
@@ -17,7 +17,7 @@ public class ColumnIndex {
     public ColumnIndex() {
     }
 
-    public static ColumnIndex fromMeasure(Measure aggregation) {
+    public static ColumnIndex fromMeasure(Metric aggregation) {
         ColumnIndex columnIndex = new ColumnIndex();
         columnIndex.setName(aggregation.getColumn());
         columnIndex.setFunction(aggregation.getFunction());
@@ -46,11 +46,11 @@ public class ColumnIndex {
         this.name = name;
     }
 
-    public Measure.Function getFunction() {
+    public Metric.Function getFunction() {
         return function;
     }
 
-    public void setFunction(Measure.Function function) {
+    public void setFunction(Metric.Function function) {
         this.function = function;
     }
 

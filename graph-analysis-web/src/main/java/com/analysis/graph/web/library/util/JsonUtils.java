@@ -1,5 +1,8 @@
 package com.analysis.graph.web.library.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,20 +14,19 @@ import java.nio.charset.Charset;
  * Created by cwc on 2017/5/6 0006.
  */
 public class JsonUtils {
-    public static <T> T jsonToJavaObject(String json, TypeReference<T> typeReference) {
-        StringReader stringReader = new StringReader(json);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-        mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
-        try {
-            return mapper.readValue(stringReader, typeReference);
-        } catch (IOException e) {
-            return null;
-        }
+    public static String toJsonString(Object obj) {
+        return JSON.toJSONString(obj, SerializerFeature.WriteEnumUsingToString);
     }
 
-    public static <T> T parseJavaFromJsonStream(InputStream in, TypeReference<T> typeReference) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in, Charset.forName("UTF-8")));
+    public static JSONObject toJsonObject(String json) {
+        return JSON.parseObject(json);
+    }
+
+    public static <T> T toJavaObject(String json, TypeReference<T> typeReference) {
+        return toJavaObject(new StringReader(json), typeReference);
+    }
+
+    private static <T> T toJavaObject(Reader reader, TypeReference<T> typeReference) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
         mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
@@ -38,6 +40,11 @@ public class JsonUtils {
             } catch (IOException e) {
             }
         }
+    }
+
+    public static <T> T toJavaObject(InputStream in, TypeReference<T> typeReference) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, Charset.forName("UTF-8")));
+        return toJavaObject(reader, typeReference);
     }
 
 }
