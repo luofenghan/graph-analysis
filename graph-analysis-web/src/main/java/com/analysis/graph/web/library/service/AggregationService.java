@@ -56,14 +56,11 @@ public class AggregationService {
         return aggregate(clientId, dataSourceInfo.getUri(), dataSet.getQuery(), aggregationView);
     }
 
-    public AggregationResult aggregate(Integer clientId, String uri, String queryStr, AggregationView aggregationView) {
+    private AggregationResult aggregate(Integer clientId, String uri, String queryStr, AggregationView aggregationView) {
         Map<String, String> queryParam = Maps.transformValues(JsonUtils.toJsonObject(queryStr), Functions.toStringFunction());
-        return aggregate(clientId, URI.create(uri), queryParam, aggregationView);
-    }
 
-    private AggregationResult aggregate(Integer clientId, URI uri, Map<String, String> query, AggregationView aggregationView) {
-        DataSourceSystem dataSourceSystem = DataSourceSystem.get(clientId, uri);
-        try (DataProvider dataProvider = dataSourceSystem.getDataProvider(query)) {
+        DataSourceSystem dataSourceSystem = DataSourceSystem.get(clientId, URI.create(uri));
+        try (DataProvider dataProvider = dataSourceSystem.getDataProvider(queryParam)) {
             Aggregator aggregator = dataSourceSystem.getDataAggregator(dataProvider);
             return aggregator.doAggregation(aggregationView);
         } catch (Exception e) {

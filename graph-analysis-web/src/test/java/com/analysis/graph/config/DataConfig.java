@@ -79,9 +79,11 @@ public class DataConfig {
     @Bean
     public EmbeddedDatabase embeddedDataSource() {
         return new EmbeddedDatabaseBuilder()
+                .setName("test")
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:schema.sql")
-                .addScript("classpath:test-data.sql")
+                .addScript("classpath:test-data-graph-analysis.sql")
+                .addScript("classpath:test-data-global-store.sql")
                 .build();
     }
 

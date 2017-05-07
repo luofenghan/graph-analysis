@@ -1,8 +1,12 @@
 package com.analysis.graph.datasource.aggregation.collector;
 
-import com.analysis.graph.datasource.aggregation.ColumnIndex;
 
-import java.util.*;
+import com.analysis.graph.datasource.aggregation.AggregationResult.ColumnIndex;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;

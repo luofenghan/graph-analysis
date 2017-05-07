@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.analysis.graph.datasource.*;
 import com.analysis.graph.datasource.aggregation.*;
+import com.analysis.graph.datasource.aggregation.AggregationResult.ColumnIndex;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 

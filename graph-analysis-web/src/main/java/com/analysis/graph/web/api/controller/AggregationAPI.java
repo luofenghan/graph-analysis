@@ -36,29 +36,15 @@ public class AggregationAPI {
     @Resource
     private SessionRepository sessionRepository;
 
-    @RequestMapping(value = "/dataset/result", method = RequestMethod.GET)
+    @RequestMapping(value = "/result", method = RequestMethod.GET)
     public AggregationResult aggregateDataFromDataset(@RequestParam Long dataSetId, @RequestParam AggregationView view) {
         return dataAggregateService.aggregate(sessionRepository.getUserId(), dataSetId, view);
     }
 
-    @RequestMapping(value = "/dataset/sql", method = RequestMethod.GET)
+    @RequestMapping(value = "/sql", method = RequestMethod.GET)
     public String previewAggregateSQLFromDataset(@RequestParam Long dataSetId, @RequestParam AggregationView view) {
         Dataset dataSet = dataSetRepository.queryDataset(dataSetId);
         Datasource dataSourceInfo = dataSourceRepository.queryDatasourceById(dataSet.getDatasourceId());
         return dataAggregateService.getAggregationSQL(sessionRepository.getUserId(), URI.create(dataSourceInfo.getUri()), dataSet.getQuery(), view);
     }
-
-    @RequestMapping(value = "/datasource/result", method = RequestMethod.GET)
-    public AggregationResult aggregateDataFromDatasource(@RequestParam Integer dataSourceId, @RequestParam String query, @RequestParam AggregationView view) {
-        Datasource datasource = dataSourceRepository.queryDatasourceById(dataSourceId);
-        return dataAggregateService.aggregate(sessionRepository.getUserId(), datasource.getUri(), query, view);
-    }
-
-    @RequestMapping(value = "/datasource/sql", method = RequestMethod.GET)
-    public String previewAggregateSQLFromDatasource(@RequestParam Integer dataSourceId, @RequestParam String query, @RequestParam AggregationView view) {
-        Datasource dataSourceInfo = dataSourceRepository.queryDatasourceById(dataSourceId);
-        return dataAggregateService.getAggregationSQL(sessionRepository.getUserId(), URI.create(dataSourceInfo.getUri()), query, view);
-    }
-
-
 }

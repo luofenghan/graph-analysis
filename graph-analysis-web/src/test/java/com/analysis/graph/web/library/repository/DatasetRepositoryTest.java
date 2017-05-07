@@ -41,7 +41,6 @@ public class DatasetRepositoryTest {
         exp1.put("alias", "CountCityOfProvince");
         expressions.add(exp1);
 
-        dataset.setExpression(expressions.toJSONString());
 
         /*过滤器*/
         JSONArray filters = new JSONArray();

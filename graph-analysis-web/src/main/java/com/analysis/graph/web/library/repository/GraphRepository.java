@@ -35,16 +35,6 @@ public class GraphRepository {
         if (StringUtils.isEmpty(graph.getCategory())) {
             graph.setCategory("未分类");
         }
-
-        if (Objects.isNull(graph.getDatasourceId()) && Objects.isNull(graph.getQuery())) {
-            if (Objects.isNull(graph.getDatasetId())) {
-                throw new IllegalArgumentException("");
-            }
-        } else if (Objects.nonNull(graph.getDatasourceId()) && Objects.nonNull(graph.getQuery())) {
-            if (Objects.nonNull(graph.getDatasetId())) {
-                throw new IllegalArgumentException("");
-            }
-        }
         return graph;
 
     }

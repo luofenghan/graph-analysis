@@ -49,6 +49,31 @@ CREATE TABLE `graph-analysis-db`.`dataset` (
   KEY (`datasource_id`)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
+
+DROP TABLE
+IF EXISTS `graph-analysis-db`.`graph`;
+
+CREATE TABLE `graph-analysis-db`.`graph` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `client_id` INTEGER NOT NULL,
+  `dataset_id` BIGINT DEFAULT NULL COMMENT '数据集',
+  `category` VARCHAR (100) DEFAULT NULL,
+  `name` VARCHAR (100) DEFAULT NULL,
+  `graph_type` VARCHAR (15) NOT NULL DEFAULT 'table' COMMENT '图表类型',
+  `optional_field` VARCHAR (255) DEFAULT NULL COMMENT '表示可选择的字段，存储格式为: ["field1","field2","field3"]',
+  `row_field` VARCHAR (255) DEFAULT NULL COMMENT '行显示的字段配置',
+  `column_field` VARCHAR (255) DEFAULT NULL COMMENT '列显示的字段配置',
+  `filter_field` VARCHAR (255) DEFAULT NULL COMMENT '过滤',
+  `metric_field` VARCHAR (255) DEFAULT NULL COMMENT '聚合配置',
+  `created_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
+  `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
+  KEY (`client_id`),
+  KEY (`dataset_id`),
+  PRIMARY KEY (`id`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8;
+
+
+
 DROP TABLE
 IF EXISTS `graph-analysis-db`.`cronjob`;
 
@@ -67,27 +92,4 @@ CREATE TABLE `graph-analysis-db`.`cronjob` (
   `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
   PRIMARY KEY (`id`),
   KEY (`client_id`)
-) ENGINE = INNODB DEFAULT CHARSET = utf8;
-
-DROP TABLE
-IF EXISTS `graph-analysis-db`.`graph`;
-
-CREATE TABLE `graph-analysis-db`.`graph` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `client_id` INTEGER NOT NULL,
-  `category` VARCHAR (100) DEFAULT NULL,
-  `name` VARCHAR (100) DEFAULT NULL,
-  `datasource_id` INTEGER DEFAULT NULL COMMENT '图表的数据源，表示来自数据源，则必须提供查询的query',
-  `query` VARCHAR (500) DEFAULT NULL COMMENT '如果数据来源于数据源，那么保存数据源的sql查询语句，否则为空',
-  `dataset_id` BIGINT DEFAULT NULL COMMENT '图表的数据源，表示来自原数据集',
-  `graph_type` VARCHAR (15) NOT NULL DEFAULT 'table' COMMENT '图表类型',
-  `fill_field` VARCHAR (255) DEFAULT NULL COMMENT '表示可选择的字段，存储格式为: ["field1","field2","field3"]',
-  `row` VARCHAR (255) DEFAULT NULL COMMENT '行显示的字段配置',
-  `column` VARCHAR (255) DEFAULT NULL COMMENT '列显示的字段配置',
-  `filter` VARCHAR (255) DEFAULT NULL COMMENT '过滤',
-  `aggregation` VARCHAR (255) DEFAULT NULL COMMENT '聚合配置',
-  `created_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
-  `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
-  KEY (`client_id`),
-  PRIMARY KEY (`id`)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;

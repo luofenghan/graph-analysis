@@ -41,17 +41,17 @@
 <!--        <table tableName="datasource" domainObjectName="Datasource">
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>-->
-        <table tableName="dataset" domainObjectName="Dataset">
+<!--        <table tableName="dataset" domainObjectName="Dataset">
             <generatedKey column="id" sqlStatement="MySql"/>
-        </table>
+        </table>-->
 <!--
         <table tableName="cronjob" domainObjectName="Cronjob">
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>
 -->
-<!--        <table tableName="graph" domainObjectName="Graph">
+        <table tableName="graph" domainObjectName="Graph">
             <generatedKey column="id" sqlStatement="MySql"/>
-        </table>-->
+        </table>
 
     </context>
 </generatorConfiguration>

@@ -4,7 +4,7 @@ package com.analysis.graph.datasource;
  * Created by cwc on 2017/4/27 0027.
  */
 public enum DsType {
-    JDBC(DB.MYSQL, DB.ORACLE),
+    JDBC(DB.MYSQL, DB.ORACLE, DB.H2),
     SAIKU;
     private DB[] dbs;
 
@@ -28,6 +28,7 @@ public enum DsType {
 
     public enum DB {
         MYSQL,
-        ORACLE;
+        ORACLE,
+        H2;
     }
 }

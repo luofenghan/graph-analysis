@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by cwc on 2017/4/27 0027.
@@ -46,19 +47,23 @@ public class DsStatus {
             }
             this.conf.put("jdbc.pooled.enable", params.remove("pooled"));
             this.conf.put("data.aggregate.enable", params.remove("aggregatable"));
-
             DsType.DB db = DsType.verifyDB(uri.getScheme(), params.remove("db"));
-            this.conf.put("jdbc.driver", "com." + db.name().toLowerCase() + ".jdbc.Driver");
             switch (db) {
                 case MYSQL:
                     this.conf.put("jdbc.url", String.format("jdbc:mysql://%s:%d%s", uri.getHost(), uri.getPort(), uri.getPath()));
+                    this.conf.put("jdbc.driver", "com." + db.name().toLowerCase() + ".jdbc.Driver");
                     break;
                 case ORACLE:
                     this.conf.put("jdbc.url", String.format("jdbc:oracle:thin:@//%s:%d%s", uri.getHost(), uri.getPort(), uri.getPath()));
+                    this.conf.put("jdbc.driver", "com." + db.name().toLowerCase() + ".jdbc.Driver");
+                    break;
+                case H2:
+                    this.conf.put("jdbc.url", String.format("jdbc:h2:mem:%s", uri.getPath()));
+                    this.conf.put("jdbc.driver", "org." + db.name().toLowerCase() + ".Driver");
                     break;
             }
             String userInfo = uri.getUserInfo();
-            if (userInfo.contains(":")) {
+            if (Objects.nonNull(userInfo) && userInfo.contains(":")) {
                 String[] authority = userInfo.split(":");
                 this.conf.put("jdbc.username", authority[0]);
                 this.conf.put("jdbc.password", authority[1]);

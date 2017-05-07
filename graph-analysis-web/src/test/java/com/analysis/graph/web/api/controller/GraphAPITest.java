@@ -1,6 +1,5 @@
 package com.analysis.graph.web.api.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.analysis.graph.common.domain.dbo.Graph;
 import com.analysis.graph.config.DataConfig;
 import com.analysis.graph.web.library.repository.GraphRepository;
@@ -50,17 +49,12 @@ public class GraphAPITest {
         graph.setId(null);
         graph.setClientId(1);
         graph.setName("mock_name");
-        graph.setRow("{}");
-        graph.setFillField("[]");
-        graph.setColumn("{}");
-        graph.setAggregation("{}");
-        graph.setFilter("{}");
+        graph.setRowField("{}");
+        graph.setOptionalField("[]");
+        graph.setColumnField("{}");
+        graph.setMetricField("{}");
+        graph.setFilterField("{}");
         graph.setGraphType("table");
-
-        JSONObject query = new JSONObject();
-        query.put("sql", "select * from city");
-        graph.setQuery(query.toJSONString());
-        graph.setDatasourceId(1);
 
         return graph;
     }
@@ -72,12 +66,12 @@ public class GraphAPITest {
         Graph savedGraph = graphAPI.saveGraph(unsavedGraph);
         Assert.assertNotNull(savedGraph.getId());
 
-        savedGraph.setRow("new row");
+        savedGraph.setRowField("new row");
         Graph updatedGraph = graphAPI.updateGraph(savedGraph);
 
         Graph queriedGraph = graphRepository.queryGraph(updatedGraph.getId());
 
-        Assert.assertEquals(queriedGraph.getRow(), updatedGraph.getRow());
+        Assert.assertEquals(queriedGraph.getRowField(), updatedGraph.getRowField());
 
     }
 

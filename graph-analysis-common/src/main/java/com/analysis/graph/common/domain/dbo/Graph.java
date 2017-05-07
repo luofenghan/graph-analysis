@@ -7,27 +7,23 @@ public class Graph {
 
     private Integer clientId;
 
+    private Long datasetId;
+
     private String category;
 
     private String name;
 
-    private Integer datasourceId;
-
-    private String query;
-
-    private Long datasetId;
-
     private String graphType;
 
-    private String fillField;
+    private String optionalField;
 
-    private String row;
+    private String rowField;
 
-    private String column;
+    private String columnField;
 
-    private String filter;
+    private String filterField;
 
-    private String aggregation;
+    private String metricField;
 
     private Date createdTime;
 
@@ -49,6 +45,14 @@ public class Graph {
         this.clientId = clientId;
     }
 
+    public Long getDatasetId() {
+        return datasetId;
+    }
+
+    public void setDatasetId(Long datasetId) {
+        this.datasetId = datasetId;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -65,30 +69,6 @@ public class Graph {
         this.name = name == null ? null : name.trim();
     }
 
-    public Integer getDatasourceId() {
-        return datasourceId;
-    }
-
-    public void setDatasourceId(Integer datasourceId) {
-        this.datasourceId = datasourceId;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query == null ? null : query.trim();
-    }
-
-    public Long getDatasetId() {
-        return datasetId;
-    }
-
-    public void setDatasetId(Long datasetId) {
-        this.datasetId = datasetId;
-    }
-
     public String getGraphType() {
         return graphType;
     }
@@ -97,44 +77,44 @@ public class Graph {
         this.graphType = graphType == null ? null : graphType.trim();
     }
 
-    public String getFillField() {
-        return fillField;
+    public String getOptionalField() {
+        return optionalField;
     }
 
-    public void setFillField(String fillField) {
-        this.fillField = fillField == null ? null : fillField.trim();
+    public void setOptionalField(String optionalField) {
+        this.optionalField = optionalField == null ? null : optionalField.trim();
     }
 
-    public String getRow() {
-        return row;
+    public String getRowField() {
+        return rowField;
     }
 
-    public void setRow(String row) {
-        this.row = row == null ? null : row.trim();
+    public void setRowField(String rowField) {
+        this.rowField = rowField == null ? null : rowField.trim();
     }
 
-    public String getColumn() {
-        return column;
+    public String getColumnField() {
+        return columnField;
     }
 
-    public void setColumn(String column) {
-        this.column = column == null ? null : column.trim();
+    public void setColumnField(String columnField) {
+        this.columnField = columnField == null ? null : columnField.trim();
     }
 
-    public String getFilter() {
-        return filter;
+    public String getFilterField() {
+        return filterField;
     }
 
-    public void setFilter(String filter) {
-        this.filter = filter == null ? null : filter.trim();
+    public void setFilterField(String filterField) {
+        this.filterField = filterField == null ? null : filterField.trim();
     }
 
-    public String getAggregation() {
-        return aggregation;
+    public String getMetricField() {
+        return metricField;
     }
 
-    public void setAggregation(String aggregation) {
-        this.aggregation = aggregation == null ? null : aggregation.trim();
+    public void setMetricField(String metricField) {
+        this.metricField = metricField == null ? null : metricField.trim();
     }
 
     public Date getCreatedTime() {
@@ -161,17 +141,15 @@ public class Graph {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", clientId=").append(clientId);
+        sb.append(", datasetId=").append(datasetId);
         sb.append(", category=").append(category);
         sb.append(", name=").append(name);
-        sb.append(", datasourceId=").append(datasourceId);
-        sb.append(", query=").append(query);
-        sb.append(", datasetId=").append(datasetId);
         sb.append(", graphType=").append(graphType);
-        sb.append(", fillField=").append(fillField);
-        sb.append(", row=").append(row);
-        sb.append(", column=").append(column);
-        sb.append(", filter=").append(filter);
-        sb.append(", aggregation=").append(aggregation);
+        sb.append(", optionalField=").append(optionalField);
+        sb.append(", rowField=").append(rowField);
+        sb.append(", columnField=").append(columnField);
+        sb.append(", filterField=").append(filterField);
+        sb.append(", metricField=").append(metricField);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", updatedTime=").append(updatedTime);
         sb.append("]");
