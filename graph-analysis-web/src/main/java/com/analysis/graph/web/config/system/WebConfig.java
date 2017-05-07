@@ -5,10 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -16,6 +13,7 @@ import javax.annotation.Resource;
  * Created by cwc on 2017/4/19 0019.
  */
 @Configuration
+@EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Resource
     private APIAccessInterceptor apiAccessInterceptor;

@@ -1,6 +1,7 @@
 package com.analysis.graph.web.library.util;
 
-import com.alibaba.fastjson.JSONObject;
+import com.analysis.graph.common.domain.dto.ErrorDTO;
+import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,12 +16,17 @@ public class HttpUtils {
         return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 
-    public static void writeAjaxSuccessRequestResponse(HttpServletResponse response) throws IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        JSONObject authSuccess = new JSONObject();
-        authSuccess.put("success", true);
-        authSuccess.put("status", "1");
-        response.getWriter().write(authSuccess.toJSONString());
+    public static void writeResponse(HttpServletResponse response, HttpStatus httpStatus, String title) throws IOException {
+        response.setStatus(httpStatus.value());
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setStatus(httpStatus.getReasonPhrase());
+        errorDTO.setCode(httpStatus.value());
+        errorDTO.setTitle(title);
+        errorDTO.setDetail("");
+        response.getWriter().write(JsonUtils.toJsonString(errorDTO));
     }
 
 }

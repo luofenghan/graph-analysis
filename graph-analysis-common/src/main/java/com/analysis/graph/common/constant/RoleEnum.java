@@ -5,5 +5,5 @@ package com.analysis.graph.common.constant;
  */
 public enum RoleEnum {
     ADMIN,
-    CLIENT;
+    ANONYMOUS;
 }

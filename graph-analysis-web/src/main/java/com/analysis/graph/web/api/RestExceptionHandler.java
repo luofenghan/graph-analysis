@@ -18,8 +18,8 @@ import java.sql.SQLException;
  * Created by cwc on 2017/4/6 0006.
  */
 @RestControllerAdvice
-public class RestControllerAdviceHandler {
-    private static final Logger logger = LoggerFactory.getLogger(RestControllerAdviceHandler.class);
+public class RestExceptionHandler {
+    private static final Logger logger = LoggerFactory.getLogger(RestExceptionHandler.class);
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorDTO handleIllegalArgumentException(IllegalArgumentException e) {

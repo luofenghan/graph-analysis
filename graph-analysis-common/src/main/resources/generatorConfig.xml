@@ -52,7 +52,13 @@
 <!--        <table tableName="widget" domainObjectName="Widget">
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>-->
-        <table tableName="dashboard" domainObjectName="Dashboard">
+<!--        <table tableName="dashboard" domainObjectName="Dashboard">
+            <generatedKey column="id" sqlStatement="MySql"/>
+        </table>-->
+<!--        <table tableName="role" domainObjectName="Role">
+            <generatedKey column="id" sqlStatement="MySql"/>
+        </table>-->
+        <table tableName="client_role" domainObjectName="ClientRole">
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>
     </context>

@@ -110,3 +110,32 @@ CREATE TABLE `graph-analysis-db`.`cronjob` (
   PRIMARY KEY (`id`),
   KEY (`client_id`)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
+
+
+-- 角色，考虑到这表很小，就直接用role_id做primary key
+DROP TABLE
+IF EXISTS `graph-analysis-db`.`role`;
+
+CREATE TABLE `graph-analysis-db`.`role` (
+  `id` VARCHAR (64) NOT NULL COMMENT '角色ID，使用英文大写，单词间以下划线分隔如 ADMIN,CLIENT',
+  `name` VARCHAR (64) NOT NULL COMMENT '角色中文名称，如：管理员',
+  `resource_list` TEXT DEFAULT NULL COMMENT '角色拥有的资源列表，资源列表由一系列api组成，例如["/api/dashboard",'']',
+  `created_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
+  `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
+  PRIMARY KEY (`id`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8;
+
+-- 管理用户和角色的对应关系，一个用户可以属于多个角色
+DROP TABLE
+IF EXISTS `graph-analysis-db`.`client_role`;
+
+CREATE TABLE `graph-analysis-db`.`client_role` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `client_id` INTEGER UNSIGNED NOT NULL COMMENT '用户ID',
+  `role_id` VARCHAR (64) NOT NULL COMMENT '用户角色ID',
+  `created_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
+  `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY (`client_id`, `role_id`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8;
+
