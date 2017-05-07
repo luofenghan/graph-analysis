@@ -3,24 +3,13 @@ package com.analysis.graph.datasource.aggregation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
- * Created by cwc on 2017/5/4 0004.
+ * Created by cwc on 2017/5/7 0007.
  */
-public class Dimension {
-    private String name;
+public class Filter {
     private List<String> values;
-    private Filter filter;
-    private Sort sort;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Type type;
 
     public List<String> getValues() {
         return values;
@@ -30,39 +19,19 @@ public class Dimension {
         this.values = values;
     }
 
-    public Filter getFilter() {
-        return filter;
+    public Type getType() {
+        return type;
     }
 
-    public void setFilter(Filter filter) {
-        this.filter = filter;
+    public void setType(Type type) {
+        this.type = type;
     }
 
-    public void setFilter(String filter) {
-        this.filter = Filter.valueOfSymbol(filter);
+    public void setType(String type) {
+        this.type = Type.valueOfSymbol(type);
     }
 
-    public Sort getSort() {
-        return sort;
-    }
-
-    public void setSort(Sort sort) {
-        this.sort = sort;
-    }
-
-    public void setSort(String sort) {
-        if (!Objects.isNull(sort)) {
-            this.sort = Sort.valueOf(sort.toUpperCase());
-        } else {
-            this.sort = Sort.DEFAULT;
-        }
-    }
-
-    public enum Sort {
-        DEFAULT, ASC, DESC;
-    }
-
-    public enum Filter {
+    public enum Type {
         EQUAL("=", "%s IN ( %s )"),
         NOT_EQUAL("≠", "%s NOT IN ( '%s' )"),
         GREATER_THAN(">", "%s > '%s'"),
@@ -76,15 +45,15 @@ public class Dimension {
         private String symbol;
         private String expFormat;
 
-        Filter(String symbol, String expFormat) {
+        Type(String symbol, String expFormat) {
             this.symbol = symbol;
             this.expFormat = expFormat;
         }
 
-        private static final Map<String, Filter> MAP = new HashMap<>(values().length);
+        private static final Map<String, Type> MAP = new HashMap<>(values().length);
 
         static {
-            for (Filter filter : values()) {
+            for (Type filter : values()) {
                 MAP.put(filter.symbol, filter);
             }
         }
@@ -93,7 +62,7 @@ public class Dimension {
             return symbol;
         }
 
-        public static Filter valueOfSymbol(String type) {
+        public static Type valueOfSymbol(String type) {
             return MAP.get(type.toLowerCase());
         }
 

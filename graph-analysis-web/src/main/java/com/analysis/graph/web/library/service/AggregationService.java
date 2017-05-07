@@ -39,10 +39,10 @@ public class AggregationService {
 
     @SuppressWarnings("unchecked")
     public AggregationResult aggregate(Integer clientId, Dataset dataset) {
-        AggregationView aggregationQuery = new AggregationView();
+        DimensionView aggregationQuery = new DimensionView();
         if (dataset.getFilter() != null) {
             JSONArray.parseArray(dataset.getFilter());
-            List<Dimension> filters = JsonUtils.toJavaObject(dataset.getFilter(), new TypeReference<List<Dimension>>() {
+            List<Field> filters = JsonUtils.toJavaObject(dataset.getFilter(), new TypeReference<List<Field>>() {
             });
             aggregationQuery.setFilters(filters);
         }
@@ -50,13 +50,13 @@ public class AggregationService {
         return aggregate(clientId, dataSourceInfo.getUri(), dataset.getQuery(), aggregationQuery);
     }
 
-    public AggregationResult aggregate(Integer clientId, Long datasetId, AggregationView aggregationView) {
+    public AggregationResult aggregate(Integer clientId, Long datasetId, DimensionView aggregationView) {
         Dataset dataSet = dataSetRepository.queryDataset(datasetId);
         Datasource dataSourceInfo = dataSourceRepository.queryDatasourceById(dataSet.getDatasourceId());
         return aggregate(clientId, dataSourceInfo.getUri(), dataSet.getQuery(), aggregationView);
     }
 
-    private AggregationResult aggregate(Integer clientId, String uri, String queryStr, AggregationView aggregationView) {
+    private AggregationResult aggregate(Integer clientId, String uri, String queryStr, DimensionView aggregationView) {
         Map<String, String> queryParam = Maps.transformValues(JsonUtils.toJsonObject(queryStr), Functions.toStringFunction());
 
         DataSourceSystem dataSourceSystem = DataSourceSystem.get(clientId, URI.create(uri));
@@ -73,7 +73,7 @@ public class AggregationService {
         }
     }
 
-    public String getAggregationSQL(Integer clientId, URI uri, String queryStr, AggregationView aggregationView) {
+    public String getAggregationSQL(Integer clientId, URI uri, String queryStr, DimensionView aggregationView) {
         Map<String, String> queryParam = Maps.transformValues(JSON.parseObject(queryStr), Functions.toStringFunction());
         DataSourceSystem dataSourceSystem = DataSourceSystem.get(clientId, uri);
         try (DataProvider dataProvider = dataSourceSystem.getDataProvider(queryParam)) {

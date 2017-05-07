@@ -5,10 +5,10 @@ import com.analysis.graph.common.domain.dbo.Dataset;
 import com.analysis.graph.common.domain.dbo.Datasource;
 import com.analysis.graph.config.DataConfig;
 import com.analysis.graph.datasource.aggregation.AggregationResult;
-import com.analysis.graph.datasource.aggregation.Dimension;
+import com.analysis.graph.datasource.aggregation.Field;
+import com.analysis.graph.datasource.aggregation.Filter;
 import com.analysis.graph.web.library.repository.DatasourceRepository;
 import com.analysis.graph.web.library.util.JsonUtils;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -35,9 +35,15 @@ public class AggregationServiceTest {
         Class.forName("org.h2.Driver");
         Connection connection = DriverManager.getConnection("jdbc:h2:mem:test", "sa", "");
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM ( SELECT o.* FROM orders o INNER JOIN returns r ON o.order_id = r.order_id LIMIT 1,5000 ) __view__ WHERE 1=0");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM (SELECT o.* FROM orders o INNER JOIN returns r ON o.order_id = r.order_id) __view__ WHERE 1=0");
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-        Assert.assertTrue(resultSetMetaData.getColumnCount() != 0);
+        while (resultSet.next()) {
+            for (int i = 0; i < resultSetMetaData.getColumnCount(); i++) {
+                System.out.print(resultSet.getString(i + 1) + " ");
+            }
+            System.out.println();
+        }
+
     }
 
     @Test
@@ -47,7 +53,7 @@ public class AggregationServiceTest {
         datasource.setClientId(1);
         datasource.setName("数据源名称");
         //jdbc:h2:mem:test
-        datasource.setUri("jdbc://sa:/test?db=h2&aggregatable=true&pooled=false");
+        datasource.setUri("jdbc://sa@mem:0/test?db=h2&aggregatable=true&pooled=false");
         datasource.setId(null);
         datasource = datasourceRepository.insertDataSource(datasource);
 
@@ -59,10 +65,12 @@ public class AggregationServiceTest {
         dataset.setClientId(1);
         dataset.setDatasourceId(datasource.getId());
 
-        Dimension dimension = new Dimension();
-        dimension.setFilter(Dimension.Filter.LESS_THAN);
+        Field dimension = new Field();
+        Filter filter = new Filter();
+        filter.setType(Filter.Type.LESS_THAN);
+        filter.setValues(Collections.singletonList("64.8"));
+        dimension.setFilter(filter);
         dimension.setName("sales");
-        dimension.setValues(Collections.singletonList("64.8"));
         JSONArray filters = new JSONArray();
         filters.add(dimension);
         dataset.setFilter(JsonUtils.toJsonString(filters));

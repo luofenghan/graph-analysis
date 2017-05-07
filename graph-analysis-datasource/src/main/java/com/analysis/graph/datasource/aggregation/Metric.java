@@ -33,6 +33,7 @@ public class Metric {
     }
 
     public enum Function {
+        NORMAL("%s"),
         SUM("SUM(%s)"),
         AVG("AVG(%s)"),
         MAX("MAX(%s)"),

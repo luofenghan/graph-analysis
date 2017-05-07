@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.Objects;
 
 /**
  * Created by cwc on 2017/5/6 0006.
@@ -23,6 +24,9 @@ public class JsonUtils {
     }
 
     public static <T> T toJavaObject(String json, TypeReference<T> typeReference) {
+        if (Objects.isNull(json)) {
+            return null;
+        }
         return toJavaObject(new StringReader(json), typeReference);
     }
 

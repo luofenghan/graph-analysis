@@ -7,8 +7,8 @@ import java.sql.SQLException;
  */
 public interface Aggregator {
 
-    AggregationResult doAggregation(AggregationView aggregationView) throws SQLException;
+    AggregationResult doAggregation(DimensionView aggregationView) throws SQLException;
 
-    String getAggregationSql(AggregationView av) throws SQLException;
+    String getAggregationSql(DimensionView av) throws SQLException;
 
 }

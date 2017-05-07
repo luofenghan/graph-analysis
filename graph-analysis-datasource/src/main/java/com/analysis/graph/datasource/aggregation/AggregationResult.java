@@ -53,7 +53,7 @@ public class AggregationResult {
             return columnIndex;
         }
 
-        public static ColumnIndex fromDimension(Dimension dimension) {
+        public static ColumnIndex fromDimension(Field dimension) {
             ColumnIndex columnIndex = new ColumnIndex();
             columnIndex.setName(dimension.getName());
             return columnIndex;

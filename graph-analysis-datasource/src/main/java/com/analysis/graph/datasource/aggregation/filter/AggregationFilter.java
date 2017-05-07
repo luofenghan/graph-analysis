@@ -1,7 +1,7 @@
 package com.analysis.graph.datasource.aggregation.filter;
 
-import com.analysis.graph.datasource.aggregation.AggregationView;
-import com.analysis.graph.datasource.aggregation.Dimension;
+import com.analysis.graph.datasource.aggregation.DimensionView;
+import com.analysis.graph.datasource.aggregation.Field;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -13,10 +13,10 @@ import java.util.*;
  * Created by cwc on 2017/4/23 0023.
  */
 public class AggregationFilter {
-    private List<Dimension> ruleList;
+    private List<Field> ruleList;
     private Map<String, Integer> columnIndex;
 
-    public AggregationFilter(AggregationView aggregationView, Map<String, Integer> columnIndex) {
+    public AggregationFilter(DimensionView aggregationView, Map<String, Integer> columnIndex) {
         ruleList = new ArrayList<>();
         if (aggregationView != null) {
             ruleList.addAll(aggregationView.getColumns());
@@ -40,7 +40,7 @@ public class AggregationFilter {
             String b = rule.getValues().size() >= 2 ? rule.getValues().get(1) : null;
 
             Comparator<String> stringComparator = Comparator.naturalOrder();
-            switch (rule.getFilter()) {
+            switch (rule.getFilter().getType()) {
                 case EQUAL:
                     return rule.getValues().stream().anyMatch(e -> e.equals(value));
                 case NOT_EQUAL:

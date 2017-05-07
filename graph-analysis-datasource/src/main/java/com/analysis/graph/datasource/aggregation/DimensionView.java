@@ -7,28 +7,28 @@ import java.util.stream.Stream;
 /**
  * Created by cwc on 2017/4/27 0027.
  */
-public class AggregationView {
-    private List<Dimension> rows;
-    private List<Dimension> columns;
-    private List<Dimension> filters;
+public class DimensionView {
+    private List<Field> rows;
+    private List<Field> columns;
+    private List<Field> filters;
     private List<Metric> metrics;
 
-    public AggregationView() {
+    public DimensionView() {
         this.rows = Collections.emptyList();
         this.columns = Collections.emptyList();
         this.filters = Collections.emptyList();
         this.metrics = Collections.emptyList();
     }
 
-    public Stream<Dimension> rowStream() {
+    public Stream<Field> rowStream() {
         return rows.stream();
     }
 
-    public Stream<Dimension> columnStream() {
+    public Stream<Field> columnStream() {
         return columns.stream();
     }
 
-    public Stream<Dimension> filterStream() {
+    public Stream<Field> filterStream() {
         return filters.stream();
     }
 
@@ -37,28 +37,32 @@ public class AggregationView {
     }
 
 
-    public List<Dimension> getRows() {
+    public List<Field> getRows() {
         return rows;
     }
 
-    public void setRows(List<Dimension> rows) {
-        this.rows = rows;
+    public void setRows(List<Field> rows) {
+        if (rows != null)
+            this.rows = rows;
     }
 
-    public List<Dimension> getColumns() {
+    public List<Field> getColumns() {
         return columns;
     }
 
-    public void setColumns(List<Dimension> columns) {
-        this.columns = columns;
+    public void setColumns(List<Field> columns) {
+        if (columns != null)
+            this.columns = columns;
     }
 
-    public List<Dimension> getFilters() {
+    public List<Field> getFilters() {
         return filters;
     }
 
-    public void setFilters(List<Dimension> filters) {
-        this.filters = filters;
+    public void setFilters(List<Field> filters) {
+        if (filters != null) {
+            this.filters = filters;
+        }
     }
 
     public List<Metric> getMetrics() {
@@ -66,6 +70,7 @@ public class AggregationView {
     }
 
     public void setMetrics(List<Metric> metrics) {
-        this.metrics = metrics;
+        if (metrics != null)
+            this.metrics = metrics;
     }
 }

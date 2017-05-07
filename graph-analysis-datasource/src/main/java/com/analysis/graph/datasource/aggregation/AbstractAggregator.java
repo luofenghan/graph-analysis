@@ -3,6 +3,7 @@ package com.analysis.graph.datasource.aggregation;
 import com.analysis.graph.datasource.DataProvider;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -26,26 +27,27 @@ public abstract class AbstractAggregator implements Aggregator {
         return config.getFunction().getMetricFunc(aggExp);
     };
 
-    protected static final Function<Dimension, String> FILTER_PARSER = (config) -> {
-        if (CollectionUtils.isEmpty(config.getValues())) {
+    protected static final Function<Field, String> FILTER_PARSER = (config) -> {
+        Filter filter = config.getFilter();
+        if (Objects.isNull(filter) || CollectionUtils.isEmpty(filter.getValues())) {
             return null;
         }
-        Dimension.Filter filter = config.getFilter();
-        switch (filter) {
+        Filter.Type type = filter.getType();
+        switch (type) {
             case EQUAL:
             case NOT_EQUAL:
-                return filter.getFilterExp(config.getName(), IntStream.range(0, config.getValues().size()).boxed().map(i -> config.getValues().get(i)).collect(Collectors.joining(",")));
+                return type.getFilterExp(config.getName(), IntStream.range(0, filter.getValues().size()).boxed().map(i -> filter.getValues().get(i)).collect(Collectors.joining(",")));
             case GREATER_THAN:
             case LESS_THAN:
             case NOT_LESS_THAN:
             case NOT_MORE_THAN:
-                return filter.getFilterExp(config.getName(), config.getValues().get(0));
+                return type.getFilterExp(config.getName(), filter.getValues().get(0));
             case RANGE_A_$B:
             case RANGE_$A_B:
             case RANGE_A_B:
             case RANGE_$A_$B:
-                if (config.getValues().size() >= 2) {
-                    filter.getFilterExp(config.getName(), config.getValues().get(0), config.getName(), config.getValues().get(1));
+                if (filter.getValues().size() >= 2) {
+                    type.getFilterExp(config.getName(), filter.getValues().get(0), config.getName(), filter.getValues().get(1));
                 } else {
                     return null;
                 }

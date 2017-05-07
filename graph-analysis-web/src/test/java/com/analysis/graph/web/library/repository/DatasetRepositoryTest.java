@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestComponent;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -22,26 +23,18 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DataConfig.class})
 @Transactional
+@TestComponent
 public class DatasetRepositoryTest {
     @Autowired
     private DatasetRepository datasetRepository;
 
-    private Dataset dataset() {
+    public Dataset dataset() {
         Dataset dataset = new Dataset();
         dataset.setId(null);
         dataset.setCategory("数据集分类");
         dataset.setName("数据集名称");
         dataset.setClientId(1);
         dataset.setDatasourceId(1);
-
-        /*表达式*/
-        JSONArray expressions = new JSONArray();
-        JSONObject exp1 = new JSONObject();
-        exp1.put("exp", "count(city_name)");
-        exp1.put("alias", "CountCityOfProvince");
-        expressions.add(exp1);
-
-
         /*过滤器*/
         JSONArray filters = new JSONArray();
         JSONObject filter1 = new JSONObject();

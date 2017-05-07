@@ -64,7 +64,7 @@ public class DatasetRepository {
     public Dataset queryDataset(Long dataSetId) {
         Dataset dataSet = dataSetMapper.selectByPrimaryKey(dataSetId);
         if (dataSet == null) {
-            throw new IllegalArgumentException("can not find client's dataset by datasetId：" + dataSetId);
+            throw new IllegalArgumentException("can not find dataset by datasetId：" + dataSetId);
         }
         return dataSet;
     }

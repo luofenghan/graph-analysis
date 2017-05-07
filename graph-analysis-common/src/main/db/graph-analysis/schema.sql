@@ -60,7 +60,7 @@ CREATE TABLE `graph-analysis-db`.`graph` (
   `category` VARCHAR (100) DEFAULT NULL,
   `name` VARCHAR (100) DEFAULT NULL,
   `graph_type` VARCHAR (15) NOT NULL DEFAULT 'table' COMMENT '图表类型',
-  `optional_field` VARCHAR (255) DEFAULT NULL COMMENT '表示可选择的字段，存储格式为: ["field1","field2","field3"]',
+  `optional_field` VARCHAR (1000) DEFAULT NULL COMMENT '表示可选择的字段，存储格式为: ["field1","field2","field3"]',
   `row_field` VARCHAR (255) DEFAULT NULL COMMENT '行显示的字段配置',
   `column_field` VARCHAR (255) DEFAULT NULL COMMENT '列显示的字段配置',
   `filter_field` VARCHAR (255) DEFAULT NULL COMMENT '过滤',

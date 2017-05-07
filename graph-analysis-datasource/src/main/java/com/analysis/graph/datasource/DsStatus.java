@@ -58,7 +58,7 @@ public class DsStatus {
                     this.conf.put("jdbc.driver", "com." + db.name().toLowerCase() + ".jdbc.Driver");
                     break;
                 case H2:
-                    this.conf.put("jdbc.url", String.format("jdbc:h2:mem:%s", uri.getPath()));
+                    this.conf.put("jdbc.url", String.format("jdbc:h2:%s:%s", uri.getHost(), uri.getPath().substring(1)));
                     this.conf.put("jdbc.driver", "org." + db.name().toLowerCase() + ".Driver");
                     break;
             }
@@ -67,6 +67,9 @@ public class DsStatus {
                 String[] authority = userInfo.split(":");
                 this.conf.put("jdbc.username", authority[0]);
                 this.conf.put("jdbc.password", authority[1]);
+            } else {
+                this.conf.put("jdbc.username", userInfo);
+                this.conf.put("jdbc.password", "");
             }
         }
     }

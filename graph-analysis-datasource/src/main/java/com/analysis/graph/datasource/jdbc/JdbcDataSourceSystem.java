@@ -158,7 +158,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
         }
 
         @Override
-        public AggregationResult doAggregation(AggregationView av) throws SQLException {
+        public AggregationResult doAggregation(DimensionView av) throws SQLException {
             String sql = getAggregationSql(av);
             dataProvider.resetResultSetIfExisted(sql);
 
@@ -171,7 +171,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
             return new AggregationResult(columnIndices, dataProvider.readFully());
         }
 
-        private List<ColumnIndex> getColumnIndexList(AggregationView av) {
+        private List<ColumnIndex> getColumnIndexList(DimensionView av) {
             List<ColumnIndex> columnIndexList = Stream.concat(av.columnStream(), av.rowStream())
                     .map(ColumnIndex::fromDimension)
                     .collect(Collectors.toList());
@@ -182,7 +182,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
 
 
         @Override
-        public String getAggregationSql(AggregationView av) throws SQLException {
+        public String getAggregationSql(DimensionView av) throws SQLException {
             String columnNames = getDimensionColumns(av.rowStream(), av.columnStream());
 
             String groupBy = "";
@@ -204,7 +204,7 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
 
         }
 
-        private String getWhereCondition(Stream<Dimension> rowStream, Stream<Dimension> columnStream, Stream<Dimension> filterStream) {
+        private String getWhereCondition(Stream<Field> rowStream, Stream<Field> columnStream, Stream<Field> filterStream) {
             StringJoiner where = new StringJoiner("\nAND ", "WHERE" + " ", "").setEmptyValue("");
             Stream.concat(Stream.concat(rowStream, columnStream), filterStream)
                     .map(FILTER_PARSER)
@@ -213,10 +213,10 @@ public class JdbcDataSourceSystem extends DataSourceSystem {
             return where.toString();
         }
 
-        private String getDimensionColumns(Stream<Dimension> rowStream, Stream<Dimension> columnStream) {
+        private String getDimensionColumns(Stream<Field> rowStream, Stream<Field> columnStream) {
             StringJoiner columns = new StringJoiner(", ", "", " ").setEmptyValue("");
             Stream.concat(rowStream, columnStream)
-                    .map(Dimension::getName)
+                    .map(Field::getName)
                     .distinct()
                     .filter(Objects::nonNull)
                     .forEach(columns::add);
