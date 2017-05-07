@@ -2,12 +2,12 @@ package com.analysis.graph.web.api.controller;
 
 import com.analysis.graph.common.domain.dbo.Dataset;
 import com.analysis.graph.common.domain.dbo.Datasource;
-import com.analysis.graph.common.domain.dbo.Graph;
+import com.analysis.graph.common.domain.dbo.Widget;
 import com.analysis.graph.config.DataConfig;
 import com.analysis.graph.datasource.aggregation.*;
 import com.analysis.graph.web.library.repository.DatasetRepository;
 import com.analysis.graph.web.library.repository.DatasourceRepository;
-import com.analysis.graph.web.library.repository.GraphRepositoryTest;
+import com.analysis.graph.web.library.repository.WidgetRepositoryTest;
 import com.analysis.graph.web.library.service.AggregationService;
 import com.analysis.graph.web.library.util.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -33,7 +33,7 @@ public class AggregationAPITest {
     private DatasetRepository datasetRepository;
 
     @Resource
-    private GraphRepositoryTest graphRepositoryTest;
+    private WidgetRepositoryTest graphRepositoryTest;
 
     @Resource
     private DatasourceRepository datasourceRepository;
@@ -49,7 +49,7 @@ public class AggregationAPITest {
         //jdbc:h2:mem:test
         datasource.setUri("jdbc://sa@mem/test?db=h2&aggregatable=true&pooled=false");
         datasource.setId(null);
-        datasource = datasourceRepository.insertDataSource(datasource);
+        datasource = datasourceRepository.saveDatasource(datasource);
 
         Dataset dataset = new Dataset();
         dataset.setName("全球市场数据集");
@@ -70,9 +70,9 @@ public class AggregationAPITest {
 
         dataset.setDatasourceId(datasource.getId());
 
-        dataset = datasetRepository.insertDataset(dataset);
+        dataset = datasetRepository.saveDataset(dataset);
 
-        Graph graph = graphRepositoryTest.graph();
+        Widget graph = graphRepositoryTest.graph();
 
         DimensionView dimensionView = new DimensionView();
         dimensionView.setColumns(JsonUtils.toJavaObject(graph.getColumnField(), new TypeReference<List<Field>>() {

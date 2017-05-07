@@ -2,7 +2,7 @@ package com.analysis.graph.common.domain.dbo;
 
 import java.util.Date;
 
-public class Graph {
+public class Widget {
     private Long id;
 
     private Integer clientId;

@@ -43,7 +43,7 @@ CREATE TABLE `dataset` (
 ) ;
 
 
-CREATE TABLE `graph` (
+CREATE TABLE `widget` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `client_id` INTEGER NOT NULL,
   `dataset_id` BIGINT DEFAULT NULL COMMENT '数据集',
@@ -56,6 +56,17 @@ CREATE TABLE `graph` (
   `filter_field` VARCHAR (255) DEFAULT NULL COMMENT '过滤',
   `metric_field` VARCHAR (255) DEFAULT NULL COMMENT '聚合配置',
   `created_time` DATETIME DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
+  `updated_time` DATETIME DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
+  PRIMARY KEY (`id`)
+) ;
+
+CREATE TABLE `dashboard` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `client_id` INTEGER NOT NULL,
+  `category` VARCHAR (100) DEFAULT NULL COMMENT '仪表板的分类',
+  `name` VARCHAR (100) NOT NULL COMMENT '仪表板的命名',
+  `layout_config` TEXT DEFAULT NULL COMMENT '仪表板的布局配置',
+  `created_time` DATETIME  DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
   `updated_time` DATETIME DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
   PRIMARY KEY (`id`)
 ) ;

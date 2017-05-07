@@ -1,9 +1,10 @@
 package com.analysis.graph.web.library.repository;
 
+import com.analysis.graph.common.constant.GlobalConstant;
 import com.analysis.graph.common.domain.dbo.Dataset;
 import com.analysis.graph.common.domain.dbo.DatasetExample;
-import com.analysis.graph.common.domain.dbo.Datasource;
 import com.analysis.graph.common.repository.mapper.DatasetMapper;
+import com.google.common.base.Preconditions;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,48 +25,45 @@ public class DatasetRepository {
     @Resource
     private DatasetMapper dataSetMapper;
 
-    @Transactional
-    public Dataset insertDataset(Dataset dataSet) {
-        if (StringUtils.isEmpty(dataSet.getName())) {
-            Datasource dataSourceInfo = dataSourceRepository.queryDatasourceById(dataSet.getDatasourceId());
-            dataSet.setName(String.format("%s_%s", dataSourceInfo.getName(), dataSet.hashCode()));
-        }
+    private void sanitize(Dataset dataSet) {
         if (StringUtils.isEmpty(dataSet.getCategory())) {
-            dataSet.setCategory("未分类");
+            dataSet.setCategory(GlobalConstant.UN_CATEGORY);
         }
+    }
 
+    @Transactional
+    public Dataset saveDataset(Dataset dataSet) {
+        sanitize(dataSet);
         DateTime now = new DateTime();
         dataSet.setCreatedTime(now.toDate());
         dataSet.setUpdatedTime(now.toDate());
-
         dataSetMapper.insert(dataSet);
         return dataSet;
     }
 
     @Transactional
     public Dataset updateDataset(Dataset dataSet) {
+        sanitize(dataSet);
         dataSet.setUpdatedTime(new DateTime().toDate());
         dataSetMapper.updateByPrimaryKeySelective(dataSet);
         return dataSet;
     }
 
     @Transactional
-    public void deleteDataset(Long id) {
+    public void removeDataset(Long id) {
         dataSetMapper.deleteByPrimaryKey(id);
     }
 
-    public List<Dataset> queryClientDataset(Integer clientId) {
+    public List<Dataset> listDatasetForClient(Integer clientId) {
         DatasetExample example = new DatasetExample();
         example.createCriteria().andClientIdEqualTo(clientId);
 
         return dataSetMapper.selectByExample(example);
     }
 
-    public Dataset queryDataset(Long dataSetId) {
+    public Dataset getDataset(Long dataSetId) {
         Dataset dataSet = dataSetMapper.selectByPrimaryKey(dataSetId);
-        if (dataSet == null) {
-            throw new IllegalArgumentException("can not find dataset by datasetId：" + dataSetId);
-        }
+        Preconditions.checkArgument(dataSet != null, "can not find dataset by datasetId：" + dataSetId);
         return dataSet;
     }
 }

@@ -55,7 +55,7 @@ public class AggregationServiceTest {
         //jdbc:h2:mem:test
         datasource.setUri("jdbc://sa@mem:0/test?db=h2&aggregatable=true&pooled=false");
         datasource.setId(null);
-        datasource = datasourceRepository.insertDataSource(datasource);
+        datasource = datasourceRepository.saveDatasource(datasource);
 
         /*初始化数据集*/
         Dataset dataset = new Dataset();

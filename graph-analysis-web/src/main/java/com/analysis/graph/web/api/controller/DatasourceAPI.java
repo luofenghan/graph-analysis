@@ -34,17 +34,17 @@ public class DatasourceAPI {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Datasource saveDataSource(Datasource dataSourceInfo) {
-        return dataSourceRepository.insertDataSource(dataSourceInfo);
+        return dataSourceRepository.saveDatasource(dataSourceInfo);
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Datasource updateDataSource(Datasource dataSourceInfo) {
-        return dataSourceRepository.updateDataSource(dataSourceInfo);
+        return dataSourceRepository.updateDatasource(dataSourceInfo);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteDatasource(@PathVariable Integer id) {
-        dataSourceRepository.deleteDataSource(id);
+        dataSourceRepository.removeDataSource(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -60,7 +60,7 @@ public class DatasourceAPI {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<Datasource> dataSourceList() {
         Client client = sessionRepository.getCurrentOnlineClient();
-        return dataSourceRepository.queryDataSourceListByClientId(client.getId());
+        return dataSourceRepository.listDatasourceForClient(client.getId());
     }
 
     @RequestMapping(value = "/type/list", method = RequestMethod.GET)

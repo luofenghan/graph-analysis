@@ -46,13 +46,13 @@ public class AggregationService {
             });
             aggregationQuery.setFilters(filters);
         }
-        Datasource dataSourceInfo = dataSourceRepository.queryDatasourceById(dataset.getDatasourceId());
+        Datasource dataSourceInfo = dataSourceRepository.getDatasource(dataset.getDatasourceId());
         return aggregate(clientId, dataSourceInfo.getUri(), dataset.getQuery(), aggregationQuery);
     }
 
     public AggregationResult aggregate(Integer clientId, Long datasetId, DimensionView aggregationView) {
-        Dataset dataSet = dataSetRepository.queryDataset(datasetId);
-        Datasource dataSourceInfo = dataSourceRepository.queryDatasourceById(dataSet.getDatasourceId());
+        Dataset dataSet = dataSetRepository.getDataset(datasetId);
+        Datasource dataSourceInfo = dataSourceRepository.getDatasource(dataSet.getDatasourceId());
         return aggregate(clientId, dataSourceInfo.getUri(), dataSet.getQuery(), aggregationView);
     }
 

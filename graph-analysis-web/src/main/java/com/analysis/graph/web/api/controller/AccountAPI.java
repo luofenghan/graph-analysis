@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Optional;
 
 /**
  * Created by cwc on 2017/4/6 0006.
@@ -28,18 +27,14 @@ public class AccountAPI {
 
     @RequestMapping(method = RequestMethod.POST)
     public Client register(Client customer) {
-        return clientRepository.createClient(customer);
+        return clientRepository.saveClient(customer);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Client getClientById(@PathVariable Integer id) {
-        Optional<Client> clientOptional = clientRepository.getClientById(id);
-        if (clientOptional.isPresent()) {
-            Client client = clientOptional.get();
-            client.setPassword(null);
-            return client;
-        }
-        throw new IllegalArgumentException(String.format("can not find client by id %s", id));
+        Client client = clientRepository.getClientById(id);
+        client.setPassword(null);
+        return client;
     }
 
     @RequestMapping(method = RequestMethod.GET)

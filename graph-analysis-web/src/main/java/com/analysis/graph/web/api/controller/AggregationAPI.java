@@ -43,8 +43,8 @@ public class AggregationAPI {
 
     @RequestMapping(value = "/sql", method = RequestMethod.GET)
     public String getAggregationSql(@RequestParam Long dataSetId, @RequestParam DimensionView view) {
-        Dataset dataSet = dataSetRepository.queryDataset(dataSetId);
-        Datasource dataSourceInfo = dataSourceRepository.queryDatasourceById(dataSet.getDatasourceId());
+        Dataset dataSet = dataSetRepository.getDataset(dataSetId);
+        Datasource dataSourceInfo = dataSourceRepository.getDatasource(dataSet.getDatasourceId());
         return dataAggregateService.getAggregationSQL(sessionRepository.getUserId(), URI.create(dataSourceInfo.getUri()), dataSet.getQuery(), view);
     }
 }

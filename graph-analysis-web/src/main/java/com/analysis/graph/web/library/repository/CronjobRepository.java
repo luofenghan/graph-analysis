@@ -3,6 +3,7 @@ package com.analysis.graph.web.library.repository;
 import com.analysis.graph.common.domain.dbo.Cronjob;
 import com.analysis.graph.common.domain.dbo.CronjobExample;
 import com.analysis.graph.common.repository.mapper.CronjobMapper;
+import com.google.common.base.Preconditions;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ public class CronjobRepository {
     private CronjobMapper cronjobMapper;
 
     @Transactional
-    public Cronjob insertCronjob(Cronjob cronJob) {
+    public Cronjob saveCronjob(Cronjob cronJob) {
         DateTime now = new DateTime();
         cronJob.setCreatedTime(now.toDate());
         cronJob.setUpdatedTime(now.toDate());
@@ -36,7 +37,7 @@ public class CronjobRepository {
         return cronJob;
     }
 
-    public List<Cronjob> queryCronjobList(Integer clientId) {
+    public List<Cronjob> listCronjobForClient(Integer clientId) {
         CronjobExample example = new CronjobExample();
         example.createCriteria().andClientIdEqualTo(clientId);
 
@@ -44,12 +45,14 @@ public class CronjobRepository {
     }
 
     @Transactional
-    public void deleteCronjob(Long id) {
+    public void removeCronjob(Long id) {
         cronjobMapper.deleteByPrimaryKey(id);
 
     }
 
-    public Optional<Cronjob> queryCronjob(Long id) {
-        return Optional.ofNullable(cronjobMapper.selectByPrimaryKey(id));
+    public Cronjob getCronjob(Long id) {
+        Cronjob cronjob = cronjobMapper.selectByPrimaryKey(id);
+        Preconditions.checkArgument(cronjob != null, "can not find Cronjob by id: %d", id);
+        return cronjob;
     }
 }

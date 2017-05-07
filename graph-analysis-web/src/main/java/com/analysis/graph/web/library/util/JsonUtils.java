@@ -39,6 +39,7 @@ public class JsonUtils {
         } catch (IOException e) {
             return null;
         } finally {
+
             try {
                 reader.close();
             } catch (IOException e) {

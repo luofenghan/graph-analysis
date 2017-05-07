@@ -49,9 +49,11 @@
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>
 -->
-        <table tableName="graph" domainObjectName="Graph">
+<!--        <table tableName="widget" domainObjectName="Widget">
+            <generatedKey column="id" sqlStatement="MySql"/>
+        </table>-->
+        <table tableName="dashboard" domainObjectName="Dashboard">
             <generatedKey column="id" sqlStatement="MySql"/>
         </table>
-
     </context>
 </generatorConfiguration>

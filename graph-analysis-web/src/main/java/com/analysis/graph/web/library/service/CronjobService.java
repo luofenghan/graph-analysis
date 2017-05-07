@@ -39,11 +39,7 @@ public class CronjobService {
     private SessionRepository sessionRepository;
 
     public void executeCronjob(Long jobId) {
-        Optional<Cronjob> cronJobOptional = cronJobRepository.queryCronjob(jobId);
-        if (!cronJobOptional.isPresent()) {
-            throw new IllegalArgumentException("Can not find cron job with id:" + jobId);
-        }
-        Cronjob cronJob = cronJobOptional.get();
+        Cronjob cronJob = cronJobRepository.getCronjob(jobId);
         startJob(cronJob.getType(), cronJob.getConfig());
     }
 
@@ -63,7 +59,7 @@ public class CronjobService {
             e.printStackTrace();
         }
         Client client = sessionRepository.getCurrentOnlineClient();
-        List<Cronjob> cronJobList = cronJobRepository.queryCronjobList(client.getId());
+        List<Cronjob> cronJobList = cronJobRepository.listCronjobForClient(client.getId());
         for (Cronjob cronJob : cronJobList) {
             try {
                 long startTime = cronJob.getStartTime().getTime();

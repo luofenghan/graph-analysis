@@ -37,20 +37,20 @@ public class DatasourceRepositoryTest {
     @Rollback
     public void queryDatasourceById() throws Exception {
         Datasource datasource = datasource();
-        datasource = datasourceRepository.insertDataSource(datasource);
+        datasource = datasourceRepository.saveDatasource(datasource);
         Assert.assertNotNull(datasource.getId());
 
-        datasourceRepository.queryDatasourceById(datasource.getId());
+        datasourceRepository.getDatasource(datasource.getId());
     }
 
     @Test
     @Rollback
     public void queryDataSourceListByClientId() throws Exception {
         Datasource datasource = datasource();
-        datasource = datasourceRepository.insertDataSource(datasource);
+        datasource = datasourceRepository.saveDatasource(datasource);
         Assert.assertNotNull(datasource.getId());
 
-        List<Datasource> datasources = datasourceRepository.queryDataSourceListByClientId(1);
+        List<Datasource> datasources = datasourceRepository.listDatasourceForClient(1);
         Assert.assertTrue(datasources.size() == 1);
     }
 
@@ -58,7 +58,7 @@ public class DatasourceRepositoryTest {
     @Rollback
     public void insertDataSource() throws Exception {
         Datasource datasource = datasource();
-        datasource = datasourceRepository.insertDataSource(datasource);
+        datasource = datasourceRepository.saveDatasource(datasource);
         Assert.assertNotNull(datasource.getId());
     }
 
@@ -66,16 +66,16 @@ public class DatasourceRepositoryTest {
     @Rollback
     public void updateDataSource() throws Exception {
         Datasource datasource = datasource();
-        datasource = datasourceRepository.insertDataSource(datasource);
+        datasource = datasourceRepository.saveDatasource(datasource);
         Assert.assertNotNull(datasource.getId());
 
         Datasource datasource1 = new Datasource();
         datasource1.setId(datasource.getId());
         datasource1.setName("new Name");
 
-        datasourceRepository.updateDataSource(datasource1);
+        datasourceRepository.updateDatasource(datasource1);
 
-        Datasource updated = datasourceRepository.queryDatasourceById(datasource.getId());
+        Datasource updated = datasourceRepository.getDatasource(datasource.getId());
         Assert.assertEquals("new Name", updated.getName());
         Assert.assertNotNull(updated.getClientId());
     }
@@ -84,12 +84,12 @@ public class DatasourceRepositoryTest {
     @Rollback
     public void deleteDataSource() throws Exception {
         Datasource datasource = datasource();
-        datasource = datasourceRepository.insertDataSource(datasource);
+        datasource = datasourceRepository.saveDatasource(datasource);
         Assert.assertNotNull(datasource.getId());
 
-        datasourceRepository.deleteDataSource(datasource.getId());
+        datasourceRepository.removeDataSource(datasource.getId());
 
-        datasourceRepository.queryDatasourceById(datasource.getId());
+        datasourceRepository.getDatasource(datasource.getId());
     }
 
 }

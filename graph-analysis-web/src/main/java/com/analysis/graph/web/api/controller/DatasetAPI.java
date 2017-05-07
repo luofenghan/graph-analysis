@@ -36,7 +36,7 @@ public class DatasetAPI {
     @RequestMapping(method = RequestMethod.POST)
     public Dataset createDataset(Dataset dataSet) {
         dataSet.setClientId(sessionRepository.getUserId());
-        return dataSetRepository.insertDataset(dataSet);
+        return dataSetRepository.saveDataset(dataSet);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
@@ -46,19 +46,19 @@ public class DatasetAPI {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteDataset(@PathVariable Long id) {
-        dataSetRepository.deleteDataset(id);
+        dataSetRepository.removeDataset(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<Dataset> getAllDatasetList() {
         Client client = sessionRepository.getCurrentOnlineClient();
-        return dataSetRepository.queryClientDataset(client.getId());
+        return dataSetRepository.listDatasetForClient(client.getId());
     }
 
     @RequestMapping(value = "/category/list", method = RequestMethod.GET)
     public List<String> getDatasetCategoryList() {
-        return dataSetRepository.queryClientDataset(sessionRepository.getUserId())
+        return dataSetRepository.listDatasetForClient(sessionRepository.getUserId())
                 .stream()
                 .map(Dataset::getCategory)
                 .collect(Collectors.toList());

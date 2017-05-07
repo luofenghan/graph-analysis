@@ -23,8 +23,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
-
 
 /**
  * Created by cwc on 2017/4/19 0019.
@@ -41,13 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return mobile -> {
-            Optional<Client> clientOptional = clientRepository.getClientByMobile(mobile);
-            if (!clientOptional.isPresent()) {
-                throw new UsernameNotFoundException(String.format("Client %s not found", mobile));
+            try {
+                Client client = clientRepository.getClientByMobile(mobile);
+                return new SecurityUser(client, new SimpleGrantedAuthority(RoleEnum.CLIENT.name()));
+            } catch (IllegalArgumentException e) {
+                throw new UsernameNotFoundException(String.format("Client %s not found", mobile), e);
             }
-            Client client = clientOptional.get();
-
-            return new SecurityUser(client, new SimpleGrantedAuthority(RoleEnum.CLIENT.name()));
         };
     }
 

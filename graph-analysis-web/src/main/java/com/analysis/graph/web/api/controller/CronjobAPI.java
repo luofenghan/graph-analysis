@@ -36,7 +36,7 @@ public class CronjobAPI {
     public Cronjob createCronjob(Cronjob cronJob) {
         Client client = sessionRepository.getCurrentOnlineClient();
         cronJob.setClientId(client.getId());
-        cronJob = cronJobRepository.insertCronjob(cronJob);
+        cronJob = cronJobRepository.saveCronjob(cronJob);
         cronJobService.configScheduler();
         return cronJob;
     }
@@ -51,12 +51,12 @@ public class CronjobAPI {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<Cronjob> getCronjobList() {
         Client client = sessionRepository.getCurrentOnlineClient();
-        return cronJobRepository.queryCronjobList(client.getId());
+        return cronJobRepository.listCronjobForClient(client.getId());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteCronjob(@PathVariable Long id) {
-        cronJobRepository.deleteCronjob(id);
+        cronJobRepository.removeCronjob(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -1,6 +1,6 @@
 package com.analysis.graph.web.library.repository;
 
-import com.analysis.graph.common.domain.dbo.Graph;
+import com.analysis.graph.common.domain.dbo.Widget;
 import com.analysis.graph.config.DataConfig;
 import com.analysis.graph.datasource.aggregation.Field;
 import com.analysis.graph.datasource.aggregation.Filter;
@@ -27,26 +27,26 @@ import java.util.List;
 @ContextConfiguration(classes = {DataConfig.class})
 @Transactional
 @TestComponent
-public class GraphRepositoryTest {
+public class WidgetRepositoryTest {
     @Resource
-    private GraphRepository graphRepository;
+    private WidgetRepository graphRepository;
 
-    public Graph graph() {
-        Graph graph = new Graph();
-        graph.setId(null);
-        graph.setName("graph");
-        graph.setCategory("图表");
-        graph.setClientId(1);
-        graph.setDatasetId(1L);
-        graph.setGraphType("table");
+    public Widget graph() {
+        Widget widget = new Widget();
+        widget.setId(null);
+        widget.setName("graph");
+        widget.setCategory("图表");
+        widget.setClientId(1);
+        widget.setDatasetId(1L);
+        widget.setGraphType("table");
 
-        graph.setOptionalField(null);
+        widget.setOptionalField(null);
 
-        graph.setRowField(JsonUtils.toJsonString(getRowFields()));
-        graph.setColumnField(JsonUtils.toJsonString(getColumnFields()));
-        graph.setOptionalField(JsonUtils.toJsonString(getOptionalFields()));
-        graph.setMetricField(JsonUtils.toJsonString(getMetricFields()));
-        return graph;
+        widget.setRowField(JsonUtils.toJsonString(getRowFields()));
+        widget.setColumnField(JsonUtils.toJsonString(getColumnFields()));
+        widget.setOptionalField(JsonUtils.toJsonString(getOptionalFields()));
+        widget.setMetricField(JsonUtils.toJsonString(getMetricFields()));
+        return widget;
     }
 
     private List<Metric> getMetricFields() {
@@ -124,8 +124,8 @@ public class GraphRepositoryTest {
     @Test
     @Rollback
     public void insertGraph() throws Exception {
-        Graph graph = graph();
-        Graph savedGraph = graphRepository.insertGraph(graph);
+        Widget graph = graph();
+        Widget savedGraph = graphRepository.saveWidget(graph);
 
         Assert.assertNotNull(savedGraph.getId());
 
@@ -134,8 +134,8 @@ public class GraphRepositoryTest {
     @Test
     @Rollback
     public void updateGraph() throws Exception {
-        Graph graph = graph();
-        Graph savedGraph = graphRepository.insertGraph(graph);
+        Widget graph = graph();
+        Widget savedGraph = graphRepository.saveWidget(graph);
         Assert.assertNotNull(savedGraph.getId());
 
         ;
@@ -150,9 +150,9 @@ public class GraphRepositoryTest {
 
         savedGraph.setRowField(JsonUtils.toJsonString(rowFieldsList));
 
-        graphRepository.updateGraph(savedGraph);
+        graphRepository.updateWidget(savedGraph);
 
-        Graph queriedGraph = graphRepository.queryGraph(savedGraph.getId());
+        Widget queriedGraph = graphRepository.getWidget(savedGraph.getId());
 
         Assert.assertEquals(JsonUtils.toJsonString(rowFieldsList), queriedGraph.getRowField());
         Assert.assertNotNull(queriedGraph.getColumnField());
@@ -161,22 +161,22 @@ public class GraphRepositoryTest {
     @Test
     @Rollback
     public void listGraph() throws Exception {
-        Graph graph = graph();
-        Graph savedGraph = graphRepository.insertGraph(graph);
+        Widget graph = graph();
+        Widget savedGraph = graphRepository.saveWidget(graph);
         Assert.assertNotNull(savedGraph.getId());
-        Assert.assertEquals(1, graphRepository.listGraph(savedGraph.getClientId()).size());
+        Assert.assertEquals(1, graphRepository.listWidgetForClient(savedGraph.getClientId()).size());
     }
 
     @Test(expected = IllegalArgumentException.class)
     @Rollback
     public void deleteGraph() throws Exception {
-        Graph graph = graph();
-        Graph savedGraph = graphRepository.insertGraph(graph);
+        Widget graph = graph();
+        Widget savedGraph = graphRepository.saveWidget(graph);
         Assert.assertNotNull(savedGraph.getId());
 
-        graphRepository.deleteGraph(savedGraph.getId());
+        graphRepository.removeWidget(savedGraph.getId());
 
-        graphRepository.queryGraph(savedGraph.getId());
+        graphRepository.getWidget(savedGraph.getId());
     }
 
 }

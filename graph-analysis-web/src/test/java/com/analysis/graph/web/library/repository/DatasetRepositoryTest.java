@@ -58,7 +58,7 @@ public class DatasetRepositoryTest {
     @Rollback
     public void insertDataset() throws Exception {
         Dataset dataset = dataset();
-        dataset = datasetRepository.insertDataset(dataset);
+        dataset = datasetRepository.saveDataset(dataset);
         Assert.assertNotNull(dataset.getId());
     }
 
@@ -66,7 +66,7 @@ public class DatasetRepositoryTest {
     @Rollback
     public void updateDataset() throws Exception {
         Dataset dataset = dataset();
-        dataset = datasetRepository.insertDataset(dataset);
+        dataset = datasetRepository.saveDataset(dataset);
         Assert.assertNotNull(dataset.getId());
 
         Dataset dataset2 = dataset();
@@ -74,7 +74,7 @@ public class DatasetRepositoryTest {
         dataset2.setQuery("select * from dual");
         datasetRepository.updateDataset(dataset2);
 
-        Dataset queriedDataSet = datasetRepository.queryDataset(dataset2.getId());
+        Dataset queriedDataSet = datasetRepository.getDataset(dataset2.getId());
         System.out.println(JSON.toJSONString(queriedDataSet));
         Assert.assertNotNull(queriedDataSet.getName());
 
@@ -84,22 +84,22 @@ public class DatasetRepositoryTest {
     @Rollback
     public void deleteDataset() throws Exception {
         Dataset dataset = dataset();
-        dataset = datasetRepository.insertDataset(dataset);
+        dataset = datasetRepository.saveDataset(dataset);
         Assert.assertNotNull(dataset.getId());
 
-        datasetRepository.deleteDataset(dataset.getId());
+        datasetRepository.removeDataset(dataset.getId());
 
-        datasetRepository.queryDataset(dataset.getId());
+        datasetRepository.getDataset(dataset.getId());
     }
 
     @Test
     @Rollback
     public void queryClientDataset() throws Exception {
         Dataset dataset = dataset();
-        dataset = datasetRepository.insertDataset(dataset);
+        dataset = datasetRepository.saveDataset(dataset);
         Assert.assertNotNull(dataset.getId());
 
-        List<Dataset> clientDataSets = datasetRepository.queryClientDataset(dataset.getClientId());
+        List<Dataset> clientDataSets = datasetRepository.listDatasetForClient(dataset.getClientId());
         Assert.assertTrue(clientDataSets.size() == 1);
     }
 

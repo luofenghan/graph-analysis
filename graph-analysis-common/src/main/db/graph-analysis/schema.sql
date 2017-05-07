@@ -2,6 +2,7 @@ CREATE DATABASE
 IF NOT EXISTS `graph-analysis-db` DEFAULT CHARACTER
 SET utf8 COLLATE utf8_general_ci;
 
+-- 用户表
 DROP TABLE
 IF EXISTS `graph-analysis-db`.`client`;
 
@@ -16,6 +17,7 @@ CREATE TABLE `graph-analysis-db`.`client` (
   UNIQUE (mobile)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
+-- 数据连接源记录表
 DROP TABLE
 IF EXISTS `graph-analysis-db`.`datasource`;
 
@@ -29,6 +31,7 @@ CREATE TABLE `graph-analysis-db`.`datasource` (
   PRIMARY KEY (`id`)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
+-- 用户数据集
 DROP TABLE
 IF EXISTS `graph-analysis-db`.`dataset`;
 
@@ -41,7 +44,7 @@ CREATE TABLE `graph-analysis-db`.`dataset` (
   `query` VARCHAR (255) DEFAULT NULL COMMENT '对数据源的查询，存储格式为Json,eg:[{"sql":"select * from dual"}]',
   `filter` VARCHAR (255) DEFAULT NULL COMMENT '数据集筛选器，用于添加到查询中,eg: [{"col":"created_time","values":["{now(''W'',-1,''yyyy-MM-dd'')}"],"type":">","alias":"创建时间不为1"},{"col":"created_time","type":">","values":["{now(''W'',-1,''yyyy-MM-dd'')}"],"alias":"创建时间不为1"}]',
   `metric` VARCHAR (255) DEFAULT NULL COMMENT '度量存储格式为json 数组，eg:[{"alias":"CountCityOfProvince","column":"exp","function":"count"}]',
-  `interval` BIGINT DEFAULT -1 COMMENT '表示数据集自动刷新间隔，-1表示不刷新',
+  `interval` BIGINT DEFAULT - 1 COMMENT '表示数据集自动刷新间隔，-1表示不刷新',
   `created_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
   `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
   PRIMARY KEY (`id`),
@@ -49,11 +52,11 @@ CREATE TABLE `graph-analysis-db`.`dataset` (
   KEY (`datasource_id`)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
-
+-- 组件表
 DROP TABLE
-IF EXISTS `graph-analysis-db`.`graph`;
+IF EXISTS `graph-analysis-db`.`widget`;
 
-CREATE TABLE `graph-analysis-db`.`graph` (
+CREATE TABLE `graph-analysis-db`.`widget` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `client_id` INTEGER NOT NULL,
   `dataset_id` BIGINT DEFAULT NULL COMMENT '数据集',
@@ -72,8 +75,22 @@ CREATE TABLE `graph-analysis-db`.`graph` (
   PRIMARY KEY (`id`)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
+-- 仪表板
+DROP TABLE
+IF EXISTS `graph-analysis-db`.`dashboard`;
 
+CREATE TABLE `graph-analysis-db`.`dashboard` (
+  `id` BIGINT (20) NOT NULL AUTO_INCREMENT,
+  `client_id` INTEGER NOT NULL,
+  `category` VARCHAR (100) DEFAULT NULL COMMENT '仪表板的分类',
+  `name` VARCHAR (100) NOT NULL COMMENT '仪表板的命名',
+  `layout_config` TEXT DEFAULT NULL COMMENT '仪表板的布局配置',
+  `created_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '创建日期',
+  `updated_time` DATETIME (3) DEFAULT CURRENT_TIMESTAMP (3) COMMENT '更新日期',
+  PRIMARY KEY (`id`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
+-- 定时任务
 DROP TABLE
 IF EXISTS `graph-analysis-db`.`cronjob`;
 

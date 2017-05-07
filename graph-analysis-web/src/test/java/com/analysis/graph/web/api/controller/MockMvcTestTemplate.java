@@ -2,7 +2,7 @@ package com.analysis.graph.web.api.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.analysis.graph.common.domain.dbo.Graph;
+import com.analysis.graph.common.domain.dbo.Widget;
 import com.google.common.base.Functions;
 import com.google.common.collect.Maps;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,7 +44,7 @@ public class MockMvcTestTemplate {
                 .andReturn();
     }
 
-    private LinkedMultiValueMap<String, String> toParams(Graph graph) {
+    private LinkedMultiValueMap<String, String> toParams(Widget graph) {
         Map<String, List<String>> stringListHashMap = new HashMap<>();
         Map<String, String> queryParam = Maps.transformValues(JSON.parseObject(JSONObject.toJSONString(graph)), Functions.toStringFunction());
         for (Map.Entry<String, String> entry : queryParam.entrySet()) {

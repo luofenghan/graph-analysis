@@ -6,6 +6,7 @@ import java.util.Date;
  * Created by zhangle on 15/12/25.
  */
 public class GlobalConstant {
+    public static final String UN_CATEGORY = "默认分类";
 
     public static final String COOKIE_NAME = "beauty-data-cookie";
 

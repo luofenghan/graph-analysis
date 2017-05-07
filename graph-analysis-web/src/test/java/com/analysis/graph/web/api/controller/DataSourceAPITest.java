@@ -66,7 +66,7 @@ public class DataSourceAPITest {
         savedDatasource.setCreatedTime(new Date());
         savedDatasource.setUpdatedTime(new Date());
 
-        given(dataSourceRepository.insertDataSource(anyObject())).willReturn(savedDatasource);
+        given(dataSourceRepository.saveDatasource(anyObject())).willReturn(savedDatasource);
 
         this.mockMvc.perform(put("/api/data-source")
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -75,7 +75,7 @@ public class DataSourceAPITest {
                 .param("name", savedDatasource.getName()))
                 .andReturn();
 
-        verify(dataSourceRepository, atLeastOnce()).insertDataSource(savedDatasource);
+        verify(dataSourceRepository, atLeastOnce()).saveDatasource(savedDatasource);
 
     }
 

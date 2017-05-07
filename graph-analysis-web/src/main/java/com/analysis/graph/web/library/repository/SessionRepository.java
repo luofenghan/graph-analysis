@@ -21,11 +21,7 @@ public class SessionRepository {
     private ClientRepository clientRepository;
 
     public Client getCurrentOnlineClient() {
-        Optional<Client> clientOptional = clientRepository.getClientByMobile(getSecurityUser().getUsername());
-        if (!clientOptional.isPresent()) {
-            throw new IllegalArgumentException("client offline");
-        }
-        return clientOptional.get();
+        return clientRepository.getClientByMobile(getSecurityUser().getUsername());
     }
 
     public Integer getUserId() {

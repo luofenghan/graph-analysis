@@ -19,20 +19,20 @@ public class DatasourceRepository {
     @Resource
     private DatasourceMapper datasourceMapper;
 
-    public Datasource queryDatasourceById(Integer id) {
+    public Datasource getDatasource(Integer id) {
         Datasource dataSourceInfo = datasourceMapper.selectByPrimaryKey(id);
         Preconditions.checkArgument(dataSourceInfo != null, "can not find dataSourceInfo by id: %d", id);
         return dataSourceInfo;
     }
 
-    public List<Datasource> queryDataSourceListByClientId(Integer id) {
+    public List<Datasource> listDatasourceForClient(Integer id) {
         DatasourceExample example = new DatasourceExample();
         example.createCriteria().andClientIdEqualTo(id);
         return datasourceMapper.selectByExample(example);
     }
 
     @Transactional
-    public Datasource insertDataSource(Datasource dataSourceInfo) {
+    public Datasource saveDatasource(Datasource dataSourceInfo) {
         DateTime now = new DateTime();
         dataSourceInfo.setCreatedTime(now.toDate());
         dataSourceInfo.setUpdatedTime(now.toDate());
@@ -41,14 +41,14 @@ public class DatasourceRepository {
     }
 
     @Transactional
-    public Datasource updateDataSource(Datasource dataSourceInfo) {
+    public Datasource updateDatasource(Datasource dataSourceInfo) {
         dataSourceInfo.setUpdatedTime(new DateTime().toDate());
         datasourceMapper.updateByPrimaryKeySelective(dataSourceInfo);
         return dataSourceInfo;
     }
 
     @Transactional
-    public void deleteDataSource(Integer id) {
+    public void removeDataSource(Integer id) {
         datasourceMapper.deleteByPrimaryKey(id);
     }
 }
